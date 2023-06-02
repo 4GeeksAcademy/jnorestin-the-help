@@ -4,6 +4,7 @@
     "workbench.editorAssociations": {   
         "*.md": "vscode.markdown.preview.editor"
     },
+    "files.defaultLanguage": "",
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     }
