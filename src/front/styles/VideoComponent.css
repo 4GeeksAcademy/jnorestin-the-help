@@ -1,0 +1,43 @@
+.video-container {
+  position: relative;
+  width: 100%;
+}
+
+.video-element {
+  width: 100%;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animated-text {
+  animation: fade 3s infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.text {
+  color: white;
+  font-size: 24px;
+}

@@ -1,0 +1,25 @@
+.front-help-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background-color: #e8e8e8; /* Replace with desired background color */
+  }
+  
+  .data-text {
+    text-align: center;
+    padding: 10px;
+    background-color: #e8e8e8; /* Replace with desired background color */
+    border-radius: 5px;
+  }
+  
