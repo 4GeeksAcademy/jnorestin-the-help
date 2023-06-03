@@ -6,6 +6,7 @@ db = SQLAlchemy()
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
+    user = db.relationship("User", backref = "posts")
     description = db.Column(db.String(500),unique=False, nullable=False)
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
@@ -19,7 +20,8 @@ class Post(db.Model):
             "user_id": self.user_id,
             "description":self.description,
             "location":self.location,
-            "date":self.date
+            "date":self.date,
+            "user":self.user.serialize()
             # do not serialize the password, its a security breach
         }
 
@@ -40,6 +42,7 @@ class User(db.Model):
             "email": self.email,
             "prifle_image":self.profile_image,
             "name":self.name
+            
             # do not serialize the password, its a security breach
         }
 
