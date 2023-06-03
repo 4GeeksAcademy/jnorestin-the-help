@@ -3,7 +3,7 @@ import "../../../front/styles/help.css";
 import "../../../front/styles/form.css";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import PopupForm from "../component/postform";
+import PopupForm from "../component/popupform";
 
 
 export const Help = (props) => {
