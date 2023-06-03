@@ -17,9 +17,15 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container">
+        <div className="nav-link">
         <Link to="/">
           <span className="navbar-brand mb-0 h1">Home</span>
         </Link>
+        <Link to="/help">
+          <span className="navbar-brand mb-0 h1">Help</span>
+        </Link>
+        </div>
+
         <div className="ml-auto">
           <button className="btn btn-primary" onClick={handleLoginClick}>
             Log In
