@@ -4,8 +4,8 @@ import "./VideoComponent.css"; // Import the CSS file for styling
 const VideoComponent = () => {
   const textRef = useRef(null);
   const messages = [
-    "find the nanny you need!",
-    "find the mechanic you need!",
+    "Find the nanny you need!",
+    "Find the mechanic you need!",
     "Find the dog walker you need!",
     "Find the help you need!"
   ];

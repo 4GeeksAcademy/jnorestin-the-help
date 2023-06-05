@@ -66,7 +66,7 @@ const VideoComponent = () => {
       </div>
       <video autoPlay loop muted className="video-element">
         <source
-          src="https://res.cloudinary.com/dggcy5lcn/video/upload/v1685580603/pexels-chris-j-mitchell-1182756-1920x1080-25fps_olig2p.mp4"
+          src="https://vimeo.com/manage/videos/833462254"
           type="video/mp4"
         />
       </video>
