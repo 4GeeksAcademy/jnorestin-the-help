@@ -87,16 +87,31 @@ export const Help = (props) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("API_ENDPOINT_URL");
+        const response = await fetch(`${process.env.BACKEND_URL}/api/posts`);
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
         const data = await response.json();
         setPosts(data);
+        console.log(data)
       } catch (error) {
         console.log(error);
       }
     };
+
+    // // useEffect(() => {
+    //   const fetchPosts = async () => {
+    //     try {
+    //       const response = await fetch(`${process.env.BACKEND_URL}/api/posts`);
+    //       if (!response.ok) {
+    //         throw new Error("Failed to fetch posts");
+    //       }
+    //       const data = await response.json();
+    //       setPosts(data);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   };
 
     fetchPosts();
   }, []);
@@ -135,7 +150,8 @@ export const Help = (props) => {
   return (
     <div>
       <div className="popup-container">
-        <button onClick={openPopup}>New Post</button>
+        {!popupOpen &&
+          <button onClick={openPopup}>New Post</button>}
         {popupOpen && <PopupForm onClose={closePopup} />}
       </div>
 
