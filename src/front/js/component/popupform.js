@@ -5,7 +5,7 @@ const PopupForm = ({ onClose }) => {
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-  const [profilePictures, setProfilePictures] = useState([]);
+  const [postImages, setPostImages] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,14 +15,14 @@ const PopupForm = ({ onClose }) => {
     console.log("Text Input:", text);
     console.log("Date:", date);
     console.log("Location:", location);
-    console.log("Profile Pictures:", profilePictures);
+    console.log("Post Images:", postImages);
 
     // Reset form fields
     setName("");
     setText("");
     setDate("");
     setLocation("");
-    setProfilePictures([]);
+    setPostImages([]);
 
     // Close the form
     onClose();
@@ -47,16 +47,16 @@ const PopupForm = ({ onClose }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="profile-picture">Profile Pictures:</label>
+              <label htmlFor="post-images">Post Images:</label>
               <input
                 type="file"
-                id="profile-picture"
-                name="profile-picture"
+                id="post-images"
+                name="post-images"
                 multiple
                 onChange={(event) => {
                   if (event.target.files && event.target.files.length > 0) {
                     const filesArray = Array.from(event.target.files);
-                    setProfilePictures(filesArray.slice(0, 3)); // Limit to 3 pictures
+                    setPostImages(filesArray.slice(0, 3)); // Limit to 3 images
                   }
                 }}
               />
@@ -65,16 +65,16 @@ const PopupForm = ({ onClose }) => {
             <div className="carousel-container">
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
-                  {profilePictures.length > 0 ? (
-                    profilePictures.map((picture, index) => (
+                  {postImages.length > 0 ? (
+                    postImages.map((image, index) => (
                       <div
                         className={index === 0 ? "carousel-item active" : "carousel-item"}
                         key={index}
                       >
                         <img
                           className="d-block w-100"
-                          src={URL.createObjectURL(picture)}
-                          alt={`Picture ${index}`}
+                          src={URL.createObjectURL(image)}
+                          alt={`Image ${index}`}
                           height={300}
                           width={350}
                         />

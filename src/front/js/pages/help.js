@@ -36,7 +36,6 @@ export const Help = (props) => {
       images: [
         { id: 15, url: "https://apexpros.com/wp-content/uploads/2021/12/Apex-89.png" },
         { id: 16, url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvb6iiysn4n_cl1ra3wrtIJsaTLCLFhzWbPg&usqp=CAU" }
-
       ],
       user: {
         id: 2,
@@ -52,7 +51,6 @@ export const Help = (props) => {
       user_id: 3,
       description: "Need assistance with gardening",
       images: [
-
         { id: 17, url: "https://ca-times.brightspotcdn.com/dims4/default/c8f0d3e/2147483647/strip/true/crop/1800x1013+0+0/resize/1200x675!/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Ff5%2F33%2F417fa05141e394041be1e7fe9813%2Fgardening-clip-art-adobe-stock.jpg" },
         { id: 18, url: "https://media.greenmatters.com/brand-img/kER6G5G9-/0x0/is-gardening-good-for-you-1598025162933.jpg" }
       ],
@@ -149,9 +147,8 @@ export const Help = (props) => {
               <p className="card-text">{post.description}</p>
               <div className="card-images">
                 {post.images.map((image, index) => (
-                  <div className="image-wrapper">
+                  <div className="image-wrapper" key={image.id}>
                     <img
-                      key={image.id}
                       src={image.url}
                       alt="Post Image"
                       onClick={() => {
@@ -182,20 +179,3 @@ export const Help = (props) => {
   );
 };
 
-{/* <form onSubmit={handlePostSubmit}>
-        <textarea
-          value={postText}
-          onChange={handleTextChange}
-          placeholder="Write a post..."
-        />
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageSelect}
-        />
-        {selectedImages.map((imageUrl, index) => (
-          <img key={index} src={imageUrl} alt={`Selected Image ${index}`} />
-        ))}
-        <button type="submit">Submit</button>
-      </form> */}
