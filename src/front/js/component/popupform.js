@@ -5,12 +5,7 @@ const PopupForm = ({ onClose }) => {
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-  const [profilePicture, setProfilePicture] = useState(null);
-
-
-
-
-
+  const [profilePictures, setProfilePictures] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,96 +15,150 @@ const PopupForm = ({ onClose }) => {
     console.log("Text Input:", text);
     console.log("Date:", date);
     console.log("Location:", location);
-    console.log("Profile Picture:", profilePicture);
+    console.log("Profile Pictures:", profilePictures);
 
     // Reset form fields
     setName("");
     setText("");
     setDate("");
     setLocation("");
-    // setProfilePicture(null);
+    setProfilePictures([]);
 
     // Close the form
-    closeForm();
+    onClose();
   };
 
   return (
     <div>
-
-
       <div className="overlay">
         <div className="popup-form">
           <h2>Pop-up Form</h2>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+            <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
 
-            <label htmlFor="profile-picture">Profile Picture:</label>
-            <input
-              type="file"
-              id="profile-picture"
-              name="profile-picture"
-              multiple
-              onChange={(event) => {
-                if (event.target.files && event.target.files[0]) {
-                  // setProfilePicture(...profilePicture, URL.createObjectURL(event.target.files[0]));
-                  setProfilePicture(URL.createObjectURL(event.target.files[0]));
-                  console.log(profilePicture)
-                }
-              }}
-            // onChange={(e) =>{
-            //   setProfilePicture(e.target.files[0])
-            //   e.preventDefault()
-            //   console.log(e)
-            // } }
-            />
-            {/* {profilePicture.map((item,key) =><div key={key}><img src={item} /></div>)} */}
-              <div><img src= {profilePicture}/></div>
-            
+            <div className="form-group">
+              <label htmlFor="profile-picture">Profile Pictures:</label>
+              <input
+                type="file"
+                id="profile-picture"
+                name="profile-picture"
+                multiple
+                onChange={(event) => {
+                  if (event.target.files && event.target.files.length > 0) {
+                    const filesArray = Array.from(event.target.files);
+                    setProfilePictures(filesArray.slice(0, 3)); // Limit to 3 pictures
+                  }
+                }}
+              />
+            </div>
 
+            <div className="carousel-container">
+              <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+                <div className="carousel-inner">
+                  {profilePictures.length > 0 ? (
+                    profilePictures.map((picture, index) => (
+                      <div
+                        className={index === 0 ? "carousel-item active" : "carousel-item"}
+                        key={index}
+                      >
+                        <img
+                          className="d-block w-100"
+                          src={URL.createObjectURL(picture)}
+                          alt={`Picture ${index}`}
+                          height={300}
+                          width={350}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="carousel-item active">
+                      <img
+                        className="d-block w-100"
+                        src="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
+                        alt="Default placeholder"
+                        height={300}
+                        width={350}
+                      />
+                    </div>
+                  )}
+                </div>
+                <a
+                  className="carousel-control-prev"
+                  href="#carouselExampleControls"
+                  role="button"
+                  data-slide="prev"
+                >
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span className="sr-only">Previous</span>
+                </a>
+                <a
+                  className="carousel-control-next"
+                  href="#carouselExampleControls"
+                  role="button"
+                  data-slide="next"
+                >
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span className="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
 
-            <label htmlFor="text">Text Input:</label>
-            <input
-              type="text"
-              id="text"
-              name="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+            <div className="form-group">
+              <label htmlFor="text">Text Input:</label>
+              <input
+                type="text"
+                id="text"
+                name="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </div>
 
-            <label htmlFor="date">Date:</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
+            <div className="form-group">
+              <label htmlFor="date">Date:</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
 
-            <label htmlFor="location">Location:</label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
+            <div className="form-group">
+              <label htmlFor="location">Location:</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
 
-            <input type="submit" value="Submit" />
+            <div className="button-group">
+              <input type="submit" value="Submit" className="submit-button" />
+              <button onClick={onClose} className="close-button">Close</button>
+            </div>
           </form>
-          <button onClick={onClose}>Close</button>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default PopupForm;
+
+
+
+
