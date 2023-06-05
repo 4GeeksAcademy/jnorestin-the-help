@@ -40,7 +40,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "prifle_image":self.profile_image,
+            "profile_image":self.profile_image,
             "name":self.name
             
             # do not serialize the password, its a security breach

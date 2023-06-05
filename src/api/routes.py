@@ -25,3 +25,11 @@ def get_posts():
         posts
     ))
     return jsonify(post_dictionaries)
+
+@api.route('/posts', methods=['POST'])
+def create_posts():
+    posts = request.json
+    new_post = Post(
+        
+    )
+    return{},
