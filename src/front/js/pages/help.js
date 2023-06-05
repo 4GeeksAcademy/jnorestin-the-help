@@ -135,7 +135,7 @@ export const Help = (props) => {
   return (
     <div>
       <div className="popup-container">
-        <button onClick={openPopup}>Open Form</button>
+        <button onClick={openPopup}>New Post</button>
         {popupOpen && <PopupForm onClose={closePopup} />}
       </div>
 
