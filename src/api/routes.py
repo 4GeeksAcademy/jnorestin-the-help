@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Post
+from api.models import db, User,Post,Image
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -28,8 +28,13 @@ def get_posts():
 
 @api.route('/posts', methods=['POST'])
 def create_posts():
-    posts = request.json
+    request_body = request.get_json()
     new_post = Post(
-        
+        description = request_body["description"],
+        location = request_body["location"],
+        date = request_body["date"]
     )
-    return{},
+    db.session.add(new_post)
+    db.session.commit()
+
+    return (jsonify),200
