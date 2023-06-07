@@ -1,28 +1,31 @@
 import React from "react";
-import Slider from "react-slick";
-import Help from "./Help";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "../path/to/helpslider.css"; // Replace with the path to your helpslider.css file
-import "./HelpSlider.css";
-import { Help } from "./Help";
-const HelpSlider = () => {
+import { Help } from "../pages/help";
+
+
+export  const HelpSlider = ({ posts }) => {
+
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-    };
-
-    return (
-        <Slider {...settings}>
-            <Help />
-            <Help />
-            <Help />
-            {/* Add additional Help components here if needed */}
-        </Slider>
-    );
+      };
+      
+  return (
+    <div className="help-slider">
+      {posts.map((post) => (
+        <div key={post.id} className="help-slider-item">
+          <img src={post.user.profile_pic} alt="Profile Picture" />
+          <p>{post.description}</p>
+        </div>
+      ))}
+    </div>
+  );
 };
 
-export default HelpSlider;
+
+
+  
+
+

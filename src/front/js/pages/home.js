@@ -6,7 +6,7 @@ import { Navbar } from "../component/navbar";
 
 import VideoComponent from "../component/videoComponent";
 
-import HelpSlider from "../component/helpslider";
+import {HelpSlider} from "../component/helpslider";
 
 
 
@@ -19,7 +19,7 @@ export const Home = () => {
 
 			<VideoComponent />
 			<div>
-				<HelpSlider/>
+			<HelpSlider />
 			</div>
 			<div>
 				<footer />
