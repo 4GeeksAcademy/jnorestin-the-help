@@ -6,7 +6,7 @@ import { Navbar } from "../component/navbar";
 
 import VideoComponent from "../component/videoComponent";
 
-import FrontHelpCard from "../component/FrontHelpCard";
+import HelpSlider from "../component/helpslider";
 
 
 
@@ -16,13 +16,13 @@ export const Home = () => {
 
 	return (
 		<div>
-			
-			<VideoComponent/>
+
+			<VideoComponent />
 			<div>
-			<FrontHelpCard/>
+				<HelpSlider/>
 			</div>
 			<div>
-				<footer/>
+				<footer />
 			</div>
 
 		</div>

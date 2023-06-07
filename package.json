@@ -78,8 +78,11 @@
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
+		"react-image-lightbox": "^5.1.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
-		"react-typewriter-effect": "^1.1.0"
+		"react-slick": "^0.29.0",
+		"react-typewriter-effect": "^1.1.0",
+		"slick-carousel": "^1.8.1"
 	}
 }

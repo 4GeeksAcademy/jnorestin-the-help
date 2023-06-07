@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../../../front/styles/index.css";
 
 export const Navbar = () => {
   return (
