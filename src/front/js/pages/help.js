@@ -62,19 +62,17 @@ export const Help = (props) => {
 
   const createPost = async (postData) => {
     try {
-      // Fetch user account information
       const userResponse = await fetch("https://ronaldinep-congenial-fishstick-r9w4pjjq4xxfx554-3001.preview.app.github.dev/api/user");
       if (!userResponse.ok) {
         throw new Error("Failed to fetch user account");
       }
       const userAccount = await userResponse.json();
 
-      // Add user account and timestamp to the post data
       const postWithUser = {
         ...postData,
         user: {
           name: userAccount.name,
-          avatar: userAccount.avatar,
+          profile_image: userAccount.profile_image,
         },
         timestamp: new Date().toLocaleString(),
         location: "Your current location",
@@ -99,18 +97,22 @@ export const Help = (props) => {
     }
   };
 
+  const handleCreatePost = (postData) => {
+    createPost(postData);
+  };
+
   return (
     <div>
       <div className="popup-container">
-        {!popupOpen && <button onClick={openPopup}>New Post</button>}
-        {popupOpen && <PopupForm createPost={createPost} onClose={closePopup} />}
+        {!popupOpen && <button onClick={openPopup} className="btn-new-post">New Post</button>}
+        {popupOpen && <PopupForm onSubmit={handleCreatePost} onClose={closePopup} />}
       </div>
       <div className="cards">
         {posts.map((post, i) => (
           <div key={post.id} className="card">
             <div className="card-body">
               <div className="user-info">
-                <img src={post.user.avatar} alt="User Avatar" className="user-avatar" />
+                <img src={post.user.profile_image} alt="User Profile Image" className="profile_image" />
                 <h5 className="card-title">{post.user.name}</h5>
               </div>
               <p className="card-text">{post.description}</p>
@@ -152,6 +154,7 @@ export const Help = (props) => {
     </div>
   );
 };
+
 
 
 

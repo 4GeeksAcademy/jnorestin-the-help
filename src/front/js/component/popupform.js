@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PopupForm = ({ createPost, onClose }) => {
+const PopupForm = ({ onSubmit, onClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -17,7 +17,7 @@ const PopupForm = ({ createPost, onClose }) => {
       images: images,
     };
 
-    createPost(postData);
+    onSubmit(postData); // Pass the postData to the onSubmit callback
 
     // Reset form fields
     setName("");
@@ -68,45 +68,37 @@ const PopupForm = ({ createPost, onClose }) => {
                 type="file"
                 id="images"
                 name="images"
-                multiple
-                onChange={(event) => {
-                  if (event.target.files && event.target.files.length > 0) {
-                    const filesArray = Array.from(event.target.files);
-                    setImages(filesArray.slice(0, 3)); // Limit to 3 images
-                  }
+                accept="image/*"
+                onChange={(e) => {
+                  const fileList = e.target.files;
+                  const newImages = Array.from(fileList).map((file) => ({
+                    id: Date.now() + Math.random(),
+                    url: URL.createObjectURL(file),
+                  }));
+                  setImages(newImages);
+                  setActiveIndex(0);
                 }}
+                multiple
               />
             </div>
 
             <div className="carousel-container">
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
-                  {images.length > 0 ? (
-                    images.map((image, index) => (
-                      <div
-                        className={`carousel-item ${index === activeIndex ? "active" : ""}`}
-                        key={index}
-                      >
-                        <img
-                          className="d-block w-100"
-                          src={URL.createObjectURL(image)}
-                          alt={`Image ${index}`}
-                          height={300}
-                          width={350}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="carousel-item active">
+                  {images.map((image, index) => (
+                    <div
+                      className={`carousel-item ${index === activeIndex ? "active" : ""}`}
+                      key={image.id}
+                    >
                       <img
                         className="d-block w-100"
-                        src="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
-                        alt="Default placeholder"
+                        src={image.url}
+                        alt={`Image ${index}`}
                         height={300}
                         width={350}
                       />
                     </div>
-                  )}
+                  ))}
                 </div>
                 <a
                   className="carousel-control-prev"
@@ -149,9 +141,4 @@ const PopupForm = ({ createPost, onClose }) => {
 };
 
 export default PopupForm;
-
-
-
-
-
 
