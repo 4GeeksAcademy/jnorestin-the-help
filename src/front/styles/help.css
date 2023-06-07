@@ -79,12 +79,22 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
   padding-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
 
+.profile_image {
+  position: absolute;
+  top: 10px; 
+  left: 10px; 
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .card-images {
   display: flex;
   justify-content: center;
@@ -243,4 +253,7 @@ body {
   50% {
     opacity: 0;
   }
+}
+.btn-new-post {
+  margin-bottom: 50px;
 }

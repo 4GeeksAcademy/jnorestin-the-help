@@ -10,6 +10,7 @@ class Post(db.Model):
     description = db.Column(db.String(500),unique=False, nullable=False)
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
+    images = db.relationship('Image', backref='post')
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -21,7 +22,8 @@ class Post(db.Model):
             "description":self.description,
             "location":self.location,
             "date":self.date,
-            "user":self.user.serialize()
+            "user":self.user.serialize(),
+            "images":[image.serialize() for image in self.images]
             # do not serialize the password, its a security breach
         }
 
@@ -78,7 +80,7 @@ class Helper (db.Model):
 class Image (db.Model):
     id = db.Column(db.Integer,primary_key=True)
     post_id = db.Column(db.Integer, ForeignKey("post.id"))
-    image_url = db.Column(db.String(500), unique=False, nullable=False)
+    url = db.Column(db.String(500), unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Image {self.id}>'
@@ -87,7 +89,7 @@ class Image (db.Model):
         return {
             "id": self.id,
             "post_id": self.post_id,
-            "image":self.image_url
+            "url":self.url
         }
 
     

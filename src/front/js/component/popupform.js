@@ -1,38 +1,43 @@
 import React, { useState } from "react";
 
-const PopupForm = ({ onClose }) => {
+const PopupForm = ({ onSubmit, onClose }) => {
   const [name, setName] = useState("");
-  const [text, setText] = useState("");
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
-  const [postImages, setPostImages] = useState([]);
+  const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Process form data
-    console.log("Name:", name);
-    console.log("Text Input:", text);
-    console.log("Date:", date);
-    console.log("Location:", location);
-    console.log("Post Images:", postImages);
+    const postData = {
+      user: {
+        name: name,
+      },
+      description: description,
+      images: images,
+    };
+
+    onSubmit(postData); // Pass the postData to the onSubmit callback
 
     // Reset form fields
     setName("");
-    setText("");
-    setDate("");
-    setLocation("");
-    setPostImages([]);
+    setDescription("");
+    setImages([]);
+    setActiveIndex(0);
 
     // Close the form
     onClose();
+  };
+
+  const handleSlideChange = (index) => {
+    setActiveIndex(index);
   };
 
   return (
     <div>
       <div className="overlay">
         <div className="popup-form">
-          <h2>Pop-up Form</h2>
+          <h2>Create Post</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name:</label>
@@ -47,56 +52,62 @@ const PopupForm = ({ onClose }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="post-images">Post Images:</label>
+              <label htmlFor="description">Description:</label>
+              <input
+                type="text"
+                id="description"
+                name="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="images">Images:</label>
               <input
                 type="file"
-                id="post-images"
-                name="post-images"
-                multiple
-                onChange={(event) => {
-                  if (event.target.files && event.target.files.length > 0) {
-                    const filesArray = Array.from(event.target.files);
-                    setPostImages(filesArray.slice(0, 3)); // Limit to 3 images
-                  }
+                id="images"
+                name="images"
+                accept="image/*"
+                onChange={(e) => {
+                  const fileList = e.target.files;
+                  const newImages = Array.from(fileList).map((file) => ({
+                    id: Date.now() + Math.random(),
+                    url: URL.createObjectURL(file),
+                  }));
+                  setImages(newImages);
+                  setActiveIndex(0);
                 }}
+                multiple
               />
             </div>
 
             <div className="carousel-container">
               <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
-                  {postImages.length > 0 ? (
-                    postImages.map((image, index) => (
-                      <div
-                        className={index === 0 ? "carousel-item active" : "carousel-item"}
-                        key={index}
-                      >
-                        <img
-                          className="d-block w-100"
-                          src={URL.createObjectURL(image)}
-                          alt={`Image ${index}`}
-                          height={300}
-                          width={350}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="carousel-item active">
+                  {images.map((image, index) => (
+                    <div
+                      className={`carousel-item ${index === activeIndex ? "active" : ""}`}
+                      key={image.id}
+                    >
                       <img
                         className="d-block w-100"
-                        src="https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
-                        alt="Default placeholder"
+                        src={image.url}
+                        alt={`Image ${index}`}
                         height={300}
                         width={350}
                       />
                     </div>
-                  )}
+                  ))}
                 </div>
                 <a
                   className="carousel-control-prev"
                   href="#carouselExampleControls"
                   role="button"
                   data-slide="prev"
+                  onClick={() => {
+                    handleSlideChange((activeIndex + images.length - 1) % images.length);
+                  }}
                 >
                   <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span className="sr-only">Previous</span>
@@ -106,6 +117,9 @@ const PopupForm = ({ onClose }) => {
                   href="#carouselExampleControls"
                   role="button"
                   data-slide="next"
+                  onClick={() => {
+                    handleSlideChange((activeIndex + 1) % images.length);
+                  }}
                 >
                   <span className="carousel-control-next-icon" aria-hidden="true"></span>
                   <span className="sr-only">Next</span>
@@ -113,42 +127,11 @@ const PopupForm = ({ onClose }) => {
               </div>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="text">Text Input:</label>
-              <input
-                type="text"
-                id="text"
-                name="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="date">Date:</label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="location">Location:</label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </div>
-
             <div className="button-group">
               <input type="submit" value="Submit" className="submit-button" />
-              <button onClick={onClose} className="close-button">Close</button>
+              <button onClick={onClose} className="close-button">
+                Close
+              </button>
             </div>
           </form>
         </div>
@@ -158,7 +141,4 @@ const PopupForm = ({ onClose }) => {
 };
 
 export default PopupForm;
-
-
-
 
