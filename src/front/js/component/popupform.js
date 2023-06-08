@@ -10,9 +10,6 @@ const PopupForm = ({ onSubmit, onClose }) => {
     e.preventDefault();
 
     const postData = {
-      user: {
-        name: name,
-      },
       description: description,
       images: images,
     };
@@ -74,6 +71,7 @@ const PopupForm = ({ onSubmit, onClose }) => {
                   const newImages = Array.from(fileList).map((file) => ({
                     id: Date.now() + Math.random(),
                     url: URL.createObjectURL(file),
+                    file: file
                   }));
                   setImages(newImages);
                   setActiveIndex(0);

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../../front/styles/help.css";
 import "../../../front/styles/form.css";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import PopupForm from "../component/popupform";
+import { Context } from "../store/appContext";
 
 export const Help = (props) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -11,23 +12,14 @@ export const Help = (props) => {
   const [postItem, setPostItem] = useState(0);
   const [popupOpen, setPopupOpen] = useState(false);
   const [posts, setPosts] = useState([]);
-
+  const { store, actions } = useContext(Context);
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch("https://ronaldinep-congenial-fishstick-r9w4pjjq4xxfx554-3001.preview.app.github.dev/api/posts");
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchPosts();
+    actions.fetchPosts();
   }, []);
+  useEffect(() => {
+    if (!store.posts) return;
+    setPosts(store.posts);
+  }, [store.posts]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,25 +54,16 @@ export const Help = (props) => {
 
   const createPost = async (postData) => {
     try {
-      const userResponse = await fetch("https://ronaldinep-congenial-fishstick-r9w4pjjq4xxfx554-3001.preview.app.github.dev/api/user");
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user account");
-      }
-      const userAccount = await userResponse.json();
-
       const postWithUser = {
-        ...postData,
-        user: {
-          name: userAccount.name,
-          profile_image: userAccount.profile_image,
-        },
-        timestamp: new Date().toLocaleString(),
+        description: postData.description,
+        date: new Date().toLocaleString(),
         location: "Your current location",
       };
 
-      const response = await fetch("https://ronaldinep-congenial-fishstick-r9w4pjjq4xxfx554-3001.preview.app.github.dev/api/posts", {
+      const response = await fetch(store.apiUrl + "/api/posts", {
         method: "POST",
         headers: {
+          "Authorization": `Bearer ${store.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postWithUser),
@@ -91,6 +74,14 @@ export const Help = (props) => {
       }
 
       const newPost = await response.json();
+      console.log(">>> 🍎", postData.images);
+      for (const image of postData.images) {
+        let formData = new FormData();
+        formData.append("file", image.file);
+        formData.append("post_id", newPost.id);
+        await actions.createPostImage(formData);
+      }
+      // get posts again -> actions.fetchPosts
       setPosts((prevPosts) => [...prevPosts, newPost]);
     } catch (error) {
       console.log(error);
