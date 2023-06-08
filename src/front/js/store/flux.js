@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: "someToken",
+			token: "",
 			user: {},
 			apiUrl: process.env.BACKEND_URL
 		},
