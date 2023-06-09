@@ -1,5 +1,11 @@
-from flask import Blueprint, request, jsonify
-from api.models import db, Post, Image, User
+"""
+This module takes care of starting the API Server, Loading the DB and Adding the endpoints
+"""
+from flask import Flask, request, jsonify, url_for, Blueprint
+from api.models import db, User,Post,Image,Helper,PostCandidate
+from api.utils import generate_sitemap, APIException
+from cloudinary import uploader
+import os
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 from cloudinary import uploader
 
@@ -10,6 +16,11 @@ def get_posts():
     posts = Post.query.all()
     post_dictionaries = [post.serialize() for post in posts]
     return jsonify(post_dictionaries)
+
+@api.route('/posts/<int:id>', methods=['GET'])
+def get_post(id):
+    post = Post.query.get(id)
+    return jsonify(post.serialize()),200
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()
@@ -73,5 +84,56 @@ def sign_up():
 
     return jsonify(user.serialize()), 201
 
+@api.route("/helper", methods=["GET"])
+def get_helper():
+    helpers = Helper.query.all()
+    helper_dictionaries = list(map(
+        lambda helper: helper.serialize(),
+        helpers
+    ))
+    return jsonify(helper_dictionaries)
+
+@api.route("/helper", methods=["POST"])
+@jwt_required()
+def creat_helper():
+    user_id = get_jwt_identity()
+    body = request.json
+    new_helper = Helper(
+        bio = body["bio"],
+        user_id = user_id
+    )
+    db.session.add(new_helper)
+    db.session.commit()
+
+    return jsonify("Successful"),200
+
+@api.route("/postcandidate", methods=["POST"])
+@jwt_required()
+def craete_postcandidate():
+    user_id = get_jwt_identity()
+    helper = Helper.query.filter_by(user_id = user_id)
+    if not helper:
+        return jsonify("user is not registered as a helper")
+    body = request.json
+    new_postcandidate = PostCandidate(
+        helper_id = helper.id,
+        post_id = body["post_id"]
+    )
+    db.session.add(new_postcandidate)
+    db.session.commit()
+
+    return jsonify("Successful"),200
+
+@api.route("/postcandidate/<int:id>", methods=["DELETE"])
+def delete_postcandidate(id):
+    PostCandidate.query.filter_by(id = id).delete()
+
+    
+    db.session.commit()
+
+    return jsonify("Successful"),200
 
 
+
+
+       

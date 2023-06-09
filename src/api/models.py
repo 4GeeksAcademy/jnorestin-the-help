@@ -11,6 +11,7 @@ class Post(db.Model):
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
     images = db.relationship('Image', backref='post')
+    candidates = db.relationship("PostCandidate",backref= "post")
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -19,11 +20,14 @@ class Post(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "description": self.description,
-            "location": self.location,
-            "date": self.date,
-            "user": self.user.serialize(),
-            "images": [image.serialize() for image in self.images]
+            "description":self.description,
+            "location":self.location,
+            "date":self.date,
+            "user":self.user.serialize(),
+            "images":[image.serialize() for image in self.images],
+            "candidates":[candidate.serialize() for candidate in self.candidates]
+            
+            # do not serialize the password, its a security breach
         }
 
 class User(db.Model):
