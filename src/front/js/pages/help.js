@@ -58,6 +58,7 @@ export const Help = (props) => {
         description: postData.description,
         date: new Date().toLocaleString(),
         location: "Your current location",
+        images: images,
       };
 
       const response = await fetch(store.apiUrl + "/api/posts", {
@@ -95,10 +96,11 @@ export const Help = (props) => {
   return (
     <div>
       <div className="popup-container">
-        {!popupOpen && <button onClick={openPopup} className="btn-new-post">New Post</button>}
+        {!popupOpen && !lightboxOpen && <button onClick={openPopup} className="btn-new-post">New Post</button>}
         {popupOpen && <PopupForm onSubmit={handleCreatePost} onClose={closePopup} />}
       </div>
-      <div className="cards">
+      
+      <div className="card-container">
         {posts.map((post, i) => (
           <div key={post.id} className="card">
             <div className="card-body">
