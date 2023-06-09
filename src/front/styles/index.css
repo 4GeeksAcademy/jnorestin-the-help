@@ -67,6 +67,118 @@
   margin-right: 10px;
 }
 
+.login-form {
+  width: 400px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-  
+.login-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.login-form-input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.login-form-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.login-form-button:hover {
+  background-color: #1b4965;
+}
+
+.signup-form-wrapper {
+  width: 400px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form-wrapper h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.signup-form-wrapper form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form-wrapper .form-group {
+  margin-bottom: 20px;
+}
+
+.signup-form-wrapper label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+.signup-form-wrapper input[type="email"],
+.signup-form-wrapper input[type="password"],
+.signup-form-wrapper input[type="text"],
+.signup-form-wrapper input[type="date"],
+.signup-form-wrapper input[type="tel"],
+.signup-form-wrapper select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.signup-form-wrapper .btn-primary {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.signup-form-wrapper .btn-primary:hover {
+  background-color: #1b4965;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #1b4965;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #007bff;
+}
 

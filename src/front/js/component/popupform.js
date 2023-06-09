@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PopupForm = ({ onSubmit, onClose }) => {
+const PopupForm = ({ onSuccess, onClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -14,7 +14,7 @@ const PopupForm = ({ onSubmit, onClose }) => {
       images: images,
     };
 
-    onSubmit(postData); // Pass the postData to the onSubmit callback
+    onSuccess(postData); // Pass the postData to the onSubmit callback
 
     // Reset form fields
     setName("");
@@ -35,7 +35,7 @@ const PopupForm = ({ onSubmit, onClose }) => {
       <div className="overlay">
         <div className="popup-form">
           <h2>Create Post</h2>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="form-group">
               <label htmlFor="name">Name:</label>
               <input
@@ -126,7 +126,9 @@ const PopupForm = ({ onSubmit, onClose }) => {
             </div>
 
             <div className="button-group">
-              <input type="submit" value="Submit" className="submit-button" />
+              <button type="button" onClick={handleSubmit} className="submit-button">
+                Submit
+              </button>
               <button onClick={onClose} className="close-button">
                 Close
               </button>

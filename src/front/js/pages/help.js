@@ -47,7 +47,7 @@ export const Help = (props) => {
         description: postData.description,
         date: new Date().toLocaleString(),
         location: "Your current location",
-        images: images,
+        // images: images,
       };
 
       const response = await fetch(store.apiUrl + "/api/posts", {
@@ -78,7 +78,9 @@ export const Help = (props) => {
   };
 
   const handleCreatePost = (postData) => {
+    console.log("HERE")
     createPost(postData);
+
   };
 
   return (
@@ -89,7 +91,7 @@ export const Help = (props) => {
             New Post
           </button>
         )}
-        {popupOpen && <PopupForm onSubmit={handleCreatePost} onClose={closePopup} />}
+        {popupOpen && <PopupForm onSuccess={handleCreatePost} onClose={closePopup} />}
       </div>
 
       <div className="card-container">

@@ -63,14 +63,15 @@ def log_in():
 @api.route("/sign-up", methods=["POST"])
 def sign_up():
     body = request.json
-    user = User(
+    user = User.create_user(
         email=body["email"],
         password=body["password"],
         name=body["name"]
     )
-    db.session.add(user)
-    db.session.commit()
+    if user is None:
+        return "Failed to create user", 400
 
     return jsonify(user.serialize()), 201
+
 
 

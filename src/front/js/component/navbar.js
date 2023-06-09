@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../../front/styles/index.css";
+import { LogIn } from "./logIn";
+import { SignUp } from "./signUp";
 
 export const Navbar = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -14,16 +16,45 @@ export const Navbar = () => {
     setShowSignupForm(true);
   };
 
+  const handleLoginFormClose = () => {
+    setShowLoginForm(false);
+  };
+
+  const handleSignupFormClose = () => {
+    setShowSignupForm(false);
+  };
+
+  const loginFormRef = useRef(null);
+  const signupFormRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        (loginFormRef.current && !loginFormRef.current.contains(event.target)) ||
+        (signupFormRef.current && !signupFormRef.current.contains(event.target))
+      ) {
+        handleLoginFormClose();
+        handleSignupFormClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <div className="nav-link">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">Home</span>
-        </Link>
-        <Link to="/help">
-          <span className="navbar-brand mb-0 h1">Help</span>
-        </Link>
+          <Link to="/">
+            <span className="navbar-brand mb-0 h1">Home</span>
+          </Link>
+          <Link to="/help">
+            <span className="navbar-brand mb-0 h1">Help</span>
+          </Link>
         </div>
 
         <div className="ml-auto">
@@ -36,14 +67,41 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
+
       {showLoginForm && (
-        // Render your login form component here
-        <LoginForm onClose={() => setShowLoginForm(false)} />
+        <div className="form-overlay">
+          <div className="form-container" ref={loginFormRef}>
+            <button className="close-button" onClick={handleLoginFormClose}>
+              Close
+            </button>
+            <div className="login-form">
+              <h3 className="form-title">Log In</h3>
+              <LogIn />
+            </div>
+          </div>
+        </div>
       )}
       {showSignupForm && (
-        // Render your signup form component here
-        <SignupForm onClose={() => setShowSignupForm(false)} />
+        <div className="form-overlay">
+          <div className="form-container" ref={signupFormRef}>
+            <button className="close-button" onClick={handleSignupFormClose}>
+              Close
+            </button>
+            <div className="signup-form">
+              <h3 className="form-title">Sign Up</h3>
+              <SignUp onClose={handleSignupFormClose} />
+            </div>
+          </div>
+        </div>
       )}
     </nav>
   );
 };
+
+
+
+
+
+
+
+
