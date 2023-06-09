@@ -46,6 +46,7 @@ export const Navbar = () => {
   }, []);
 
   return (
+    <React.Fragment>
     <nav className="navbar navbar-light bg-light">
       <div className="container">
         <div className="nav-link">
@@ -68,33 +69,35 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {showLoginForm && (
-        <div className="form-overlay">
-          <div className="form-container" ref={loginFormRef}>
-            <button className="close-button" onClick={handleLoginFormClose}>
-              Close
-            </button>
-            <div className="login-form">
-              <h3 className="form-title">Log In</h3>
-              <LogIn />
-            </div>
-          </div>
-        </div>
-      )}
-      {showSignupForm && (
-        <div className="form-overlay">
-          <div className="form-container" ref={signupFormRef}>
-            <button className="close-button" onClick={handleSignupFormClose}>
-              Close
-            </button>
-            <div className="signup-form">
-              <h3 className="form-title">Sign Up</h3>
-              <SignUp onClose={handleSignupFormClose} />
-            </div>
-          </div>
-        </div>
-      )}
+      
     </nav>
+    {showLoginForm && (
+      <div className="form-overlay">
+        <div className="form-container" ref={loginFormRef}>
+          <button className="close-button" onClick={handleLoginFormClose}>
+            Close
+          </button>
+          <div className="login-form">
+            <h3 className="form-title">Log In</h3>
+            <LogIn />
+          </div>
+        </div>
+      </div>
+    )}
+    {showSignupForm && (
+      <div className="form-overlay">
+        <div className="form-container" ref={signupFormRef}>
+          <button className="close-button" onClick={handleSignupFormClose}>
+            Close
+          </button>
+          <div className="signup-form">
+            <h3 className="form-title">Sign Up</h3>
+            <SignUp onClose={handleSignupFormClose} />
+          </div>
+        </div>
+      </div>
+    )}
+    </React.Fragment>
   );
 };
 

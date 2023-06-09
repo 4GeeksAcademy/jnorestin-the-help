@@ -12,22 +12,32 @@ export const LogIn = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Log In</button>
+    <form className="signup-form-wrapper" onSubmit={handleLogin}>
+      <div className="form-group">
+        <label>Email</label>
+        <input
+          className="login-form-input" // Updated class name for login form input
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          placeholder="Email"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>Password</label>
+        <input
+          className="signup-form-input"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button className="btn-primary" type="submit">Log In</button>
     </form>
   );
 };
+
+
 

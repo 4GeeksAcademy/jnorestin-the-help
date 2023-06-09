@@ -126,7 +126,7 @@ const PopupForm = ({ onSuccess, onClose }) => {
             </div>
 
             <div className="button-group">
-              <button type="button" onClick={handleSubmit} className="submit-button">
+              <button type="button" onClick={handleSubmit} className="submit-button"  style={{ backgroundColor: "green" }} >
                 Submit
               </button>
               <button onClick={onClose} className="close-button">
