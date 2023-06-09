@@ -13,26 +13,15 @@ export const Help = (props) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [posts, setPosts] = useState([]);
   const { store, actions } = useContext(Context);
+
   useEffect(() => {
     actions.fetchPosts();
   }, []);
+
   useEffect(() => {
     if (!store.posts) return;
     setPosts(store.posts);
   }, [store.posts]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const arrow = document.querySelector(".scroll-down-indicator .arrow");
-      arrow.classList.add("blink");
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const openLightbox = (index) => {
     setLightboxOpen(true);
@@ -64,7 +53,7 @@ export const Help = (props) => {
       const response = await fetch(store.apiUrl + "/api/posts", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${store.token}`,
+          Authorization: `Bearer ${store.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postWithUser),
@@ -82,8 +71,7 @@ export const Help = (props) => {
         formData.append("post_id", newPost.id);
         await actions.createPostImage(formData);
       }
-      // get posts again -> actions.fetchPosts
-      setPosts((prevPosts) => [...prevPosts, newPost]);
+      actions.fetchPosts(); // Fetch posts again
     } catch (error) {
       console.log(error);
     }
@@ -96,10 +84,14 @@ export const Help = (props) => {
   return (
     <div>
       <div className="popup-container">
-        {!popupOpen && !lightboxOpen && <button onClick={openPopup} className="btn-new-post">New Post</button>}
+        {!popupOpen && !lightboxOpen && (
+          <button onClick={openPopup} className="btn-new-post">
+            New Post
+          </button>
+        )}
         {popupOpen && <PopupForm onSubmit={handleCreatePost} onClose={closePopup} />}
       </div>
-      
+
       <div className="card-container">
         {posts.map((post, i) => (
           <div key={post.id} className="card">
@@ -147,6 +139,7 @@ export const Help = (props) => {
     </div>
   );
 };
+
 
 
 
