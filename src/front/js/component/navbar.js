@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../../../front/styles/index.css";
 import { LogIn } from "./logIn";
 import { SignUp } from "./signUp";
+
 
 export const Navbar = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -26,6 +27,8 @@ export const Navbar = () => {
 
   const loginFormRef = useRef(null);
   const signupFormRef = useRef(null);
+
+  const location= useLocation()
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -57,8 +60,8 @@ export const Navbar = () => {
             <span className="navbar-brand mb-0 h1">Help</span>
           </Link>
         </div>
-
-        <div className="ml-auto">
+        {(location.pathname == "/") && (
+          <div className="ml-auto">
           <button className="btn btn-primary" onClick={handleLoginClick}>
             Log In
           </button>
@@ -67,6 +70,8 @@ export const Navbar = () => {
             Sign Up
           </button>
         </div>
+        )}
+        
       </div>
 
       

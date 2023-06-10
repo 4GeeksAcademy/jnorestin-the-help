@@ -58,10 +58,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin: 80px;
-    max-height: calc(100vh - 320px); /* Adjust the value as needed */
-    overflow-y: auto;
-    
+    margin: 80px; 
   }
 
 .card {
