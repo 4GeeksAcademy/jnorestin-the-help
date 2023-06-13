@@ -18,7 +18,11 @@ gunicorn = "*"
 cloudinary = "*"
 flask-admin = "*"
 typing-extensions = "*"
+<<<<<<< HEAD
 rich = "*"
+=======
+flask-jwt-extended = "*"
+>>>>>>> 95b682fea160248afc4f7e1ceea0870be97d5f11
 
 [requires]
 python_version = "3.10"

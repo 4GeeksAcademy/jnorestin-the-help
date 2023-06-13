@@ -1,38 +1,49 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			token: "",
+			user: {},
+			apiUrl: process.env.BACKEND_URL
 		},
 		actions: {
+			logIn: async (email, password) => {
+				const store = getStore();
+				const response = await fetch(
+					store.apiUrl + "/api/log-in", {
+					method: "POST",
+					body: JSON.stringify({
+						email,
+						password
+					}),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+				);
+				const body = await response.json();
+				if (response.ok) {
+					setStore({
+						token: body.token,
+						user: body.user
+					});
+					localStorage.setItem("token", JSON.stringify(body.token));
+					localStorage.setItem("user", JSON.stringify(body.user));
+					return;
+				}
+				console.log("log in unsuccessful");
+			},
+			checkUser: () => {
+				if (localStorage.getItem("token")) {
+					setStore({
+						token: JSON.parse(localStorage.getItem("token")),
+						user: JSON.parse(localStorage.getItem("user"))
+					});
+				}
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-
-			// getMessage: async () => {
-			// 	try{
-			// 		// fetching data from the backend
-			// 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		const data = await resp.json()
-			// 		setStore({ message: data.message })
-			// 		// don't forget to return something, that is how the async resolves
-			// 		return data;
-			// 	}catch(error){
-			// 		console.log("Error loading message from backend", error)
-			// 	}
-			// },
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -46,6 +57,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			fetchPosts: async () => {
+				const store = getStore();
+				try {
+					const response = await fetch(store.apiUrl + "/api/posts");
+					if (!response.ok) {
+						throw new Error("Failed to fetch posts");
+					}
+					const data = await response.json();
+					setStore({
+						posts: data
+					});
+					return data;
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			createPostImage: async (formData) => {
+				const store = getStore();
+				try {
+					const response = await fetch(store.apiUrl + "/api/post-images", {
+						method: "POST",
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						},
+						body: formData
+					});
+					const body = await response.json();
+					if (!response.ok) {
+						throw new Error(`failed to save post image: ${body}`);
+					}
+					return;
+				} catch (error) {
+					console.log(error);
+				}
 			}
 		}
 	};

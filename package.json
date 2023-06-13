@@ -80,9 +80,14 @@
 		"react-dom": "^16.8.4",
 		"react-image-lightbox": "^5.1.4",
 		"react-polyfills": "0.0.1",
+<<<<<<< HEAD
 		"react-router-dom": "^6.3.0",
 		"react-slick": "^0.29.0",
 		"react-typewriter-effect": "^1.1.0",
 		"slick-carousel": "^1.8.1"
+=======
+		"react-redux": "^8.0.7",
+		"react-router-dom": "^6.3.0"
+>>>>>>> 95b682fea160248afc4f7e1ceea0870be97d5f11
 	}
 }
