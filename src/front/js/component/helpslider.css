@@ -1,0 +1,30 @@
+.helpslider-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .helpslider-card {
+    width: 200px;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .helpslider-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .card {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  .card-text {
+    margin: 0;
+  }
+  

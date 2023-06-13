@@ -1,31 +1,35 @@
-import React from "react";
-import { Help } from "../pages/help";
+import React, { useEffect, useState } from 'react';
 
 
-export  const HelpSlider = ({ posts }) => {
+  const HelpSlider = () => {
+  const [profiles, setProfiles] = useState([]);
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      };
-      
+  useEffect(() => {
+    // This is where I fetch the datat from the back end 
+    fetch('https://ronaldinep-congenial-fishstick-r9w4pjjq4xxfx554-3001.preview.app.github.dev/api/posts')
+      .then((response) => response.json())
+      .then((data) => {
+        setProfiles(data); // the data should appear as a list of object posts.
+      })
+      .catch((error) => {
+        console.log('Error fetching data:', error);
+      });
+  }, []);
+
   return (
-    <div className="help-slider">
-      {posts.map((post) => (
-        <div key={post.id} className="help-slider-item">
-          <img src={post.user.profile_pic} alt="Profile Picture" />
-          <p>{post.description}</p>
+    <div className="helpslider-container">
+      {profiles.map((profile, index) => (
+        <div className="helpslider-card" key={index}>
+          <img src={profile.profilePicture} alt="Profile" className="helpslider-picture" />
+          <div className="card">
+            <div className="card-body">
+              <p className="card-text">{profile.description}</p>
+            </div>
+          </div>
         </div>
       ))}
     </div>
   );
 };
 
-
-
-  
-
-
+export default HelpSlider;

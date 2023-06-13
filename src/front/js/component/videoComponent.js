@@ -4,10 +4,11 @@ import "./VideoComponent.css"; // Import the CSS file for styling
 const VideoComponent = () => {
   const textRef = useRef(null);
   const messages = [
-    "find the nanny you need!",
-    "find the mechanic you need!",
-    "Find the dog walker you need!",
-    "Find the help you need!"
+    "Welcome to your neighborhood",
+    "Find the nanny you need",
+    "Find the mechanic you need",
+    "Find the dog walker you need",
+    "Find the help you need"
   ];
   const [index, setIndex] = useState(0);
   useEffect(() => {
@@ -66,7 +67,7 @@ const VideoComponent = () => {
       </div>
       <video autoPlay loop muted className="video-element">
         <source
-          src="https://vimeo.com/manage/videos/833462254"
+          src="https://res.cloudinary.com/dggcy5lcn/video/upload/v1686616744/My_Movie_io34zg.mp4"
           type="video/mp4"
         />
       </video>
