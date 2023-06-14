@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: "",
 			user: {},
-			apiUrl: process.env.BACKEND_URL
+			apiUrl: process.env.BACKEND_URL,
+			posts: []
 		},
 		actions: {
 			logIn: async (email, password) => {
@@ -66,6 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error("Failed to fetch posts");
 					}
 					const data = await response.json();
+					console.log(data)
 					setStore({
 						posts: data
 					});
