@@ -6,8 +6,6 @@ import { SignUp } from "./signUp";
 
 
 export const Navbar = () => {
-<<<<<<< HEAD
-=======
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
 
@@ -50,20 +48,9 @@ export const Navbar = () => {
     };
   }, []);
 
->>>>>>> 95b682fea160248afc4f7e1ceea0870be97d5f11
   return (
     <React.Fragment>
     <nav className="navbar navbar-light bg-light">
-<<<<<<< HEAD
-      <div className="container d-flex justify-content-between align-items-center">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">Login</span>
-        </Link>
-        <Link to="/demo">
-          <button className="btn btn-primary">Sign up</button>
-        </Link>
-      </div>
-=======
       <div className="container">
         <div className="nav-link">
           <Link to="/">
@@ -88,7 +75,6 @@ export const Navbar = () => {
       </div>
 
       
->>>>>>> 95b682fea160248afc4f7e1ceea0870be97d5f11
     </nav>
     {showLoginForm && (
       <div className="form-overlay">
@@ -119,8 +105,6 @@ export const Navbar = () => {
     </React.Fragment>
   );
 };
-<<<<<<< HEAD
-=======
 
 
 
@@ -129,4 +113,3 @@ export const Navbar = () => {
 
 
 
->>>>>>> 95b682fea160248afc4f7e1ceea0870be97d5f11
