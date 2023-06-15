@@ -42,6 +42,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 			},
+
+			logout: () => {
+				setStore({
+				  token: "",
+				  user: {},
+				});
+				localStorage.removeItem("token");
+				localStorage.removeItem("user");
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
