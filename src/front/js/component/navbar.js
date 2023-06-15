@@ -57,7 +57,7 @@ export const Navbar = () => {
             <span className="navbar-brand mb-0 h1">Help</span>
           </Link>
           <Link to="/post">
-            <span className="navbar-brand mb-0 h1">Post</span>
+            <span className="navbar-brand mb-0 h1"> Your Post</span>
           </Link>
         </div>
 

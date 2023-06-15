@@ -59,11 +59,6 @@ export const Post = () => {
                       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
                       <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                      <label class="form-check-label" for="defaultCheck1">
-                      </label>
-                    </div>
                   </div>
                 )
               })}
