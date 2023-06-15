@@ -56,6 +56,9 @@ export const Navbar = () => {
           <Link to="/help">
             <span className="navbar-brand mb-0 h1">Help</span>
           </Link>
+          <Link to="/post">
+            <span className="navbar-brand mb-0 h1">Post</span>
+          </Link>
         </div>
 
         <div className="ml-auto">
