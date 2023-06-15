@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import "../../../front/styles/login.css";
 
 export const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ export const LogIn = () => {
     </form>
   );
 };
+
 
 
 
