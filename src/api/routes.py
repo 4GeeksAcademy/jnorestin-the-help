@@ -22,6 +22,15 @@ def get_post(id):
     post = Post.query.get(id)
     return jsonify(post.serialize()),200
 
+api.route('/userposts', methods=['GET'])
+@jwt_required()
+def get_post_by_user_id():
+    user_id = get_jwt_identity()
+    posts = Post.query.filter_by(user_id = user_id)
+    post_dictionaries = [post.serialize() for post in posts]
+    return jsonify(post_dictionaries)
+    
+
 @api.route('/posts', methods=['POST'])
 @jwt_required()
 def create_post():

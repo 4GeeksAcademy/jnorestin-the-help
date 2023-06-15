@@ -3,7 +3,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: "",
 			user: {},
-			apiUrl: process.env.BACKEND_URL
+			apiUrl: process.env.BACKEND_URL,
+			posts: [],
+			userPosts: []
 		},
 		actions: {
 			logIn: async (email, password) => {
@@ -40,6 +42,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 				}
 			},
+
+			logout: () => {
+				setStore({
+				  token: "",
+				  user: {},
+				});
+				localStorage.removeItem("token");
+				localStorage.removeItem("user");
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
@@ -58,6 +70,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+			fetchUserPosts: async () => {
+				const store = getStore();
+				let token = store.token
+				const opts = {
+					headers: {
+					  Authorization: "Bearer " + token
+					}, 
+				}
+				try {
+					const response = await fetch(store.apiUrl + "/api/userposts",opts);
+					if (!response.ok) {
+						throw new Error("Fail to fetch posts");
+					}
+					const data = await response.json();
+					console.log(data);
+					setStore({
+						userPosts: data
+					});
+					return data;
+				} catch (error) {
+					console.log(error);
+				}	
+			},
+
 			fetchPosts: async () => {
 				const store = getStore();
 				try {
@@ -66,6 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						throw new Error("Failed to fetch posts");
 					}
 					const data = await response.json();
+					console.log(data)
 					setStore({
 						posts: data
 					});
