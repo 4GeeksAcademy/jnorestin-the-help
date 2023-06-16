@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: {},
 			apiUrl: process.env.BACKEND_URL,
 			posts: [],
-			userPosts: []
+			userPosts: [],
+			candidates: []
 		},
 		actions: {
 			logIn: async (email, password) => {
@@ -93,6 +94,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}	
 			},
+
+			
 
 			fetchPosts: async () => {
 				const store = getStore();

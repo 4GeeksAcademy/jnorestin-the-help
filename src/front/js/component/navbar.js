@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react"; 
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -64,30 +64,6 @@ export const Navbar = () => {
 
   return (
     <React.Fragment>
-
-    <nav className="navbar navbar-light bg-light">
-      <div className="container">
-        <div className="nav-link">
-          <Link to="/">
-            <span className="navbar-brand mb-0 h1">Home</span>
-          </Link>
-          <Link to="/help">
-            <span className="navbar-brand mb-0 h1">Help</span>
-          </Link>
-          <Link to="/post">
-            <span className="navbar-brand mb-0 h1"> Your Post</span>
-          </Link>
-        </div>
-
-        <div className="ml-auto">
-          <button className="btn btn-primary" onClick={handleLoginClick}>
-            Log In
-          </button>
-          <span className="button-spacing" />
-          <button className="btn btn-primary" onClick={handleSignupClick}>
-            Sign Up
-          </button>
-
       <nav className="navbar navbar-light bg-light">
         <div className="container">
           <div className="nav-link">
@@ -96,6 +72,9 @@ export const Navbar = () => {
             </Link>
             <Link to="/help">
               <span className="navbar-brand mb-0 h1">Help</span>
+            </Link>
+            <Link to="/post">
+              <span className="navbar-brand mb-0 h1">Your Post</span>
             </Link>
           </div>
           {location.pathname === "/help" && (
@@ -120,7 +99,6 @@ export const Navbar = () => {
               </button>
             </div>
           )}
-
         </div>
       </nav>
       {showLoginForm && (

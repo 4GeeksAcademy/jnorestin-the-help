@@ -10,8 +10,10 @@ class Post(db.Model):
     description = db.Column(db.String(500), unique=False, nullable=False)
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
+    amount = db.Column (db.Integer,nullable=False)
     images = db.relationship('Image', backref='post')
     candidates = db.relationship("PostCandidate",backref= "post")
+    
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -25,7 +27,9 @@ class Post(db.Model):
             "date":self.date,
             "user":self.user.serialize(),
             "images":[image.serialize() for image in self.images],
-            "candidates":[candidate.serialize() for candidate in self.candidates]
+            "candidates":[candidate.serialize() for candidate in self.candidates],
+            "amount": [self.amout]
+            
             
             # do not serialize the password, its a security breach
         }
@@ -36,14 +40,20 @@ class User(db.Model):
     profile_image = db.Column(db.String(256), unique=True)
     password = db.Column(db.String(256), unique=False, nullable=False)
     name = db.Column(db.String(256), unique=False, nullable=False)
+    city = db.Column(db.String(256), unique=False, nullable=False)
+    state = db.Column(db.String(256), unique=False, nullable=False)
+    zip_code = db.Column(db.String(256), unique=False, nullable=False)
     helper = db.relationship("Helper", uselist=False, backref="user")
 
     @classmethod
-    def create_user(cls, email, password, name):
+    def create_user(cls, email, password, name, city, state, zip_code):
         new_user = cls(
             email=email,
             password=password,
-            name=name
+            name=name,
+            city=city,
+            state=state,
+            zip_code=zip_code
         )
         db.session.add(new_user)
         try:
@@ -67,7 +77,10 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "profile_image": self.profile_image,
-            "name": self.name
+            "name": self.name,
+            "city": self.city,
+            "state": self.state,
+            "zip_code": self.zip_code
         }
 
 class PostCandidate(db.Model):

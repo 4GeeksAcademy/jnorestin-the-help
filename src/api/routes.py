@@ -40,12 +40,27 @@ def create_post():
         description=request_body["description"],
         location=request_body["location"],
         date=request_body["date"],
+        amount=request_body["amount"],
         user_id=user_id
     )
     db.session.add(new_post)
     db.session.commit()
 
     return jsonify(new_post.serialize()), 201
+
+
+@api.route("/post/<int:id>", methods=["DELETE"])
+def delete_post(id):
+    Post.query.filter_by(id = id).delete()
+
+    
+    db.session.commit()
+
+    return jsonify("Successful"),200
+
+# @api.route("/postcandidate/<int:id>", methods=["DELETE"])
+# def delete_postcandidate(id):
+#     PostCandidate.query.filter_by(id = id).delete()
 
 @api.route("/post-images", methods=["POST"])
 @jwt_required()
@@ -86,12 +101,35 @@ def sign_up():
     user = User.create_user(
         email=body["email"],
         password=body["password"],
-        name=body["name"]
+        name=body["name"],
+        city=body["city"],
+        state=body["state"],
+        zip_code=body["zip_code"]
     )
     if user is None:
         return "Failed to create user", 400
 
     return jsonify(user.serialize()), 201
+
+@api.route("/profile-image", methods=["POST"])
+@jwt_required()
+def create_profile_image():
+    image = request.files['file']
+    user_id = User.query.filter_by(email=get_jwt_identity).first()
+    response = uploader.upload(
+        image,
+        resource_type="image",
+        folder="user"
+    )
+    new_post_image = Image(
+        user_id=user_id,
+        url=response["secure_url"],
+        public_id=response["public_id"]
+    )
+    db.session.add(new_post_image)
+    db.session.commit()
+
+    return jsonify(new_post_image.serialize()), 201
 
 @api.route("/helper", methods=["GET"])
 def get_helper():
@@ -115,6 +153,7 @@ def creat_helper():
     db.session.commit()
 
     return jsonify("Successful"),200
+
 
 @api.route("/postcandidate", methods=["POST"])
 @jwt_required()
@@ -141,6 +180,10 @@ def delete_postcandidate(id):
     db.session.commit()
 
     return jsonify("Successful"),200
+
+
+
+
 
 
 
