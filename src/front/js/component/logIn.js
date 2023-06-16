@@ -1,14 +1,29 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import "../../../front/styles/login&signup.css";
+import { useNavigate } from "react-router-dom";
 
-export const LogIn = () => {
+export const LogIn = ({ onClose }) => {
+  const { actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { actions } = useContext(Context);
+  const [loginStatus, setLoginStatus] = useState(null); 
+  const navigate = useNavigate();
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    actions.logIn(email, password);
+    setLoginStatus("Logging in..."); // Display "Logging in..." message
+
+    try {
+      await actions.logIn(email, password);
+      setLoginStatus("Login successful"); 
+      setTimeout(() => {
+        onClose(); 
+        navigate("/help");
+      }, 2000);
+    } catch (error) {
+      setLoginStatus("Login failed"); 
+    }
   };
 
   return (
@@ -16,7 +31,7 @@ export const LogIn = () => {
       <div className="form-group">
         <label>Email</label>
         <input
-          className="login-form-input" // Updated class name for login form input
+          className="login-form-input"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email"
@@ -35,9 +50,15 @@ export const LogIn = () => {
         />
       </div>
       <button className="btn-primary" type="submit">Log In</button>
+      {loginStatus && <p>{loginStatus}</p>} 
     </form>
   );
 };
+
+
+
+
+
 
 
 
