@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [location, setLocation] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [signupSuccess, setSignupSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -25,16 +29,16 @@ export const SignUp = ({ onClose }) => {
     setDateOfBirth(e.target.value);
   };
 
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
   };
 
-  const handleAddressChange = (e) => {
-    setAddress(e.target.value);
+  const handleLocationChange = (e) => {
+    setLocation(e.target.value);
   };
 
-  const handleGenderChange = (e) => {
-    setGender(e.target.value);
+  const handleZipCodeChange = (e) => {
+    setZipCode(e.target.value);
   };
 
   const handleSignup = (e) => {
@@ -54,59 +58,66 @@ export const SignUp = ({ onClose }) => {
 
     // Perform signup logic here, e.g., make an API request to create a new user
 
-    setEmail("");
-    setPassword("");
-    setName("");
-    setDateOfBirth("");
-    setPhone("");
-    setAddress("");
-    setGender("");
-    onClose();
+    
+    setTimeout(() => {
+      setEmail("");
+      setPassword("");
+      setName("");
+      setDateOfBirth("");
+      setZipCode("");
+      setCity("");
+      setLocation("");
+      setSignupSuccess(true);
+      onClose();
+
+      // Redirect to help page after successful signup
+      navigate("/help");
+    }, 2000);
   };
 
   return (
     <div className="signup-form-wrapper">
-      <h3>Sign Up</h3>
-      <form onSubmit={handleSignup}>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" value={email} onChange={handleEmailChange} required />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" value={password} onChange={handlePasswordChange} required />
-        </div>
-        <div className="form-group">
-          <label>Name</label>
-          <input type="text" value={name} onChange={handleNameChange} required />
-        </div>
-        <div className="form-group">
-          <label>Date of Birth</label>
-          <input type="date" value={dateOfBirth} onChange={handleDateOfBirthChange} required />
-        </div>
-        <div className="form-group">
-          <label>Phone</label>
-          <input type="tel" value={phone} onChange={handlePhoneChange} />
-        </div>
-        <div className="form-group">
-          <label>Address</label>
-          <input type="text" value={address} onChange={handleAddressChange} />
-        </div>
-        <div className="form-group">
-          <label>Gender</label>
-          <select value={gender} onChange={handleGenderChange}>
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Sign Up
-        </button>
-      </form>
+      {signupSuccess ? (
+        <p>Sign up successful. Redirecting...</p>
+      ) : (
+        <form onSubmit={handleSignup}>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" value={email} onChange={handleEmailChange} required />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" value={password} onChange={handlePasswordChange} required />
+          </div>
+          <div className="form-group">
+            <label>Name</label>
+            <input type="text" value={name} onChange={handleNameChange} required />
+          </div>
+          <div className="form-group">
+            <label>Date of Birth</label>
+            <input type="date" value={dateOfBirth} onChange={handleDateOfBirthChange} required />
+          </div>
+          <div className="form-group">
+            <label>City</label>
+            <input type="text" value={city} onChange={handleCityChange} />
+          </div>
+          <div className="form-group">
+            <label>State</label>
+            <input type="text" value={location} onChange={handleLocationChange} />
+          </div>
+          <div className="form-group">
+            <label>Zip code</label>
+            <input type="text" value={zipCode} onChange={handleZipCodeChange} />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Sign Up
+          </button>
+        </form>
+      )}
     </div>
   );
 };
+
+
 
 
