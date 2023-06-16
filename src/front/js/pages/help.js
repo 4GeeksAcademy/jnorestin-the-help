@@ -23,14 +23,16 @@ export const Help = (props) => {
     setPosts(store.posts);
   }, [store.posts]);
 
-  const openLightbox = (index) => {
+  const openLightbox = (index, item) => {
     setLightboxOpen(true);
     setPostImageIndex(index);
+    setPostItem(item);
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
     setPostImageIndex(0);
+    setPostItem(0);
   };
 
   const openPopup = () => {
@@ -41,13 +43,41 @@ export const Help = (props) => {
     setPopupOpen(false);
   };
 
+  const handleCreatePostCandidate = async (postId) => {
+    try {
+      if (store.user.role !== "helper") {
+        throw new Error("Only helpers can become post candidates");
+      }
+
+      const response = await fetch(store.apiUrl + "/api/postcandidate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ post_id: postId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create post candidate");
+      }
+
+      actions.fetchPosts(); // Fetch posts again
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleHelpMeClick = (postId) => {
+    handleCreatePostCandidate(postId);
+  };
+
   const createPost = async (postData) => {
     try {
       const postWithUser = {
         description: postData.description,
         date: new Date().toLocaleString(),
         location: "Your current location",
-        // images: images,
       };
 
       const response = await fetch(store.apiUrl + "/api/posts", {
@@ -64,7 +94,6 @@ export const Help = (props) => {
       }
 
       const newPost = await response.json();
-      console.log(">>> 🍎", postData.images);
       for (const image of postData.images) {
         let formData = new FormData();
         formData.append("file", image.file);
@@ -78,9 +107,7 @@ export const Help = (props) => {
   };
 
   const handleCreatePost = (postData) => {
-    console.log("HERE")
     createPost(postData);
-
   };
 
   return (
@@ -109,10 +136,7 @@ export const Help = (props) => {
                     <img
                       src={image.url}
                       alt="Post Image"
-                      onClick={() => {
-                        openLightbox(index);
-                        setPostItem(i);
-                      }}
+                      onClick={() => openLightbox(index, i)}
                     />
                   </div>
                 ))}
@@ -121,7 +145,11 @@ export const Help = (props) => {
                 <p className="timestamp">{post.timestamp}</p>
                 <p className="location">{post.location}</p>
               </div>
-              <a href="#" className="btn btn-primary">
+              <a
+                href="#"
+                className="btn btn-primary"
+                onClick={() => handleHelpMeClick(post.id)}
+              >
                 HELP ME
               </a>
             </div>
@@ -142,7 +170,4 @@ export const Help = (props) => {
   );
 };
 
-
-
-
-
+export default Help;

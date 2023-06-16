@@ -45,6 +45,10 @@
   margin-right: 10px;
 }
 
+.navbar-link:last-child {
+  margin-right: 0;
+}
+
 .navbar-link a {
   color: #333333;
   text-decoration: none;
@@ -60,20 +64,25 @@
 .navbar-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #62b6cb;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-right: 10px;
+  flex-shrink: 0;
 }
 
-.navbar-button:last-child {
-  margin-right: 0;
+.navbar-button:hover {
+  background-color: #1b4965;
+}
+
+.navbar-button:not(:last-child) {
+  margin-right: 10px;
 }
 
 .button-spacing {
@@ -96,13 +105,13 @@
   background-color: #1b4965;
 }
 
-
 .logout-button:last-child {
   margin-right: 0;
 }
 
-.navbar-icon{
+.navbar-icon {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
+
