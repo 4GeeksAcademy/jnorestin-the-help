@@ -95,19 +95,19 @@ def log_in():
         "token": token
     }), 200
 
-@api.route("/sign-up", methods=["POST"])
-def sign_up():
-    body = request.json
-    email = body.get("email")
-    password = body.get("password")
-    name = body.get("name")
-    date_of_birth = body.get("date_of_birth")
-    city = body.get("city")
-    location = body.get("location")
-    zip_code = body.get("zip_code")
+# @api.route("/sign-up", methods=["POST"])
+# def sign_up():
+#     body = request.json
+#     email = body.get("email")
+#     password = body.get("password")
+#     name = body.get("name")
+#     date_of_birth = body.get("date_of_birth")
+#     city = body.get("city")
+#     location = body.get("location")
+#     zip_code = body.get("zip_code")
 
-    if not email or not password or not name or not date_of_birth:
-        return jsonify("Email, password, name, and date of birth are required"), 400
+#     if not email or not password or not name or not date_of_birth:
+#         return jsonify("Email, password, name, and date of birth are required"), 400
 
 @api.route("/sign-up", methods=["POST"])
 def sign_up():
@@ -130,7 +130,6 @@ def sign_up():
         city=body["city"],
         state=body["state"],
         zip_code=body["zip_code"]
-      ]
     )
 
     if user is None:
