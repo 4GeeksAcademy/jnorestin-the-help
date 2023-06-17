@@ -1,13 +1,11 @@
 """
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
+This module takes care of starting the API Server, Loading the DB, and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Post,Image,Helper,PostCandidate
+from api.models import db, User, Post, Image, Helper, PostCandidate
 from api.utils import generate_sitemap, APIException
 from cloudinary import uploader
-import os
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-from cloudinary import uploader
 
 api = Blueprint('api', __name__)
 
@@ -20,16 +18,15 @@ def get_posts():
 @api.route('/posts/<int:id>', methods=['GET'])
 def get_post(id):
     post = Post.query.get(id)
-    return jsonify(post.serialize()),200
+    return jsonify(post.serialize()), 200
 
-api.route('/userposts', methods=['GET'])
+@api.route('/userposts', methods=['GET'])
 @jwt_required()
 def get_post_by_user_id():
     user_id = get_jwt_identity()
-    posts = Post.query.filter_by(user_id = user_id)
+    posts = Post.query.filter_by(user_id=user_id)
     post_dictionaries = [post.serialize() for post in posts]
     return jsonify(post_dictionaries)
-    
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()
@@ -94,20 +91,6 @@ def sign_up():
     if not email or not password or not name or not date_of_birth:
         return jsonify("Email, password, name, and date of birth are required"), 400
 
-@api.route("/sign-up", methods=["POST"])
-def sign_up():
-    body = request.json
-    email = body.get("email")
-    password = body.get("password")
-    name = body.get("name")
-    date_of_birth = body.get("date_of_birth")
-    city = body.get("city")
-    location = body.get("location")
-    zip_code = body.get("zip_code")
-
-    if not email or not password or not name or not date_of_birth:
-        return jsonify("Email, password, name, and date of birth are required"), 400
-
     user = User.create_user(
         email=email,
         password=password,
@@ -127,48 +110,44 @@ def sign_up():
 @api.route("/helper", methods=["GET"])
 def get_helper():
     helpers = Helper.query.all()
-    helper_dictionaries = list(map(
-        lambda helper: helper.serialize(),
-        helpers
-    ))
+    helper_dictionaries = [helper.serialize() for helper in helpers]
     return jsonify(helper_dictionaries)
 
 @api.route("/helper", methods=["POST"])
 @jwt_required()
-def creat_helper():
+def create_helper():
     user_id = get_jwt_identity()
     body = request.json
     new_helper = Helper(
-        bio = body["bio"],
-        role = body["role"],
-        user_id = user_id
+        bio=body["bio"],
+        role=body["role"],
+        user_id=user_id
     )
     db.session.add(new_helper)
     db.session.commit()
 
-    return jsonify("Successful"),200
+    return jsonify("Successful"), 200
 
 @api.route("/postcandidate", methods=["POST"])
 @jwt_required()
-def create_postcandidate():
+def create_post_candidate():
     user_id = get_jwt_identity()
     helper = Helper.query.filter_by(user_id=user_id).first()
     if not helper:
-        return jsonify("User is not registered as a helper")
+        return jsonify("User is not registered as a helper"), 400
 
     body = request.json
-    new_postcandidate = PostCandidate(
+    new_post_candidate = PostCandidate(
         helper_id=helper.id,
         post_id=body["post_id"]
     )
-    db.session.add(new_postcandidate)
+    db.session.add(new_post_candidate)
     db.session.commit()
 
     return jsonify("Successful"), 200
 
-
 @api.route("/postcandidate/<int:id>", methods=["DELETE"])
-def delete_postcandidate(id):
+def delete_post_candidate(id):
     post_candidate = PostCandidate.query.filter_by(id=id).first()
 
     if not post_candidate:
@@ -178,6 +157,23 @@ def delete_postcandidate(id):
     db.session.commit()
 
     return jsonify("Successful"), 200
+
+
+def create_app():
+    app = Flask(__name__)
+    app.url_map.strict_slashes = False
+
+    app.config['JWT_SECRET_KEY'] = 'super-secret-key'
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
+
+    app.register_blueprint(api)
+
+    return app
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run()
+
 
 
 
