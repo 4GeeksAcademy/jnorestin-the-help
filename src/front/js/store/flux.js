@@ -6,12 +6,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			apiUrl: process.env.BACKEND_URL,
 			posts: [],
 			userPosts: []
+			
 		},
 		actions: {
 			logIn: async (email, password) => {
 				const store = getStore();
-				const response = await fetch(
-					store.apiUrl + "/api/log-in", {
+				const response = await fetch(store.apiUrl + "/api/log-in", {
 					method: "POST",
 					body: JSON.stringify({
 						email,
@@ -20,8 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json"
 					}
-				}
-				);
+				});
 				const body = await response.json();
 				if (response.ok) {
 					setStore({
@@ -45,30 +44,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			logout: () => {
 				setStore({
-				  token: "",
-				  user: {},
+					token: "",
+					user: {},
 				});
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
-			},
-
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
 			},
 
 
@@ -76,25 +56,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				let token = store.token;
 				const opts = {
-				  headers: {
-					Authorization: "Bearer " + token
-				  }
+					headers: {
+						Authorization: "Bearer " + token
+					}
 				};
 				try {
-				  const response = await fetch(store.apiUrl + "/api/userposts", opts);
-				  if (!response.ok) {
-					throw new Error("Fail to fetch posts");
-				  }
-				  const data = await response.json();
-				  console.log(data);
-				  setStore({
-					userPosts: data
-				  });
-				  return data;
+					const response = await fetch(store.apiUrl + "/api/userposts", opts);
+					if (!response.ok) {
+						throw new Error("Fail to fetch posts");
+					}
+					const data = await response.json();
+					console.log(data);
+					setStore({
+						userPosts: data
+					});
+					return data;
 				} catch (error) {
-				  console.log(error);
+					console.log(error);
 				}
-			  },
+			},
 
 
 			fetchPosts: async () => {
@@ -114,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
-			
+
 			createPostImage: async (formData) => {
 				const store = getStore();
 				try {
@@ -133,9 +113,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error);
 				}
-			}
+			},
+
+			createPostCandidate: async (postId) => {
+				try {
+				  const store = getStore();
+				  const response = await fetch(`${store.apiUrl}/api/postcandidate`, {
+					method: "POST",
+					headers: {
+					  Authorization: `Bearer ${store.token}`,
+					  "Content-Type": "application/json",
+					},
+					body: JSON.stringify({ post_id: postId }),
+				  });
+				  if (!response.ok) {
+					throw new Error("Failed to create post candidate");
+				  }
+				  // Fetch posts again after creating post candidate
+				  getActions().fetchPosts();
+				} catch (error) {
+				  console.log(error);
+				}
+			  }
+
+
 		}
 	};
 };
 
 export default getState;
+
+

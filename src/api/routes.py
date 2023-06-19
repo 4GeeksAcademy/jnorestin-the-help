@@ -44,12 +44,27 @@ def create_post():
         description=request_body["description"],
         location=request_body["location"],
         date=request_body["date"],
+        price=request_body["price"],
         user_id=user_id
     )
     db.session.add(new_post)
     db.session.commit()
 
     return jsonify(new_post.serialize()), 201
+
+
+@api.route("/post/<int:id>", methods=["DELETE"])
+def delete_post(id):
+    Post.query.filter_by(id = id).delete()
+
+    
+    db.session.commit()
+
+    return jsonify("Successful"),200
+
+# @api.route("/postcandidate/<int:id>", methods=["DELETE"])
+# def delete_postcandidate(id):
+#     PostCandidate.query.filter_by(id = id).delete()
 
 @api.route("/post-images", methods=["POST"])
 @jwt_required()
@@ -89,18 +104,67 @@ def get_user(user_id):
     user = User.query.filter_by(id=user_id).first()
     return jsonify(user.serialize()), 200
 
+# @api.route("/sign-up", methods=["POST"])
+# def sign_up():
+#     body = request.json
+#     email = body.get("email")
+#     password = body.get("password")
+#     name = body.get("name")
+#     date_of_birth = body.get("date_of_birth")
+#     city = body.get("city")
+#     location = body.get("location")
+#     zip_code = body.get("zip_code")
+
+#     if not email or not password or not name or not date_of_birth:
+#         return jsonify("Email, password, name, and date of birth are required"), 400
+
 @api.route("/sign-up", methods=["POST"])
 def sign_up():
     body = request.json
+    email = body.get("email")
+    password = body.get("password")
+    name = body.get("name")
+    date_of_birth = body.get("date_of_birth")
+    city = body.get("city")
+    location = body.get("location")
+    zip_code = body.get("zip_code")
+
+    if not email or not password or not name or not date_of_birth:
+        return jsonify("Email, password, name, and date of birth are required"), 400
+
     user = User.create_user(
         email=body["email"],
         password=body["password"],
-        name=body["name"]
+        name=body["name"],
+        city=body["city"],
+        state=body["state"],
+        zip_code=body["zip_code"]
     )
+
     if user is None:
-        return "Failed to create user", 400
+        return jsonify("Failed to create user"), 400
 
     return jsonify(user.serialize()), 201
+
+@api.route("/profile-image", methods=["POST"])
+@jwt_required()
+def create_profile_image():
+    image = request.files['file']
+    user_id = User.query.filter_by(email=get_jwt_identity).first()
+    response = uploader.upload(
+        image,
+        resource_type="image",
+        folder="user"
+    )
+    new_post_image = Image(
+        user_id=user_id,
+        url=response["secure_url"],
+        public_id=response["public_id"]
+    )
+    db.session.add(new_post_image)
+    db.session.commit()
+
+    return jsonify(new_post_image.serialize()), 201
 
 @api.route("/helper", methods=["GET"])
 def get_helper():
@@ -118,6 +182,7 @@ def creat_helper():
     body = request.json
     new_helper = Helper(
         bio = body["bio"],
+        role = body["role"],
         user_id = user_id
     )
     db.session.add(new_helper)
@@ -127,7 +192,7 @@ def creat_helper():
 
 @api.route("/postcandidate", methods=["PUT"])
 @jwt_required()
-def craete_postcandidate():
+def create_postcandidate():
     user_id = get_jwt_identity()
     helper = Helper.query.filter_by(user_id = user_id).first()
     if not helper:
