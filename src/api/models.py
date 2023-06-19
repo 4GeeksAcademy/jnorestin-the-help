@@ -3,6 +3,13 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+post_candidates = db.Table(
+    "post_candidates",
+   
+    db.Column("helper_id", db.Integer, db.ForeignKey("helper.id"), primary_key=True),
+    db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True),
+)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
@@ -11,7 +18,7 @@ class Post(db.Model):
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
     images = db.relationship('Image', backref='post')
-    candidates = db.relationship("PostCandidate",backref= "post")
+    candidates = db.relationship("Helper", secondary=post_candidates, lazy= "subquery")
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -67,23 +74,25 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "profile_image": self.profile_image,
-            "name": self.name
+            "name": self.name   
         }
 
-class PostCandidate(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
-    post_id = db.Column(db.Integer, ForeignKey("post.id"))
 
-    def __repr__(self):
-        return f'<PostCandidate {self.id}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "helper_id": self.helper_id,
-            "post_id": self.post_id
-        }
+# class PostCandidate(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
+#     post_id = db.Column(db.Integer, ForeignKey("post.id"))
+
+#     def __repr__(self):
+#         return f'<PostCandidate {self.id}>'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "helper_id": self.helper_id,
+#             "post_id": self.post_id
+#         }
 
 class Helper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
