@@ -99,10 +99,12 @@ def log_in():
         "token": token
     }), 200
 
+
 @api.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.filter_by(id=user_id).first()
     return jsonify(user.serialize()), 200
+
 
 # @api.route("/sign-up", methods=["POST"])
 # def sign_up():
