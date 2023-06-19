@@ -124,15 +124,15 @@ export const SignUp = ({ onClose }) => {
           </div>
           <div className="form-group">
             <label>City</label>
-            <input type="text" value={city} onChange={handleCityChange} />
+            <input type="text" value={city} onChange={handleCityChange} required />
           </div>
           <div className="form-group">
             <label>State</label>
-            <input type="text" value={location} onChange={handleLocationChange} />
+            <input type="text" value={location} onChange={handleLocationChange} required />
           </div>
           <div className="form-group">
             <label>Zip code</label>
-            <input type="text" value={zipCode} onChange={handleZipCodeChange} />
+            <input type="text" value={zipCode} onChange={handleZipCodeChange} required />
           </div>
           <button type="submit" className="navbar-button">
             Sign Up
@@ -141,7 +141,6 @@ export const SignUp = ({ onClose }) => {
       )}
     </div>
   );
-};
 
 
 
