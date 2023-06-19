@@ -3,6 +3,13 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+post_candidates = db.Table(
+    "post_candidates",
+   
+    db.Column("helper_id", db.Integer, db.ForeignKey("helper.id"), primary_key=True),
+    db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True),
+)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
@@ -10,10 +17,9 @@ class Post(db.Model):
     description = db.Column(db.String(500), unique=False, nullable=False)
     location = db.Column(db.String(256), unique=False, nullable=False)
     date = db.Column(db.String(256), unique=False, nullable=False)
-    amount = db.Column (db.Integer,nullable=False)
+    price = db.Column (db.Integer,nullable=False)
     images = db.relationship('Image', backref='post')
-    candidates = db.relationship("PostCandidate",backref= "post")
-    
+    candidates = db.relationship("Helper", secondary=post_candidates, lazy= "subquery")
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -28,7 +34,7 @@ class Post(db.Model):
             "user":self.user.serialize(),
             "images":[image.serialize() for image in self.images],
             "candidates":[candidate.serialize() for candidate in self.candidates],
-            "amount": [self.amout]
+            "price": [self.price]
             
             
             # do not serialize the password, its a security breach
@@ -79,47 +85,25 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "profile_image": self.profile_image,
-            "name": self.name,
-            "date_of_birth": self.date_of_birth,
-            "city": self.city,
-            "location": self.location,
-            "zip_code": self.zip_code
+            "name": self.name   
         }
 
 
-class PostCandidate(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
-    post_id = db.Column(db.Integer, ForeignKey("post.id"))
 
-    @classmethod
-    def create_new(cls, helper_id, post_id):
-        helper = Helper.query.get(helper_id)
-        if helper and helper.role == 'Helper':
-            new_post_candidate = cls(
-                helper_id=helper_id,
-                post_id=post_id
-            )
-            db.session.add(new_post_candidate)
-            try:
-                db.session.commit()
-                return new_post_candidate
-            except Exception as error:
-                db.session.rollback()
-                print(error)
-                return None
-        else:
-            return None
+# class PostCandidate(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
+#     post_id = db.Column(db.Integer, ForeignKey("post.id"))
 
-    def __repr__(self):
-        return f'<PostCandidate {self.id}>'
+#     def __repr__(self):
+#         return f'<PostCandidate {self.id}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "helper_id": self.helper_id,
-            "post_id": self.post_id
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "helper_id": self.helper_id,
+#             "post_id": self.post_id
+#         }
 
 class Helper(db.Model):
     id = db.Column(db.Integer, primary_key=True)

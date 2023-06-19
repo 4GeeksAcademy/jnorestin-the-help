@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Post,Image,Helper,PostCandidate
+from api.models import db, User,Post,Image,Helper
 from api.utils import generate_sitemap, APIException
 from cloudinary import uploader
 import os
@@ -26,9 +26,13 @@ api.route('/userposts', methods=['GET'])
 @jwt_required()
 def get_post_by_user_id():
     user_id = get_jwt_identity()
+    print("Hello")
     posts = Post.query.filter_by(user_id = user_id)
+    print(posts)
     post_dictionaries = [post.serialize() for post in posts]
-    return jsonify(post_dictionaries)
+    print("these are the posts",post_dictionaries)
+    # return jsonify(post_dictionaries)
+    return jsonify("Hello!!!")
     
 
 @api.route('/posts', methods=['POST'])
@@ -40,7 +44,7 @@ def create_post():
         description=request_body["description"],
         location=request_body["location"],
         date=request_body["date"],
-        amount=request_body["amount"],
+        price=request_body["price"],
         user_id=user_id
     )
     db.session.add(new_post)
@@ -94,6 +98,13 @@ def log_in():
         "user": user.serialize(),
         "token": token
     }), 200
+
+
+@api.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify(user.serialize()), 200
+
 
 # @api.route("/sign-up", methods=["POST"])
 # def sign_up():
@@ -181,42 +192,42 @@ def creat_helper():
 
     return jsonify("Successful"),200
 
-
-@api.route("/postcandidate", methods=["POST"])
+@api.route("/postcandidate", methods=["PUT"])
 @jwt_required()
 def create_postcandidate():
     user_id = get_jwt_identity()
-    helper = Helper.query.filter_by(user_id=user_id).first()
+    helper = Helper.query.filter_by(user_id = user_id).first()
     if not helper:
-        return jsonify("User is not registered as a helper")
-
+        return jsonify("user is not registered as a helper"),400
     body = request.json
-    new_postcandidate = PostCandidate(
-        helper_id=helper.id,
-        post_id=body["post_id"]
-    )
-    db.session.add(new_postcandidate)
+    if body["post_id"] is None :
+        return "No Post Provide", 400 
+    post = Post.query.filter_by(id = body["post_id"]).first()
+    if post is None :
+        return "Post Not Found",404
+    new_post_candidate = helper.id
+    
+    if post.post_candidates is None :
+        post.post_candidates =[]
+    try:
+        post.post_candidates.append(new_post_candidate)
+    except Exception as e:
+        payload = {
+            "msg": " Couldn't add Candidate",
+            "error": e
+        }
+        return jsonify(payload),409
     db.session.commit()
+    return jsonify("Successful"),200
 
-    return jsonify("Successful"), 200
+# @api.route("/postcandidate/<int:id>", methods=["DELETE"])
+# def delete_postcandidate(id):
+#     post_candidate.query.filter_by(id = id).delete()
 
+    
+#     db.session.commit()
 
-@api.route("/postcandidate/<int:id>", methods=["DELETE"])
-def delete_postcandidate(id):
-    post_candidate = PostCandidate.query.filter_by(id=id).first()
-
-    if not post_candidate:
-        return jsonify("Post candidate not found"), 404
-
-    db.session.delete(post_candidate)
-    db.session.commit()
-
-    return jsonify("Successful"), 200
-
-
-
-
-
+#     return jsonify("Successful"),200
 
 
 

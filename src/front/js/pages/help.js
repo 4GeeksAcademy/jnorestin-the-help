@@ -5,6 +5,7 @@ import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import PopupForm from "../component/popupform";
 import { Context } from "../store/appContext";
+import PayPal from "../component/paypal";
 
 export const Help = (props) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -112,6 +113,7 @@ export const Help = (props) => {
 
   return (
     <div>
+      <PayPal />
       <div className="popup-container">
         {!popupOpen && !lightboxOpen && (
           <button onClick={openPopup} className="btn-new-post">

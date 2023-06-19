@@ -81,7 +81,7 @@ export const Navbar = () => {
               <span className="navbar-brand mb-0 h1">Help</span>
             </Link>
             <Link to="/post">
-              <span className="navbar-brand mb-0 h1">Your Post</span>
+              <span className="navbar-brand mb-0 h1">Your Posts</span>
             </Link>
           </div>
           {location.pathname === "/help" && (
