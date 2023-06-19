@@ -27,10 +27,8 @@ Migrate(app, db, compare_type=True)
 db.init_app(app)
 
 # Allow CORS requests to this API
-cors = CORS(app)
+CORS(app)
 JWTManager(app)
-
-
 
 # Add the admin
 setup_admin(app)

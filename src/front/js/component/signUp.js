@@ -143,6 +143,4 @@ export const SignUp = ({ onClose }) => {
   );
 
 
-
-
-
+};
