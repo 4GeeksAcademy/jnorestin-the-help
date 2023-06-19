@@ -58,7 +58,7 @@ export const SignUp = ({ onClose }) => {
     }
 
     try {
-      const response = await fetch("/sign-up", {
+      const response = await fetch(process.env.BACKEND_URL + "/api/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

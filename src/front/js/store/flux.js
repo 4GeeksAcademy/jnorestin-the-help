@@ -13,8 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  const response = await fetch(store.apiUrl + "/api/log-in", {
 			method: "POST",
 			body: JSON.stringify({
-			  email,
-			  password
+			  "email":email,
+			  "password":password
 			}),
 			headers: {
 			  "Content-Type": "application/json"
@@ -28,7 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			});
 			localStorage.setItem("token", JSON.stringify(body.token));
 			localStorage.setItem("user", JSON.stringify(body.user));
-			return;
+			return body;
 		  }
 		  console.log("log in unsuccessful");
 		},
@@ -48,6 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  localStorage.removeItem("token");
 		  localStorage.removeItem("user");
 		},
+		
 		fetchUserPosts: async () => {
 		  const store = getStore();
 		  let token = store.token;

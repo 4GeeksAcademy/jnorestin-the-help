@@ -3,12 +3,15 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+from datetime import datetime
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     location = db.Column(db.String(256), nullable=False)
-    date = db.Column(db.String(256), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    city = db.Column(db.String(256), nullable=False)
     images = db.relationship('Image', backref='post')
     candidates = db.relationship("PostCandidate", backref="post")
 
@@ -23,11 +26,13 @@ class Post(db.Model):
             "user_id": self.user_id,
             "description": self.description,
             "location": self.location,
-            "date": self.date,
-            "user": self.user.serialize(),  # Include the serialized user information
+            "date": self.date.strftime("%Y-%m-%d %H:%M:%S"),
+            "city": self.city,
+            "user": self.user.serialize(),
             "images": [image.serialize() for image in self.images],
             "candidates": [candidate.serialize() for candidate in self.candidates]
         }
+
 
 
 class User(db.Model):

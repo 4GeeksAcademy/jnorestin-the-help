@@ -12,11 +12,12 @@ export const LogIn = ({ onClose }) => {
     event.preventDefault();
     setLoginStatus("Logging in..."); // Display "Logging in..." message
 
-    try {
+     try {
       const response = await actions.logIn(
         event.target.email.value,
         event.target.password.value
       );
+      console.log(response)
       if (response.token) {
         setLoginStatus("Login successful");
         setTimeout(() => {
@@ -26,9 +27,9 @@ export const LogIn = ({ onClose }) => {
       } else {
         setLoginStatus("Login failed");
       }
-    } catch (error) {
-      setLoginStatus("Login failed");
-    }
+     } catch (error) {
+       setLoginStatus("Login failed HERE");
+     }
   };
 
   return (
