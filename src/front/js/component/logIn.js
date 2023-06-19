@@ -5,9 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const LogIn = ({ onClose }) => {
   const { actions } = useContext(Context);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState(null); 
+  const [loginStatus, setLoginStatus] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -15,14 +13,21 @@ export const LogIn = ({ onClose }) => {
     setLoginStatus("Logging in..."); // Display "Logging in..." message
 
     try {
-      await actions.logIn(email, password);
-      setLoginStatus("Login successful"); 
-      setTimeout(() => {
-        onClose(); 
-        navigate("/help");
-      }, 2000);
+      const response = await actions.logIn(
+        event.target.email.value,
+        event.target.password.value
+      );
+      if (response.token) {
+        setLoginStatus("Login successful");
+        setTimeout(() => {
+          onClose();
+          navigate("/help");
+        }, 2000);
+      } else {
+        setLoginStatus("Login failed");
+      }
     } catch (error) {
-      setLoginStatus("Login failed"); 
+      setLoginStatus("Login failed");
     }
   };
 
@@ -32,8 +37,8 @@ export const LogIn = ({ onClose }) => {
         <label>Email</label>
         <input
           className="login-form-input"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          name="email" // Added name attribute
+          type="email" // Set input type to "email"
           placeholder="Email"
           required
         />
@@ -42,18 +47,21 @@ export const LogIn = ({ onClose }) => {
         <label>Password</label>
         <input
           className="signup-form-input"
+          name="password" // Added name attribute
           type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
           required
         />
       </div>
-      <button className="btn-primary" type="submit">Log In</button>
-      {loginStatus && <p>{loginStatus}</p>} 
+      <button className="navbar-button" type="submit">
+        Log In
+      </button>
+      {loginStatus && <p>{loginStatus}</p>}
     </form>
   );
 };
+
+
 
 
 

@@ -5,13 +5,14 @@ db = SQLAlchemy()
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
-    user = db.relationship("User", backref="posts")
-    description = db.Column(db.String(500), unique=False, nullable=False)
-    location = db.Column(db.String(256), unique=False, nullable=False)
-    date = db.Column(db.String(256), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    location = db.Column(db.String(256), nullable=False)
+    date = db.Column(db.String(256), nullable=False)
     images = db.relationship('Image', backref='post')
     candidates = db.relationship("PostCandidate", backref="post")
+
+    user = db.relationship("User", backref="posts")
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -23,21 +24,22 @@ class Post(db.Model):
             "description": self.description,
             "location": self.location,
             "date": self.date,
-            "user": self.user.serialize(),
+            "user": self.user.serialize(),  # Include the serialized user information
             "images": [image.serialize() for image in self.images],
             "candidates": [candidate.serialize() for candidate in self.candidates]
         }
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), unique=True, nullable=False)
     profile_image = db.Column(db.String(256), unique=True)
-    password = db.Column(db.String(256), unique=False, nullable=False)
-    name = db.Column(db.String(256), unique=False, nullable=False)
-    date_of_birth = db.Column(db.String(256), unique=False, nullable=False)
-    city = db.Column(db.String(256), unique=False, nullable=True)
-    location = db.Column(db.String(256), unique=False, nullable=True)
-    zip_code = db.Column(db.String(256), unique=False, nullable=True)
+    password = db.Column(db.String(256), nullable=False)
+    name = db.Column(db.String(256), nullable=False)
+    date_of_birth = db.Column(db.String(256), nullable=False)
+    city = db.Column(db.String(256), nullable=True)
+    location = db.Column(db.String(256), nullable=True)
+    zip_code = db.Column(db.String(256), nullable=True)
     helper = db.relationship("Helper", uselist=False, backref="user")
 
     @classmethod
@@ -64,9 +66,7 @@ class User(db.Model):
         return f'<User {self.email}>'
 
     def check_password(self, pswd):
-        if self.password == pswd:
-            return True
-        return False
+        return self.password == pswd
 
     def serialize(self):
         return {
@@ -118,8 +118,8 @@ class PostCandidate(db.Model):
 class Helper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
-    bio = db.Column(db.String(500), unique=False, nullable=False)
-    role = db.Column(db.String(50), unique=False, nullable=False)
+    bio = db.Column(db.String(500), nullable=False)
+    role = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
         return f'<Helper {self.id}>'
@@ -135,7 +135,7 @@ class Helper(db.Model):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, ForeignKey("post.id"))
-    url = db.Column(db.String(500), unique=False, nullable=False)
+    url = db.Column(db.String(500), nullable=False)
     public_id = db.Column(db.String(250), unique=True, nullable=False)
 
     @classmethod
@@ -163,6 +163,7 @@ class Image(db.Model):
             "post_id": self.post_id,
             "url": self.url
         }
+
 
 
     

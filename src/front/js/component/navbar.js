@@ -93,19 +93,18 @@ export const Navbar = () => {
             </div>
           )}
           {location.pathname === "/" && (
-            <div>
-            <div className="navbar-button">
-              <button className="navbar-button" onClick={handleLoginClick}>
-                Log In
-              </button>
-            </div>
+            <div className="ml-auto">
+             
+                <button className="navbar-button" onClick={handleLoginClick}>
+                  Log In
+                </button>
+             
 
-              <div className="navbar-button">
-
-              <button className="navbar-button" onClick={handleSignupClick}>
-                Sign Up
-              </button>
-            </div>
+              
+                <button className="navbar-button" onClick={handleSignupClick}>
+                  Sign Up
+                </button>
+              
             </div>
           )}
         </div>
@@ -113,9 +112,6 @@ export const Navbar = () => {
       {showLoginForm && (
         <div className="form-overlay">
           <div className="form-container" ref={loginFormRef}>
-            <button className="close-button" onClick={handleLoginFormClose}>
-              Close
-            </button>
             <div className="login-form">
               {loginSuccess ? ( // Display success message if login was successful
                 <p>Login successful. Closing form...</p>
@@ -132,9 +128,6 @@ export const Navbar = () => {
       {showSignupForm && (
         <div className="form-overlay">
           <div className="form-container" ref={signupFormRef}>
-            <button className="close-button" onClick={handleSignupFormClose}>
-              Close
-            </button>
             <div className="signup-form">
               <h3 className="form-title">Sign Up</h3>
               <SignUp onClose={handleSignupFormClose} />
@@ -150,5 +143,6 @@ export const Navbar = () => {
     </React.Fragment>
   );
 };
+
 
 

@@ -40,7 +40,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			});
 		  }
 		},
-  
 		logout: () => {
 		  setStore({
 			token: "",
@@ -49,7 +48,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  localStorage.removeItem("token");
 		  localStorage.removeItem("user");
 		},
-  
 		fetchUserPosts: async () => {
 		  const store = getStore();
 		  let token = store.token;
@@ -73,25 +71,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log(error);
 		  }
 		},
-  
+
+		// fetchPosts: async () => {
+		//   const store = getStore();
+		//   try {
+		// 	const response = await fetch(store.apiUrl + "/api/posts");
+		// 	if (!response.ok) {
+		// 	  throw new Error("Failed to fetch posts");
+		// 	}
+		// 	const data = await response.json();
+		// 	console.log(data);
+		// 	setStore({
+		// 	  posts: data
+		// 	});
+		// 	return data;
+		//   } catch (error) {
+		// 	console.log(error);
+		//   }
+		// },
+
 		fetchPosts: async () => {
-		  const store = getStore();
-		  try {
-			const response = await fetch(store.apiUrl + "/api/posts");
-			if (!response.ok) {
-			  throw new Error("Failed to fetch posts");
+			const store = getStore();
+			try {
+				const response = await fetch(store.apiUrl + "/api/posts");
+				if (!response.ok) {
+					throw new Error("Failed to fetch posts");
+				}
+				const data = await response.json();
+				console.log(data)
+				setStore({
+					posts: data
+				});
+				return data;
+			} catch (error) {
+				console.log(error);
 			}
-			const data = await response.json();
-			console.log(data);
-			setStore({
-			  posts: data
-			});
-			return data;
-		  } catch (error) {
-			console.log(error);
-		  }
 		},
-  
+
 		createPostImage: async (formData) => {
 		  const store = getStore();
 		  try {
@@ -110,10 +126,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  } catch (error) {
 			console.log(error);
 		  }
+		},
+		createPostCandidate: async (postId) => {
+		  try {
+			const store = getStore();
+			const response = await fetch(`${store.apiUrl}/api/postcandidate`, {
+			  method: "POST",
+			  headers: {
+				Authorization: `Bearer ${store.token}`,
+				"Content-Type": "application/json",
+			  },
+			  body: JSON.stringify({ post_id: postId }),
+			});
+			if (!response.ok) {
+			  throw new Error("Failed to create post candidate");
+			}
+			// Fetch posts again after creating post candidate
+			getActions().fetchPosts();
+		  } catch (error) {
+			console.log(error);
+		  }
 		}
 	  }
 	};
-  };
-  
-  export default getState;
-  
+};
+
+export default getState;
+
