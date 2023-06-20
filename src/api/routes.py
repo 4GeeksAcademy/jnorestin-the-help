@@ -37,6 +37,8 @@ def create_post():
         description=request_body["description"],
         location=request_body["location"],
         date=request_body["date"],
+        city=request_body["city"],
+        price=request_body["price"],
         user_id=user_id
     )
     db.session.add(new_post)

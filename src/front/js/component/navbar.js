@@ -29,13 +29,15 @@ export const Navbar = () => {
   };
 
   const handleLogoutClick = () => {
-    actions.logout(); // Perform the logout action, e.g., clear user session, remove user information, etc.
-    setLogoutSuccess(true); // Set the logout success state to true
+    actions.logout(); 
+    setLogoutSuccess(true); 
     setTimeout(() => {
-      setLogoutSuccess(false); // Reset the logout success state after 1 second
-      navigate("/"); // Redirect to the home page after resetting the state
+      setLogoutSuccess(false); 
+      navigate("/"); 
     }, 1000);
   };
+  
+
 
   const handleLoginFormClose = () => {
     setShowLoginForm(false);

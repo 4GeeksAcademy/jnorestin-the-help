@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../front/styles/login&signup.css";
 
@@ -86,10 +86,6 @@ export const SignUp = ({ onClose }) => {
         setCity("");
         setLocation("");
         setSignupSuccess(true);
-        onClose();
-
-        // Redirect to help page after successful signup
-        navigate("/help");
       } else {
         console.log("Failed to create user.");
         const errorData = await response.json();
@@ -100,10 +96,20 @@ export const SignUp = ({ onClose }) => {
     }
   };
 
+  useEffect(() => {
+    if (signupSuccess) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [signupSuccess, onClose]);
+
   return (
     <div className="signup-form-wrapper">
       {signupSuccess ? (
-        <p>Sign up successful. Redirecting...</p>
+        <p style={{ color: "green" }}>Sign up successful.</p>
       ) : (
         <form onSubmit={handleSignup}>
           <div className="form-group">
@@ -141,6 +147,5 @@ export const SignUp = ({ onClose }) => {
       )}
     </div>
   );
-
-
 };
+

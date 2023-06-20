@@ -12,8 +12,10 @@ class Post(db.Model):
     location = db.Column(db.String(256), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     city = db.Column(db.String(256), nullable=False)
+    price = db.Column(db.Float, nullable=False)
     images = db.relationship('Image', backref='post')
     candidates = db.relationship("PostCandidate", backref="post")
+   
 
     user = db.relationship("User", backref="posts")
 
@@ -28,6 +30,7 @@ class Post(db.Model):
             "location": self.location,
             "date": self.date.strftime("%Y-%m-%d %H:%M:%S"),
             "city": self.city,
+            "price": self.price,
             "user": self.user.serialize(),
             "images": [image.serialize() for image in self.images],
             "candidates": [candidate.serialize() for candidate in self.candidates]
@@ -42,10 +45,11 @@ class User(db.Model):
     password = db.Column(db.String(256), nullable=False)
     name = db.Column(db.String(256), nullable=False)
     date_of_birth = db.Column(db.String(256), nullable=False)
-    city = db.Column(db.String(256), nullable=True)
-    location = db.Column(db.String(256), nullable=True)
+    city = db.Column(db.String(256), nullable=False)
+    location = db.Column(db.String(256), nullable=False)
     zip_code = db.Column(db.String(256), nullable=True)
-    helper = db.relationship("Helper", uselist=False, backref="user")
+    helper = db.relationship("Helper", uselist=False, backref="user",)
+    
 
     @classmethod
     def create_user(cls, email, password, name, date_of_birth, city, location, zip_code):
@@ -82,7 +86,7 @@ class User(db.Model):
             "date_of_birth": self.date_of_birth,
             "city": self.city,
             "location": self.location,
-            "zip_code": self.zip_code
+            "zip_code": self.zip_code,
         }
 
 
