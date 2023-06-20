@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 export const LogIn = ({ onClose }) => {
   const { actions } = useContext(Context);
-  const [loginStatus, setLoginStatus] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState(null); 
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -13,22 +15,14 @@ export const LogIn = ({ onClose }) => {
     setLoginStatus("Logging in..."); // Display "Logging in..." message
 
     try {
-      const response = await actions.logIn(
-        event.target.email.value,
-        event.target.password.value
-      );
-      console.log(response);
-      if (response.token) {
-        setLoginStatus("Login successful");
-        setTimeout(() => {
-          onClose();
-          navigate("/help");
-        }, 2000);
-      } else {
-        setLoginStatus("Login failed");
-      }
+      await actions.logIn(email, password);
+      setLoginStatus("Login successful"); 
+      setTimeout(() => {
+        onClose(); 
+        navigate("/help");
+      }, 2000);
     } catch (error) {
-      setLoginStatus("Login failed");
+      setLoginStatus("Login failed"); 
     }
   };
 
@@ -38,8 +32,8 @@ export const LogIn = ({ onClose }) => {
         <label>Email</label>
         <input
           className="login-form-input"
-          name="email" // Added name attribute
-          type="email" // Set input type to "email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           placeholder="Email"
           required
         />
@@ -48,26 +42,18 @@ export const LogIn = ({ onClose }) => {
         <label>Password</label>
         <input
           className="signup-form-input"
-          name="password" // Added name attribute
           type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
           required
         />
       </div>
-      <button className="navbar-button" type="submit">
-        Log In
-      </button>
-      {loginStatus && (
-        <p style={{ color: loginStatus === "Login successful" ? "green" : "red" }}>
-          {loginStatus}
-        </p>
-      )}
+      <button className="btn-primary" type="submit">Log In</button>
+      {loginStatus && <p>{loginStatus}</p>} 
     </form>
   );
 };
-
-
-
 
 
 

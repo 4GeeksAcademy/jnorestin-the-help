@@ -124,7 +124,7 @@ body {
   margin-bottom: 100px;
 }
 
-.btn-new-post {
+.btn {
   margin-top: 20px;
   background-color: #62b6cb;
   color: #ffffff;
@@ -134,19 +134,11 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease-in-out;
-  position:absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto; 
-  white-space: nowrap;
 }
 
 .btn:hover {
   background-color: #1b4965;
 }
-
-
 
 .card-title {
   color: #1b4965;
@@ -180,7 +172,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-bottom: 20px;
 }
 
 .popup-container button {
@@ -252,8 +243,6 @@ body {
   animation: arrowBlink 1.5s infinite;
   cursor: pointer;
 }
-
-
 
 @keyframes arrowBlink {
   0%, 100% {
