@@ -1,60 +1,16 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-	  store: {
-		token: "",
-		user: {},
-		apiUrl: process.env.BACKEND_URL,
-		posts: [],
-		userPosts: []
-	  },
-	  actions: {
-		logIn: async (email, password) => {
-		  const store = getStore();
-		  const response = await fetch(store.apiUrl + "/api/log-in", {
-			method: "POST",
-			body: JSON.stringify({
-			  email,
-			  password
-			}),
-			headers: {
-			  "Content-Type": "application/json"
-			}
-		  });
-		  const body = await response.json();
-		  if (response.ok) {
-			setStore({
-			  token: body.token,
-			  user: body.user
-			});
-			localStorage.setItem("token", JSON.stringify(body.token));
-			localStorage.setItem("user", JSON.stringify(body.user));
-			return;
-		  }
-		  console.log("log in unsuccessful");
-		},
-		checkUser: () => {
-		  if (localStorage.getItem("token")) {
-			setStore({
-			  token: JSON.parse(localStorage.getItem("token")),
-			  user: JSON.parse(localStorage.getItem("user"))
-			});
-		  }
-		},
-  
-		logout: () => {
-		  setStore({
+		store: {
 			token: "",
 			user: {},
 			apiUrl: process.env.BACKEND_URL,
 			posts: [],
-			userPosts: [],
-			candidates: []
+			userPosts: []
 		},
 		actions: {
 			logIn: async (email, password) => {
 				const store = getStore();
-				const response = await fetch(
-					store.apiUrl + "/api/log-in", {
+				const response = await fetch(store.apiUrl + "/api/log-in", {
 					method: "POST",
 					body: JSON.stringify({
 						email,
@@ -63,8 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					headers: {
 						"Content-Type": "application/json"
 					}
-				}
-				);
+				});
 				const body = await response.json();
 				if (response.ok) {
 					setStore({
@@ -88,41 +43,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			logout: () => {
 				setStore({
-				  token: "",
-				  user: {},
+					token: "",
+					user: {},
 				});
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
 			},
 
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			},
 			fetchUserPosts: async () => {
 				const store = getStore();
-				let token = store.token
+				let token = store.token;
 				const opts = {
 					headers: {
-					  Authorization: "Bearer " + token
-					}, 
-				}
+						Authorization: "Bearer " + token
+					}
+				};
 				try {
-					const response = await fetch(store.apiUrl + "/api/userposts",opts);
+					const response = await fetch(store.apiUrl + "/api/userposts", opts);
 					if (!response.ok) {
 						throw new Error("Fail to fetch posts");
 					}
@@ -134,10 +72,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return data;
 				} catch (error) {
 					console.log(error);
-				}	
+				}
 			},
 
-			
 
 			fetchPosts: async () => {
 				const store = getStore();
@@ -156,6 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+
 			createPostImage: async (formData) => {
 				const store = getStore();
 				try {
@@ -175,14 +113,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			}
-			return;
-		  } catch (error) {
-			console.log(error);
-		  }
+
+
 		}
-	  }
 	};
-  };
+};
+
   
   export default getState;
   
