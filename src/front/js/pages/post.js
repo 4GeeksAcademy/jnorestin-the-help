@@ -1,71 +1,61 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
-import "../../styles/post.css";
 
 export const Post = () => {
   const { store, actions } = useContext(Context);
-  console.log(store.posts)
-  let request = [
-    {
-      "candidates": [{ "name": "Lee Zee" }, { "name": "Dan Bun" }],
-      "date": "06-02-2023",
-      "description": "fix my mower",
-      "id": 1,
-      "images": ["https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg", "https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg", "https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg"],
-      "location": "Huntsville AL",
-      "user_id": 2
-    },
-    {
-      "candidates": [{ "name": "Lee Zee" }, { "name": "Dan Bun" }],
-      "date": "06-02-2023",
-      "description": "fix my mower",
-      "id": 1,
-      "images": ["https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg", "https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg", "https://media.npr.org/assets/img/2011/06/21/flat-698474925749231d3fda07ba360d73772ef39545.jpg"],
-      "location": "Huntsville AL",
-      "user_id": 2
-    },
-  ]
+
+  useEffect(() => {
+    // Fetch user posts and post candidates when the component mounts
+    actions.fetchUserPosts();
+    actions.fetchPostCandidates();
+  }, []);
+
+  const { userPosts, postCandidates } = store;
+
+  // Render the userPosts and associated postCandidates
   return (
-    <div className="card-container">
-      {request.map((item) => {
-        return (
-          <div className="card">
-            <div className="card-body">
-              <div className="user-info">
-                <img src="User Profile Image" className="profile_image" />
-                <h5 className="card-title"></h5>
-              </div>
-              <p className="card-text">{item.description}</p>
-              <div className="card-images">
-                {item.images.map((image, index) => {
-                  return (
-                    <img src={image} key={index} className="cardImage" />
-                  )
-                })}
-              </div>
-              <div className="post-info">
-                <p className="date">{item.date}</p>
-                <p className="location">{item.location}</p>
-              </div>
+    <div>
+      <h1>User Posts</h1>
+      {userPosts.map((post) => (
+        <div className="card" key={post.id}>
+          <div className="card-body">
+            <div className="user-info">
+              <img src={post.user.profile_image} alt="User Profile Image" className="profile_image" />
+              <h5 className="card-title">{post.user.name}</h5>
             </div>
-            <div>
-              {item.candidates.map((cand, index) => {
-                return (
-                  <div className="helper-info d-flex navbar">
-                    <img src="helper profile image" className="helper_image mx-5" />
-                    <h5 className="card-text2 mx-5">{cand.name}</h5>
-                    <i class="fa-sharp fa-regular fa-envelope ms-5 me-2"></i>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
-                      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                    </div>
-                  </div>
-                )
-              })}
+            <p className="card-text">{post.description}</p>
+            <div className="card-images">
+              {post.images.map((image) => (
+                <div className="image-wrapper" key={image.id}>
+                  <img src={image.url} alt="Post Image" />
+                </div>
+              ))}
+            </div>
+            <div className="post-info">
+              <p className="timestamp">{post.timestamp}</p>
+              <p className="location">
+                {post.city}, {post.location}
+              </p>
+            </div>
+            <div className="post-candidates">
+              <h3>Post Candidates</h3>
+              <ul>
+                {postCandidates
+                  .filter((candidate) => candidate.postId === post.id)
+                  .map((candidate) => (
+                    <li key={candidate.id}>
+                      <div className="candidate-info">
+                        <img src={candidate.profile_image} alt="Candidate Profile Image" className="profile_image" />
+                        <p>{candidate.name}</p>
+                      </div>
+                      {/* Add any other candidate details */}
+                    </li>
+                  ))}
+              </ul>
             </div>
           </div>
-        )
-      })}
+        </div>
+      ))}
     </div>
   );
 };

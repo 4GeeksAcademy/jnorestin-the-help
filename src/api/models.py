@@ -3,21 +3,23 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
-from datetime import datetime
+post_candidates = db.Table(
+    "post_candidates",
+    db.Column("helper_id", db.Integer, db.ForeignKey("helper.id"), primary_key=True),
+    db.Column("post_id", db.Integer, db.ForeignKey("post.id"), primary_key=True),
+)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
-    location = db.Column(db.String(256), nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    city = db.Column(db.String(256), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    images = db.relationship('Image', backref='post')
-    candidates = db.relationship("PostCandidate", backref="post")
-   
-
+    user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
     user = db.relationship("User", backref="posts")
+    description = db.Column(db.String(500), unique=False, nullable=False)
+    location = db.Column(db.String(256), unique=False, nullable=False)
+    date = db.Column(db.String(256), unique=False, nullable=False)
+    price = db.Column (db.Integer,nullable=False)
+    images = db.relationship('Image', backref='post')
+    candidates = db.relationship("Helper", secondary=post_candidates, lazy= "subquery")
+
 
     def __repr__(self):
         return f'<Post {self.id}>'
@@ -87,42 +89,24 @@ class User(db.Model):
             "city": self.city,
             "location": self.location,
             "zip_code": self.zip_code,
-        }
 
 
-class PostCandidate(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
-    post_id = db.Column(db.Integer, ForeignKey("post.id"))
 
-    @classmethod
-    def create_new(cls, helper_id, post_id):
-        helper = Helper.query.get(helper_id)
-        if helper and helper.role == 'Helper':
-            new_post_candidate = cls(
-                helper_id=helper_id,
-                post_id=post_id
-            )
-            db.session.add(new_post_candidate)
-            try:
-                db.session.commit()
-                return new_post_candidate
-            except Exception as error:
-                db.session.rollback()
-                print(error)
-                return None
-        else:
-            return None
 
-    def __repr__(self):
-        return f'<PostCandidate {self.id}>'
+# class PostCandidate(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     helper_id = db.Column(db.Integer, ForeignKey("helper.id"))
+#     post_id = db.Column(db.Integer, ForeignKey("post.id"))
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "helper_id": self.helper_id,
-            "post_id": self.post_id
-        }
+#     def __repr__(self):
+#         return f'<PostCandidate {self.id}>'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "helper_id": self.helper_id,
+#             "post_id": self.post_id
+#         }
 
 class Helper(db.Model):
     id = db.Column(db.Integer, primary_key=True)

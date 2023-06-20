@@ -82,6 +82,9 @@ export const Navbar = () => {
             <Link to="/help">
               <span className="navbar-brand mb-0 h1">Help</span>
             </Link>
+            <Link to="/post">
+              <span className="navbar-brand mb-0 h1">Your Posts</span>
+            </Link>
           </div>
           {location.pathname === "/help" && (
             <div className="ml-auto">
@@ -145,6 +148,4 @@ export const Navbar = () => {
     </React.Fragment>
   );
 };
-
-
 
