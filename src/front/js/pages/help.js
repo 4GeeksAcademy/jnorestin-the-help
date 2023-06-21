@@ -309,7 +309,7 @@ export const Help = (props) => {
             <div className="card-body">
               <div className="user-info">
               <img
-  src={post.user.profile_image || 'https://www.reading.ac.uk/isli/-/media/project/uor-main/shared/images-for-shared-components/all-sites/staff-profile-placeholder.jpg'}
+  src={post.user.profile_image || 'https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg'}
   alt="User Profile Image"
   className="profile_image"
 />

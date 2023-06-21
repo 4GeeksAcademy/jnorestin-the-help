@@ -11,7 +11,7 @@
 
 body {
   background: linear-gradient(to right, #62b6cb, #1b4965);
-  background-color: #f9fafb;
+  background-color: #ffffff;
   height: 100vh;
   overflow-y: auto;
   margin-bottom: 20px;
@@ -68,7 +68,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin: 80px; 
+   
    
   }
 
@@ -98,11 +98,14 @@ body {
 .profile_image {
   position: absolute;
   top: 10px; 
-  left: 10px; 
-  width: 70px;
-  height: 70px;
+  left: 20px; 
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
+  border: #1b4965 solid 2px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .card-images {
   display: flex;
@@ -117,6 +120,7 @@ body {
   margin-top: 20px;
   border-radius: 10px;
   overflow: hidden;
+  border: #1b4965 solid 2px;
 }
 
 .image-wrapper img {
@@ -136,7 +140,7 @@ body {
 }
 
 .btn-new-post {
-  margin-top: 20px;
+  margin-top: 50px;
   background-color: #62b6cb;
   color: #ffffff;
   border: none;
@@ -169,10 +173,11 @@ body {
 }
 
 .card-text {
-  color: #1b4965;
-  background-color: #cae9ff;
+  color: hsl(203, 58%, 25%);
+  background-color: #62b6cb;
   border-radius: 5px;
   padding: 30px;
+  border: #1b4965 solid 3px;
 }
 
 .popup-container button {
