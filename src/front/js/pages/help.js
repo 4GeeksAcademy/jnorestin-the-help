@@ -308,12 +308,17 @@ export const Help = (props) => {
           <div key={post.id} className="card">
             <div className="card-body">
               <div className="user-info">
-                <img src={post.user.profile_image} alt="User Profile Image" className="profile_image" />
+              <img
+  src={post.user.profile_image || 'https://www.reading.ac.uk/isli/-/media/project/uor-main/shared/images-for-shared-components/all-sites/staff-profile-placeholder.jpg'}
+  alt="User Profile Image"
+  className="profile_image"
+/>
                 <h5 className="card-title">{post.user.name}</h5>
               </div>
               <div className="post-content">
+                <p>Description :</p>
                 <p className="card-text">{post.description}</p>
-                <p className="card-price">Price: {post.price}</p> {/* Displaying the price */}
+                <p className="card-price">Price: ${post.price}</p> {/* Displaying the price */}
               </div>
               <div className="card-images">
                 {post.images.map((image, index) => (

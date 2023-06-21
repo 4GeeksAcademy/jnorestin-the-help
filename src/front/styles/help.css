@@ -1,4 +1,4 @@
-.help-page {
+/* .help-page {
   height: 100vh;
   
   background-color: #f9fafb;
@@ -7,15 +7,25 @@
   justify-content: center;
   overflow-y: auto;
  
-}
+} */
 
 body {
   background: linear-gradient(to right, #62b6cb, #1b4965);
   background-color: #f9fafb;
   height: 100vh;
   overflow-y: auto;
+  margin-bottom: 20px;
+  font-family: "Lato", sans-serif;
   
 }
+
+.card-title,
+.card-text,
+.btn-new-post,
+.popup-container button {
+  font-family: "Lato", sans-serif;
+}
+
   @keyframes move {
     0% {
       transform: translateY(0);
@@ -74,10 +84,11 @@ body {
   text-align: center;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   margin-bottom: 25px;
+ 
 }
 
 .card:hover {
@@ -140,6 +151,7 @@ body {
   transform: translate(-50%, -50%);
   width: auto; 
   white-space: nowrap;
+  margin-bottom: 20px;
 }
 
 .btn:hover {
@@ -152,10 +164,15 @@ body {
   color: #1b4965;
   font-size: 20px;
   font-weight: bold;
+  align-items: left;
+  padding-bottom: 70px;
 }
 
 .card-text {
   color: #1b4965;
+  background-color: #cae9ff;
+  border-radius: 5px;
+  padding: 30px;
 }
 
 .popup-container button {
@@ -194,14 +211,16 @@ body {
 }
 
 .card-container {
-  margin: 50px;
+  margin: 100px;
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: #f5f5f5;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(236, 236, 236, 0.2), 0 0 20px rgba(236, 236, 236, 0.2), 0 0 30px rgba(236, 236, 236, 0.2), 0 0 40px rgba(236, 236, 236, 0.2);
+  text-shadow: 0 0 5px rgba(236, 236, 236, 0.5), 0 0 20px rgba(236, 236, 236, 0.5), 0 0 30px rgba(236, 236, 236, 0.5);
 }
+
 
 .card:hover {
   transform: translateY(-5px);
@@ -229,37 +248,7 @@ body {
 .popup-container button:hover {
   background-color: #5fa8d3;
   color: #ffffff;
-}
-
-/* Scroll-down indicator styles */
-.scroll-down-indicator {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  text-align: center;
-  opacity: 0.7;
-}
-
-.scroll-down-indicator .arrow {
-  display: block;
-  width: 30px;
-  height: 30px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  animation: arrowBlink 1.5s infinite;
-  cursor: pointer;
+  margin-bottom: 50px;
 }
 
 
-
-@keyframes arrowBlink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
