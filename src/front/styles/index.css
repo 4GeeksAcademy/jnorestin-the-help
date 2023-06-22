@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+
+
 .navbar {
 
   display: flex;
@@ -6,14 +9,16 @@
   background-color: #00aec5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   justify-content: center; 
- padding-left: 25px;
- padding-right: 30px;
+  padding-left: 25px;
+  padding-right: 30px;
+  border-bottom: #ffffff solid 11px;
+  
 }
 
 .navbar-brand {
   color: #ffffff;
-  font-size: 30px;
-  font-weight: 900;
+  font-size: 25px;
+  font-weight: bold;
   text-decoration: underline #62b6cb;
   /* transition: color 0.3s ease; */
   margin-top: 10px;
@@ -93,6 +98,7 @@
   font-size: 16px;
   transition: background-color 0.3s ease-in-out;
   align-self: center;
+  font-family: 'Arimo', sans-serif;
 }
 
 .logout-button:hover {
@@ -111,9 +117,12 @@
 }
 
 .logo-img {
-  width: 150px;
+  width: 100px;
   height: auto;
   margin: auto;
 }
 
-
+.home-logo-img {
+  margin-left: 10px; /* Adjusted margin for home page */
+  /* Add other CSS styles for the home page logo-img */
+}

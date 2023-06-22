@@ -77,16 +77,16 @@ export const Navbar = () => {
           <div className="nav-link">
             {!isHomePage && (
               <Link to="/help">
-                <span className="navbar-brand">Help</span>
+                <span className="navbar-brand">HELP</span>
               </Link>
             )}
               {!isHomePage && (
               <Link to="/post">
-                <span className="navbar-brand">Your Posts</span>
+                <span className="navbar-brand">POSTS</span>
               </Link>
             )}
           </div>
-          <img src={imgSrc} alt="" className="logo-img" />
+          <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
           {isHomePage && (
             <div className="ml-auto">
               <button className="navbar-button" onClick={handleLoginClick}>

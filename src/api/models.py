@@ -50,6 +50,7 @@ class User(db.Model):
     zip_code = db.Column(db.String(256), nullable=True)
     helper = db.relationship("Helper", uselist=False, backref="user",)
     
+    
 
     @classmethod
     def create_user(cls, email, password, name, date_of_birth, city, location, zip_code):
