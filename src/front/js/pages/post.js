@@ -7,7 +7,6 @@ export const Post = () => {
   useEffect(() => {
     // Fetch user posts and post candidates when the component mounts
     actions.fetchUserPosts();
-    actions.fetchPostCandidates();
   }, []);
 
   const { userPosts, postCandidates } = store;
