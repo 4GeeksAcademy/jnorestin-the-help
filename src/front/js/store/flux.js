@@ -27,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						token: body.token,
 						user: body.user
 					});
+					console.log (body.token)
 					localStorage.setItem("token", JSON.stringify(body.token));
 					localStorage.setItem("user", JSON.stringify(body.user));
 					return;
@@ -95,6 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			
 			createPostImage: async (formData) => {
 				const store = getStore();
 				try {
@@ -118,7 +120,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			createPostCandidate: async (postId) => {
 				try {
 				  const store = getStore();
-				  const response = await fetch(`${store.apiUrl}/api/postcandidate`, {
+				  const response = await fetch(`${store.apiUrl}/api/post_candidates`, {
 					method: "POST",
 					headers: {
 					  Authorization: `Bearer ${store.token}`,

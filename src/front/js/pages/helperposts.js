@@ -1,10 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Context } from "../store/appContext";
-import Paymentmodal from "../component/paymentmodal"
-import PayPal from '../component/paypal';
-import "../../styles/post.css"
 
-export const Post = () => {
+export const HelperPosts = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
@@ -17,8 +14,8 @@ export const Post = () => {
   // Render the userPosts and associated postCandidates
   return (
     <div className='post-container'>
-      <h1>User Posts</h1>
-      {posts.filter((item, index) => item.user_id == user.id).map((post, index) => {
+      <h1>Helper View</h1>
+      {posts.filter((item, index) => item.helper == user.helper).map((post, index) => {
         return (
           <div className="post-body">
             <div className="user-info">
@@ -45,29 +42,7 @@ export const Post = () => {
                 {post.city}, {post.location}
               </p>
             </div>
-            <div className="post-candidates">
-
-              <h3>Post Candidates</h3>
-              <ul>
-                {post.post_candidates
-                  .filter((candidate) => candidate.postid === post.id)
-                  .map((candidate) => (
-                    <li key={candidate.id}>
-                      <div className="candidate-info">
-
-                        <img src={candidate.profile_image} alt="Candidate Profile Image" className="profile_image" />
-                        <p>{candidate.name}</p>
-                      </div>
-
-                    </li>
-                  ))}
-              </ul>
-              <div className="form-check form-switch">
-                <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
-                <label className="form-check-label" type="flexSwitchCheckDefault"></label>
-              </div>
-            </div>
-            <Paymentmodal></Paymentmodal>
+            
           </div>
         )
       })}
