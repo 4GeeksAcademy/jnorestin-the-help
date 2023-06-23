@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB, and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Post, Image, Helper, PostCandidate
+from api.models import db, User,Post,Image
 from api.utils import generate_sitemap, APIException
 from cloudinary import uploader
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
@@ -20,13 +20,33 @@ def get_post(id):
     post = Post.query.get(id)
     return jsonify(post.serialize()), 200
 
-@api.route('/userposts', methods=['GET'])
-@jwt_required()
-def get_post_by_user_id():
-    user_id = get_jwt_identity()
-    posts = Post.query.filter_by(user_id=user_id)
-    post_dictionaries = [post.serialize() for post in posts]
-    return jsonify(post_dictionaries)
+
+# @api.route('/userposts/<int:user_id>', methods=['GET'])
+# # @jwt_required()
+# def get_post_by_user_id(user_id):
+#     # user_id = get_jwt_identity()
+#     print("user_id",user_id)
+#     return jsonify(user_id),200
+    # posts = Post.query.filter_by(user_id = user_id)
+    # post_dictionaries = [post.serialize() for post in posts]
+    # return jsonify(post_dictionaries)
+    # return jsonify("Hello!!!")
+
+# @api.route('/postswithhelper', methods=['GET'])
+# @jwt_required()
+# def get_posts_with_helper(): 
+#     user_id = get_jwt_identity()
+#     helper_posts = []
+#     helper = Helper.query.filter_by(user_id=user_id)  
+#     posts = Post.query.all()
+#     for post in posts :
+#         for candidate in post.candidates:
+#             if candidate.helper_id == helper.id:
+#                 helper_posts.append(post)
+#     post_dictionaries = [post.serialize() for post in helper_posts]
+#     return jsonify(post_dictionaries)
+
+
 
 @api.route('/posts', methods=['POST'])
 @jwt_required()
@@ -39,12 +59,27 @@ def create_post():
         date=request_body["date"],
         city=request_body["city"],
         price=request_body["price"],
+        post_status=request_body["post_status"],
         user_id=user_id
     )
     db.session.add(new_post)
     db.session.commit()
 
     return jsonify(new_post.serialize()), 201
+
+
+@api.route("/post/<int:id>", methods=["DELETE"])
+def delete_post(id):
+    Post.query.filter_by(id = id).delete()
+
+    
+    db.session.commit()
+
+    return jsonify("Successful"),200
+
+# @api.route("/postcandidate/<int:id>", methods=["DELETE"])
+# def delete_postcandidate(id):
+#     PostCandidate.query.filter_by(id = id).delete()
 
 @api.route("/post-images", methods=["POST"])
 @jwt_required()
@@ -79,28 +114,35 @@ def log_in():
         "token": token
     }), 200
 
-@api.route("/sign-up", methods=["POST"])
-def sign_up():
-    body = request.json
-    email = body.get("email")
-    password = body.get("password")
-    name = body.get("name")
-    date_of_birth = body.get("date_of_birth")
-    city = body.get("city")
-    location = body.get("location")
-    zip_code = body.get("zip_code")
 
-    if not email or not password or not name or not date_of_birth:
-        return jsonify("Email, password, name, and date of birth are required"), 400
+@api.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify(user.serialize()), 200
+
+
+# @api.route("/sign-up", methods=["POST"])
+# def sign_up():
+#     body = request.json
+#     email = body.get("email")
+#     password = body.get("password")
+#     name = body.get("name")
+#     date_of_birth = body.get("date_of_birth")
+#     city = body.get("city")
+#     location = body.get("location")
+#     zip_code = body.get("zip_code")
+
+#     if not email or not password or not name or not date_of_birth:
+#         return jsonify("Email, password, name, and date of birth are required"), 400
 
     user = User.create_user(
-        email=email,
-        password=password,
-        name=name,
-        date_of_birth=date_of_birth,
-        city=city,
-        location=location,
-        zip_code=zip_code
+        email=body["email"],
+        password=body["password"],
+        name=body["name"],
+        city=body["city"],
+        state=body["state"],
+        zip_code=body["zip_code"],
+        date_of_birth=body["date_of_birth"]
     )
 
     if user is None:
@@ -108,45 +150,81 @@ def sign_up():
 
     return jsonify(user.serialize()), 201
 
-
-@api.route("/helper", methods=["GET"])
-def get_helper():
-    helpers = Helper.query.all()
-    helper_dictionaries = [helper.serialize() for helper in helpers]
-    return jsonify(helper_dictionaries)
-
-@api.route("/helper", methods=["POST"])
+@api.route("/profile-image", methods=["POST"])
 @jwt_required()
-def create_helper():
-    user_id = get_jwt_identity()
-    body = request.json
-    new_helper = Helper(
-        bio=body["bio"],
-        role=body["role"],
-        user_id=user_id
+def create_profile_image():
+    image = request.files['file']
+    user_id = User.query.filter_by(email=get_jwt_identity).first()
+    response = uploader.upload(
+        image,
+        resource_type="image",
+        folder="user"
     )
-    db.session.add(new_helper)
+    new_post_image = Image(
+        user_id=user_id,
+        url=response["secure_url"],
+        public_id=response["public_id"]
+    )
+    db.session.add(new_post_image)
     db.session.commit()
 
-    return jsonify("Successful"), 200
+    return jsonify(new_post_image.serialize()), 201
 
-@api.route("/postcandidate", methods=["POST"])
+
+# @api.route("/helper", methods=["GET"])
+# def get_helper():
+#     helpers = Helper.query.all()
+#     helper_dictionaries = list(map(
+#         lambda helper: helper.serialize(),
+#         helpers
+#     ))
+#     return jsonify(helper_dictionaries)
+
+# @api.route("/helper", methods=["POST"])
+# @jwt_required()
+# def creat_helper():
+#     user_id = get_jwt_identity()
+#     body = request.json
+#     new_helper = Helper(
+#         bio = body["bio"],
+#         role = body["role"],
+#         user_id = user_id
+#     )
+#     db.session.add(new_helper)
+#     db.session.commit()
+
+#     return jsonify("Successful"),200
+
+
+@api.route("/post_candidates", methods=["PUT"])
 @jwt_required()
-def create_post_candidate():
+
+def create_post_candidates():
+
     user_id = get_jwt_identity()
-    helper = Helper.query.filter_by(user_id=user_id).first()
+    helper = Helper.query.filter_by(user_id = user_id).first()
     if not helper:
-        return jsonify("User is not registered as a helper"), 400
 
+        return jsonify("user is not registered as a helper"),400
     body = request.json
-    new_post_candidate = PostCandidate(
-        helper_id=helper.id,
-        post_id=body["post_id"]
-    )
-    db.session.add(new_post_candidate)
-    db.session.commit()
-
-    return jsonify("Successful"), 200
+    if body["post_id"] is None :
+        return "No Post Provide", 400 
+    post = Post.query.filter_by(id = body["post_id"]).first()
+    if post is None :
+        return "Post Not Found",404
+    new_post_candidate = helper.id
+    
+    if post.post_candidates is None :
+        post.post_candidates =[]
+    try:
+        post.post_candidates.append(new_post_candidate)
+    except Exception as e:
+        payload = {
+            "msg": " Couldn't add Candidate",
+            "error": e
+        }
+        return jsonify(payload),409
+        return jsonify("Successful"), 200
 
 @api.route("/postcandidate/<int:id>", methods=["DELETE"])
 def delete_post_candidate(id):
@@ -157,9 +235,6 @@ def delete_post_candidate(id):
 
     db.session.delete(post_candidate)
     db.session.commit()
-
-    return jsonify("Successful"), 200
-
 
 def create_app():
     app = Flask(__name__)

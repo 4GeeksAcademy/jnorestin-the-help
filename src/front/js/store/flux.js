@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		posts: [],
 		userPosts: []
 	  },
+    
 	  actions: {
 		logIn: async (email, password) => {
 		  const store = getStore();
@@ -40,6 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			});
 		  }
 		},
+      
 		logout: () => {
 		  setStore({
 			token: "",
@@ -73,24 +75,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
 
-		// fetchPosts: async () => {
-		//   const store = getStore();
-		//   try {
-		// 	const response = await fetch(store.apiUrl + "/api/posts");
-		// 	if (!response.ok) {
-		// 	  throw new Error("Failed to fetch posts");
-		// 	}
-		// 	const data = await response.json();
-		// 	console.log(data);
-		// 	setStore({
-		// 	  posts: data
-		// 	});
-		// 	return data;
-		//   } catch (error) {
-		// 	console.log(error);
-		//   }
-		// },
-
 		fetchPosts: async () => {
 			const store = getStore();
 			try {
@@ -103,11 +87,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					posts: data
 				});
+
 				return data;
 			} catch (error) {
 				console.log(error);
 			}
 		},
+
 
 		createPostImage: async (formData) => {
 		  const store = getStore();
@@ -128,6 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log(error);
 		  }
 		},
+     
 		createPostCandidate: async (postId) => {
 		  try {
 			const store = getStore();

@@ -11,7 +11,8 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Help } from "./pages/help";
-import { Post } from "./pages/post"
+import { Post } from "./pages/post";
+import {HelperPosts} from "./pages/helperposts"
 
 //create your first component
 function Layout() {
@@ -32,6 +33,7 @@ function Layout() {
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<Help />} path="/help" />
             <Route element={<Post />} path="/post" />
+            <Route element={<HelperPosts />} path="/helperpost" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

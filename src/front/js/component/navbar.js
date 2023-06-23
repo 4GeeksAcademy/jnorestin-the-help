@@ -75,6 +75,7 @@ export const Navbar = () => {
       <nav className="navbar">
         
           <div className="nav-link">
+
             {!isHomePage && (
               <Link to="/help">
                 <span className="navbar-brand">HELP</span>
@@ -85,6 +86,20 @@ export const Navbar = () => {
                 <span className="navbar-brand">POSTS</span>
               </Link>
             )}
+
+            <Link to="/">
+              <span className="navbar-brand mb-0 h1">Home</span>
+            </Link>
+            <Link to="/help">
+              <span className="navbar-brand mb-0 h1">Help</span>
+            </Link>
+            <Link to="/post">
+              <span className="navbar-brand mb-0 h1">Your Posts</span>
+            </Link>
+            <Link to="/helperpost">
+              <span className="navbar-brand mb-0 h1">Helper Posts</span>
+            </Link>
+
           </div>
           <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
           {isHomePage && (
@@ -140,7 +155,5 @@ export const Navbar = () => {
     </React.Fragment>
   );
 };
-
-
 
 
