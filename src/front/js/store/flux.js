@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		posts: [],
 		userPosts: []
 	  },
+    
 	  actions: {
 		logIn: async (email, password) => {
 		  const store = getStore();
@@ -40,6 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			});
 		  }
 		},
+      
 		logout: () => {
 		  setStore({
 			token: "",
@@ -85,11 +87,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({
 					posts: data
 				});
+
 				return data;
 			} catch (error) {
 				console.log(error);
 			}
 		},
+
 
 		createPostImage: async (formData) => {
 		  const store = getStore();
@@ -110,6 +114,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.log(error);
 		  }
 		},
+     
 		createPostCandidate: async (postId) => {
 		  try {
 			const store = getStore();
