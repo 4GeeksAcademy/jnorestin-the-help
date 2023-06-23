@@ -17,13 +17,16 @@
 }
 
 .user-profile-image{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: #1B4965 solid 2px;
-    margin-left: 10px;
-    margin-top: 10px;
+  
+  top: 125px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: #1B4965 solid 2px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .post-image{
     display: flex;
@@ -43,4 +46,7 @@
   /* border-radius: 10px; */
   overflow: hidden;
   border: #1B4965 solid 2px;
+}
+.post-candidates{
+  display: flex;
 }

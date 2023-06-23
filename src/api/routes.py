@@ -56,6 +56,7 @@ def create_post():
     new_post = Post(
         description=request_body["description"],
         location=request_body["location"],
+        city=request_body["city"],
         date=request_body["date"],
         price=request_body["price"],
         post_status=request_body["post_status"],
@@ -143,7 +144,7 @@ def sign_up():
     date_of_birth = body.get("date_of_birth")
     city = body.get("city")
     location = body.get("location")
-    zip_code = body.get("zip_code")
+    
 
     if not email or not password or not name or not date_of_birth:
         return jsonify("Email, password, name, and date of birth are required"), 400
@@ -153,8 +154,7 @@ def sign_up():
         password=body["password"],
         name=body["name"],
         city=body["city"],
-        state=body["state"],
-        zip_code=body["zip_code"],
+        location=body["location"],
         date_of_birth=body["date_of_birth"]
     )
 
