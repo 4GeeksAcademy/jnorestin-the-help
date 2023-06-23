@@ -75,7 +75,7 @@
 //   const createPost = async (postData) => {
 //     try {
 //       const { city, location, zipCode } = store.user;
-  
+
 //       const postWithUser = {
 //         description: postData.description,
 //         date: new Date().toLocaleString(),
@@ -83,7 +83,7 @@
 //         location: location,
 //         zipCode: zipCode,
 //       };
-  
+
 //       const response = await fetch(store.apiUrl + "/api/posts", {
 //         method: "POST",
 //         headers: {
@@ -92,11 +92,11 @@
 //         },
 //         body: JSON.stringify(postWithUser),
 //       });
-  
+
 //       if (!response.ok) {
 //         throw new Error("Failed to create post");
 //       }
-  
+
 //       const newPost = await response.json();
 //       for (const image of postData.images) {
 //         let formData = new FormData();
@@ -310,12 +310,17 @@ export const Help = (props) => {
           <div key={post.id} className="card">
             <div className="card-body">
               <div className="user-info">
-                <img src={post.user.profile_image} alt="User Profile Image" className="profile_image" />
+                <img
+                  src={post.user.profile_image || 'https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg'}
+                  alt="User Profile Image"
+                  className="profile_image"
+                />
                 <h5 className="card-title">{post.user.name}</h5>
               </div>
               <div className="post-content">
+                <p>Description :</p>
                 <p className="card-text">{post.description}</p>
-                <p className="card-price">Price: {post.price}</p> {/* Displaying the price */}
+                <p className="card-price">Price: ${post.price}</p> {/* Displaying the price */}
               </div>
               <div className="card-images">
                 {post.images.map((image, index) => (

@@ -55,16 +55,14 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), unique=True, nullable=False)
     profile_image = db.Column(db.String(256), unique=True)
-    password = db.Column(db.String(256), unique=False, nullable=False)
-    name = db.Column(db.String(256), unique=False, nullable=False)
-    date_of_birth = db.Column(db.String(256), unique=False, nullable=True)
-    helper = db.Column(db.Boolean(),unique=False,nullable=True)
-    description = db.Column(db.String(500), unique=False, nullable=True)
-    role = db.Column(db.String(50), unique=False, nullable=True)
-    phone_number = db.Column(db.String(20), unique=False, nullable=True)
-    address = db.Column(db.String(200), unique=False, nullable=True)
-    skills = db.Column(db.String(500), unique=False, nullable=True)
 
+    password = db.Column(db.String(256), nullable=False)
+    name = db.Column(db.String(256), nullable=False)
+    date_of_birth = db.Column(db.String(256), nullable=False)
+    city = db.Column(db.String(256), nullable=False)
+    location = db.Column(db.String(256), nullable=False)
+    zip_code = db.Column(db.String(256), nullable=True)
+    helper = db.relationship("Helper", uselist=False, backref="user",)
 
 
     @classmethod
