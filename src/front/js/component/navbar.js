@@ -4,12 +4,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext";
-
-library.add(faBell, faUser, faSignOutAlt);
-
-import "../../../front/styles/index.css";
+import imgSrc from "../../img/HELPMEET-4.png";
 import { LogIn } from "./logIn";
 import { SignUp } from "./signUp";
+import "../../../front/styles/index.css";
+
+library.add(faBell, faUser, faSignOutAlt);
 
 export const Navbar = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -29,11 +29,11 @@ export const Navbar = () => {
   };
 
   const handleLogoutClick = () => {
-    actions.logout(); // Perform the logout action, e.g., clear user session, remove user information, etc.
-    setLogoutSuccess(true); // Set the logout success state to true
+    actions.logout();
+    setLogoutSuccess(true);
     setTimeout(() => {
-      setLogoutSuccess(false); // Reset the logout success state after 1 second
-      navigate("/"); // Redirect to the home page after resetting the state
+      setLogoutSuccess(false);
+      navigate("/");
     }, 1000);
   };
 
@@ -50,6 +50,7 @@ export const Navbar = () => {
   const signupFormRef = useRef(null);
 
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -71,9 +72,21 @@ export const Navbar = () => {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container">
+      <nav className="navbar">
+        
           <div className="nav-link">
+
+            {!isHomePage && (
+              <Link to="/help">
+                <span className="navbar-brand">HELP</span>
+              </Link>
+            )}
+              {!isHomePage && (
+              <Link to="/post">
+                <span className="navbar-brand">POSTS</span>
+              </Link>
+            )}
+
             <Link to="/">
               <span className="navbar-brand mb-0 h1">Home</span>
             </Link>
@@ -86,7 +99,19 @@ export const Navbar = () => {
             <Link to="/helperpost">
               <span className="navbar-brand mb-0 h1">Helper Posts</span>
             </Link>
+
           </div>
+          <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
+          {isHomePage && (
+            <div className="ml-auto">
+              <button className="navbar-button" onClick={handleLoginClick}>
+                Log In
+              </button>
+              <button className="navbar-button" onClick={handleSignupClick}>
+                Sign Up
+              </button>
+            </div>
+          )}
           {location.pathname === "/help" && (
             <div className="ml-auto">
               <FontAwesomeIcon icon={faBell} className="navbar-icon" />
@@ -98,32 +123,13 @@ export const Navbar = () => {
               </button>
             </div>
           )}
-          {location.pathname === "/" && (
-            <div>
-            <div className="navbar-button">
-              <button className="navbar-button" onClick={handleLoginClick}>
-                Log In
-              </button>
-            </div>
-
-              <div className="navbar-button">
-
-              <button className="navbar-button" onClick={handleSignupClick}>
-                Sign Up
-              </button>
-            </div>
-            </div>
-          )}
-        </div>
+        
       </nav>
       {showLoginForm && (
         <div className="form-overlay">
           <div className="form-container" ref={loginFormRef}>
-            <button className="close-button" onClick={handleLoginFormClose}>
-              Close
-            </button>
             <div className="login-form">
-              {loginSuccess ? ( // Display success message if login was successful
+              {loginSuccess ? (
                 <p>Login successful. Closing form...</p>
               ) : (
                 <React.Fragment>
@@ -138,9 +144,6 @@ export const Navbar = () => {
       {showSignupForm && (
         <div className="form-overlay">
           <div className="form-container" ref={signupFormRef}>
-            <button className="close-button" onClick={handleSignupFormClose}>
-              Close
-            </button>
             <div className="signup-form">
               <h3 className="form-title">Sign Up</h3>
               <SignUp onClose={handleSignupFormClose} />
@@ -148,12 +151,9 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-      {logoutSuccess && ( // Render the logout success message
-        <div className="logout-message alert alert-success">
-          Logout successful. Redirecting...
-        </div>
-      )}
+      {logoutSuccess && <div className="logout-message alert alert-success">Logout successful. Redirecting...</div>}
     </React.Fragment>
   );
 };
+
 

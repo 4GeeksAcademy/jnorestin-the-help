@@ -3,6 +3,7 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+
 candidates = db.Table('candidates',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True)
@@ -25,6 +26,7 @@ class Post(db.Model):
     images = db.relationship('Image', backref='post')
     post_status = db.Column(db.String(256), nullable=False)
 
+
     def __repr__(self):
         return f'<Post {self.id}>'
 
@@ -32,13 +34,15 @@ class Post(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
+
             "description":self.description,
             "location":self.location,
-            "date":self.date,
+            "date": self.date.strftime("%Y-%m-%d %H:%M:%S"),
             "user":self.user.serialize(),
             "city":self.city,
             "images":[image.serialize() for image in self.images],
             "price": self.price,
+            "city": self.city,
             "post_status":self.post_status,
             "candidates": list(map(lambda x: x.serialize(), self.candidates))
             
@@ -46,7 +50,11 @@ class Post(db.Model):
             
             
             # do not serialize the password, its a security breach
+
+
         }
+
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -100,9 +108,7 @@ class User(db.Model):
         return f'<User {self.email}>'
 
     def check_password(self, pswd):
-        if self.password == pswd:
-            return True
-        return False
+        return self.password == pswd
 
     def serialize(self):
         return {
@@ -136,11 +142,13 @@ class User(db.Model):
 #             "post_id": self.post_id
 #         }
 
+
 # class Helper(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     user_id = db.Column(db.Integer, ForeignKey("user.id"))
 #     bio = db.Column(db.String(500), unique=False, nullable=False)
 #     role = db.Column(db.String(50), unique=False, nullable=False)
+
 
 #     def __repr__(self):
 #         return f'<Helper {self.id}>'
@@ -186,6 +194,7 @@ class Image(db.Model):
             "post_id": self.post_id,
             "url": self.url
         }
+
 
 
     

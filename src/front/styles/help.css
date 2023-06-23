@@ -9,13 +9,24 @@
  
 }
 
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+
 body {
   background: linear-gradient(to right, #62b6cb, #1b4965);
-  background-color: #f9fafb;
+  background-color: #ffffff;
   height: 100vh;
   overflow-y: auto;
-  
+  margin-bottom: 20px;
+  font-family: 'Arimo', sans-serif;
 }
+
+.card-title,
+.card-text,
+.btn-new-post,
+.popup-container button {
+  font-family: 'Arimo', sans-serif;
+}
+
   @keyframes move {
     0% {
       transform: translateY(0);
@@ -57,8 +68,9 @@ body {
   .card-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin: 80px; 
+    gap: 80px;
+    padding-top: 50px;
+   
    
   }
 
@@ -74,10 +86,11 @@ body {
   text-align: center;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
   margin-bottom: 25px;
+ 
 }
 
 .card:hover {
@@ -87,16 +100,20 @@ body {
 .profile_image {
   position: absolute;
   top: 10px; 
-  left: 10px; 
-  width: 70px;
-  height: 70px;
+  left: 20px; 
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
+  border: #1b4965 solid 2px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .card-images {
   display: flex;
   justify-content: center;
   gap: 10px;
+  max-width: 100%;
 }
 
 .image-wrapper {
@@ -104,8 +121,9 @@ body {
   height: auto;
   object-fit: cover;
   margin-top: 20px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   overflow: hidden;
+  border: #1b4965 solid 2px;
 }
 
 .image-wrapper img {
@@ -124,8 +142,8 @@ body {
   margin-bottom: 100px;
 }
 
-.btn {
-  margin-top: 20px;
+.btn-new-post {
+  margin-top: 80px;
   background-color: #62b6cb;
   color: #ffffff;
   border: none;
@@ -134,24 +152,43 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease-in-out;
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto; 
+  white-space: nowrap;
+  margin-bottom: 20px;
 }
 
 .btn:hover {
   background-color: #1b4965;
 }
 
+
+
 .card-title {
   color: #1b4965;
   font-size: 20px;
   font-weight: bold;
+  align-items: left;
+  padding-bottom: 70px;
 }
 
 .card-text {
-  color: #1b4965;
+  
+  color: hsl(203, 58%, 25%);
+  /* border-radius: 5px; */
+  padding: 50px;
+  border: #1b4965 solid 3px;
+  overflow: auto; 
+  flex-grow: 1;
+  max-width: 100%; 
+ 
 }
 
 .popup-container button {
-  background-color: #cae9ff;
+  background-color: #c6e0f3;
   color: #1b4965;
   border: none;
   padding: 10px 20px;
@@ -172,6 +209,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin-bottom: 20px;
 }
 
 .popup-container button {
@@ -185,14 +223,16 @@ body {
 }
 
 .card-container {
-  margin: 50px;
+  margin: 100px;
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: #f5f5f5;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(236, 236, 236, 0.2), 0 0 20px rgba(236, 236, 236, 0.2), 0 0 30px rgba(236, 236, 236, 0.2), 0 0 40px rgba(236, 236, 236, 0.2);
+  text-shadow: 0 0 5px rgba(236, 236, 236, 0.5), 0 0 20px rgba(236, 236, 236, 0.5), 0 0 30px rgba(236, 236, 236, 0.5);
 }
+
 
 .card:hover {
   transform: translateY(-5px);
@@ -220,35 +260,9 @@ body {
 .popup-container button:hover {
   background-color: #5fa8d3;
   color: #ffffff;
+  margin-bottom: 50px;
 }
 
-/* Scroll-down indicator styles */
-.scroll-down-indicator {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  text-align: center;
-  opacity: 0.7;
-}
 
-.scroll-down-indicator .arrow {
-  display: block;
-  width: 30px;
-  height: 30px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  animation: arrowBlink 1.5s infinite;
-  cursor: pointer;
-}
 
-@keyframes arrowBlink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
+

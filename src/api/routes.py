@@ -1,13 +1,11 @@
 """
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
+This module takes care of starting the API Server, Loading the DB, and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User,Post,Image
 from api.utils import generate_sitemap, APIException
 from cloudinary import uploader
-import os
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
-from cloudinary import uploader
 
 api = Blueprint('api', __name__)
 
@@ -20,7 +18,8 @@ def get_posts():
 @api.route('/posts/<int:id>', methods=['GET'])
 def get_post(id):
     post = Post.query.get(id)
-    return jsonify(post.serialize()),200
+    return jsonify(post.serialize()), 200
+
 
 # @api.route('/userposts/<int:user_id>', methods=['GET'])
 # # @jwt_required()
@@ -48,6 +47,7 @@ def get_post(id):
 #     return jsonify(post_dictionaries)
 
 
+
 @api.route('/posts', methods=['POST'])
 @jwt_required()
 def create_post():
@@ -58,6 +58,7 @@ def create_post():
         location=request_body["location"],
         city=request_body["city"],
         date=request_body["date"],
+        city=request_body["city"],
         price=request_body["price"],
         post_status=request_body["post_status"],
         user_id=user_id
@@ -183,6 +184,7 @@ def create_profile_image():
 
     return jsonify(new_post_image.serialize()), 201
 
+
 # @api.route("/helper", methods=["GET"])
 # def get_helper():
 #     helpers = Helper.query.all()
@@ -207,12 +209,16 @@ def create_profile_image():
 
 #     return jsonify("Successful"),200
 
+
 @api.route("/post_candidates", methods=["PUT"])
 @jwt_required()
+
 def create_post_candidates():
+
     user_id = get_jwt_identity()
     helper = Helper.query.filter_by(user_id = user_id).first()
     if not helper:
+
         return jsonify("user is not registered as a helper"),400
     body = request.json
     if body["post_id"] is None :
@@ -232,17 +238,34 @@ def create_post_candidates():
             "error": e
         }
         return jsonify(payload),409
+        return jsonify("Successful"), 200
+
+@api.route("/postcandidate/<int:id>", methods=["DELETE"])
+def delete_post_candidate(id):
+    post_candidate = PostCandidate.query.filter_by(id=id).first()
+
+    if not post_candidate:
+        return jsonify("Post candidate not found"), 404
+
+    db.session.delete(post_candidate)
     db.session.commit()
-    return jsonify("Successful"),200
 
-# @api.route("/postcandidate/<int:id>", methods=["DELETE"])
-# def delete_postcandidate(id):
-#     post_candidate.query.filter_by(id = id).delete()
+def create_app():
+    app = Flask(__name__)
+    app.url_map.strict_slashes = False
 
-    
-#     db.session.commit()
+    app.config['JWT_SECRET_KEY'] = 'super-secret-key'
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
-#     return jsonify("Successful"),200
+    app.register_blueprint(api)
+
+    return app
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run()
+
+
 
 
 
