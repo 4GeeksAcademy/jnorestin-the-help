@@ -3,9 +3,11 @@ from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
 
+
 candidates = db.Table('candidates',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True)
+
 )
 
 class Post(db.Model):
@@ -20,6 +22,7 @@ class Post(db.Model):
     images = db.relationship('Image', backref='post')
     post_status = db.Column(db.String(256), nullable=False)
 
+
     def __repr__(self):
         return f'<Post {self.id}>'
 
@@ -27,12 +30,14 @@ class Post(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
+
             "description":self.description,
             "location":self.location,
-            "date":self.date,
+            "date": self.date.strftime("%Y-%m-%d %H:%M:%S"),
             "user":self.user.serialize(),
             "images":[image.serialize() for image in self.images],
             "price": self.price,
+            "city": self.city,
             "post_status":self.post_status,
             "candidates": list(map(lambda x: x.serialize(), self.candidates))
             
@@ -40,7 +45,11 @@ class Post(db.Model):
             
             
             # do not serialize the password, its a security breach
+
+
         }
+
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,6 +64,7 @@ class User(db.Model):
     phone_number = db.Column(db.String(20), unique=False, nullable=True)
     address = db.Column(db.String(200), unique=False, nullable=True)
     skills = db.Column(db.String(500), unique=False, nullable=True)
+
 
 
     @classmethod
@@ -85,17 +95,19 @@ class User(db.Model):
         return f'<User {self.email}>'
 
     def check_password(self, pswd):
-        if self.password == pswd:
-            return True
-        return False
+        return self.password == pswd
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
             "profile_image": self.profile_image,
-            "name": self.name   
-        }
+            "name": self.name,
+            "date_of_birth": self.date_of_birth,
+            "city": self.city,
+            "location": self.location,
+            "zip_code": self.zip_code,
+
 
 
 
@@ -114,11 +126,13 @@ class User(db.Model):
 #             "post_id": self.post_id
 #         }
 
+
 # class Helper(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     user_id = db.Column(db.Integer, ForeignKey("user.id"))
 #     bio = db.Column(db.String(500), unique=False, nullable=False)
 #     role = db.Column(db.String(50), unique=False, nullable=False)
+
 
 #     def __repr__(self):
 #         return f'<Helper {self.id}>'
@@ -134,7 +148,7 @@ class User(db.Model):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, ForeignKey("post.id"))
-    url = db.Column(db.String(500), unique=False, nullable=False)
+    url = db.Column(db.String(500), nullable=False)
     public_id = db.Column(db.String(250), unique=True, nullable=False)
 
     @classmethod
@@ -162,6 +176,7 @@ class Image(db.Model):
             "post_id": self.post_id,
             "url": self.url
         }
+
 
 
     

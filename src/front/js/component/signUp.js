@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "../../../front/styles/login&signup.css";
 
 export const SignUp = ({ onClose }) => {
   const [email, setEmail] = useState("");
@@ -41,7 +42,7 @@ export const SignUp = ({ onClose }) => {
     setZipCode(e.target.value);
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const currentDate = new Date();
@@ -56,29 +57,59 @@ export const SignUp = ({ onClose }) => {
       return;
     }
 
-    // Perform signup logic here, e.g., make an API request to create a new user
+    try {
+      const response = await fetch(process.env.BACKEND_URL + "/api/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+          date_of_birth: dateOfBirth,
+          city,
+          location,
+          zip_code: zipCode,
+        }),
+      });
 
-    
-    setTimeout(() => {
-      setEmail("");
-      setPassword("");
-      setName("");
-      setDateOfBirth("");
-      setZipCode("");
-      setCity("");
-      setLocation("");
-      setSignupSuccess(true);
-      onClose();
+      if (response.ok) {
+        const userData = await response.json();
+        console.log("User created:", userData);
 
-      // Redirect to help page after successful signup
-      navigate("/help");
-    }, 2000);
+        setEmail("");
+        setPassword("");
+        setName("");
+        setDateOfBirth("");
+        setZipCode("");
+        setCity("");
+        setLocation("");
+        setSignupSuccess(true);
+      } else {
+        console.log("Failed to create user.");
+        const errorData = await response.json();
+        console.log("Error:", errorData);
+      }
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
   };
+
+  useEffect(() => {
+    if (signupSuccess) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [signupSuccess, onClose]);
 
   return (
     <div className="signup-form-wrapper">
       {signupSuccess ? (
-        <p>Sign up successful. Redirecting...</p>
+        <p style={{ color: "green" }}>Sign up successful.</p>
       ) : (
         <form onSubmit={handleSignup}>
           <div className="form-group">
@@ -99,17 +130,17 @@ export const SignUp = ({ onClose }) => {
           </div>
           <div className="form-group">
             <label>City</label>
-            <input type="text" value={city} onChange={handleCityChange} />
+            <input type="text" value={city} onChange={handleCityChange} required />
           </div>
           <div className="form-group">
             <label>State</label>
-            <input type="text" value={location} onChange={handleLocationChange} />
+            <input type="text" value={location} onChange={handleLocationChange} required />
           </div>
           <div className="form-group">
             <label>Zip code</label>
-            <input type="text" value={zipCode} onChange={handleZipCodeChange} />
+            <input type="text" value={zipCode} onChange={handleZipCodeChange} required />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="navbar-button">
             Sign Up
           </button>
         </form>
@@ -117,7 +148,4 @@ export const SignUp = ({ onClose }) => {
     </div>
   );
 };
-
-
-
 
