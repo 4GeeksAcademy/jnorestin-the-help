@@ -112,13 +112,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error);
 				}
+			},
+
+			createHelperProfile: async (formData) => {
+				const store = getStore();
+				try {
+					const response = await fetch(store.apiUrl + "/api/helper", {
+						method: "PUT",
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						},
+						body: formData
+					});
+					const body = await response.json();
+					if (!response.ok) {
+						throw new Error(`Failed to update helper profile: ${body}`);
+					}
+					setStore({
+						user: body.user
+					});
+					localStorage.setItem("user", JSON.stringify(body.user));
+					return;
+				} catch (error) {
+					console.log(error);
+				}
 			}
-
-
 		}
 	};
 };
 
-  
-  export default getState;
-  
+export default getState;

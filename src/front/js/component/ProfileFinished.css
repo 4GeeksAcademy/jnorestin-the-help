@@ -1,0 +1,54 @@
+body {
+    background: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    height: -100vh;
+    margin: 0;
+    padding-top: -20px; /* Added a small padding to the top */
+  }
+  
+  .title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  
+  .center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  .profile-picture1 {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .input-group {
+    width: 400px;
+    margin: 10px auto;
+    border-radius: 20px;
+    box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+    padding: 20px;
+    background: #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .input-group label {
+    margin-right: 10px;
+  }
+  
+  .input-group .display-field {
+    width: 70%;
+    color: #666;
+    font-size: 18px;
+  }
+  

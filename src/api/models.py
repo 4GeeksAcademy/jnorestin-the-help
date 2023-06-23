@@ -124,8 +124,11 @@ class PostCandidate(db.Model):
 class Helper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"))
-    bio = db.Column(db.String(500), unique=False, nullable=False)
+    description = db.Column(db.String(500), unique=False, nullable=False)
     role = db.Column(db.String(50), unique=False, nullable=False)
+    phone_number = db.Column(db.String(20), unique=False, nullable=False)  # Assuming a maximum length of 20 characters for a phone number
+    address = db.Column(db.String(200), unique=False, nullable=False)  # Assuming a maximum length of 200 characters for an address
+    skills = db.Column(db.String(500), unique=False, nullable=True)  # Skills can be a long string, and it's nullable if not provided
 
     def __repr__(self):
         return f'<Helper {self.id}>'
@@ -134,9 +137,13 @@ class Helper(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "bio": self.bio,
-            "role": self.role
+            "description": self.description,
+            "role": self.role,
+            "phone_number": self.phone_number,
+            "address": self.address,
+            "skills": self.skills,
         }
+
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)

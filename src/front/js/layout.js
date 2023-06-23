@@ -12,6 +12,9 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Help } from "./pages/help";
 import { Post } from "./pages/post"
+import HelperProfile from './component/helperProfile';
+import {ProfileFinished} from './component/ProfileFinished'
+
 
 //create your first component
 function Layout() {
@@ -28,10 +31,12 @@ function Layout() {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Single />} path="/single/:theid" />
-            <Route element={<Help />} path="/help" />
-            <Route element={<Post />} path="/post" />
+          <Route path="/" element={<Home />} />
+    <Route path="/single/:theid" element={<Single />} />
+    <Route path="/help" element={<Help />} />
+    <Route path="/post" element={<Post />} />
+    <Route path="/helper-profile" element={<HelperProfile />} />
+    <Route path="/profile-finished" element={<ProfileFinished />} />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
@@ -42,5 +47,6 @@ function Layout() {
 }
 
 export default injectContext(Layout);
+
 
 

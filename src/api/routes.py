@@ -166,20 +166,23 @@ def get_helper():
     ))
     return jsonify(helper_dictionaries)
 
-@api.route("/helper", methods=["POST"])
-@jwt_required()
-def creat_helper():
+@api.route("/api/helper", methods=["PUT"])
+
+def create_helper():
     user_id = get_jwt_identity()
     body = request.json
     new_helper = Helper(
-        bio = body["bio"],
+        description = body["description"],
         role = body["role"],
+        phone_number = body["phone_number"],
+        address = body["address"],
+        skills = body["skills"],
         user_id = user_id
     )
     db.session.add(new_helper)
     db.session.commit()
 
-    return jsonify("Successful"),200
+    return jsonify("Successful"), 200
 
 
 @api.route("/postcandidate", methods=["POST"])
