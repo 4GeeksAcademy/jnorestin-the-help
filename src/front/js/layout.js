@@ -12,7 +12,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Help } from "./pages/help";
 import { Post } from "./pages/post";
-import {HelperPosts} from "./pages/helperposts"
+import {HelperPosts} from "./pages/helperposts";
 
 //create your first component
 function Layout() {
