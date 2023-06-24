@@ -70,7 +70,7 @@ export const SignUp = ({ onClose }) => {
           date_of_birth: dateOfBirth,
           city,
           location,
-          zip_code: zipCode,
+          zipcode: zipCode,
         }),
       });
 
