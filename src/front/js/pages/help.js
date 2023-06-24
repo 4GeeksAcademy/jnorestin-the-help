@@ -223,7 +223,7 @@ export const Help = (props) => {
 
   const handleCreatePostCandidate = async (postId) => {
     try {
-      if (store.user.role !== "helper") {
+      if (store.user.helper !== "helper") {
         throw new Error("Only helpers can become post candidates");
       }
 
