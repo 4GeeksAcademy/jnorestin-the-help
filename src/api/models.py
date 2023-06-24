@@ -42,7 +42,6 @@ class Post(db.Model):
             "city":self.city,
             "images":[image.serialize() for image in self.images],
             "price": self.price,
-            "city": self.city,
             "post_status":self.post_status,
             "candidates": list(map(lambda x: x.serialize(), self.candidates))
             

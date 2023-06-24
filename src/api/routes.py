@@ -58,7 +58,6 @@ def create_post():
         location=request_body["location"],
         city=request_body["city"],
         date=request_body["date"],
-        city=request_body["city"],
         price=request_body["price"],
         post_status=request_body["post_status"],
         user_id=user_id
