@@ -27,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  token: body.token,
 			  user: body.user
 			});
+			console.log(body)
 			localStorage.setItem("token", JSON.stringify(body.token));
 			localStorage.setItem("user", JSON.stringify(body.user));
 			return body;
