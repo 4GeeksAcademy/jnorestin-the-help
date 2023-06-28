@@ -52,7 +52,7 @@ export const Help = (props) => {
       }
 
       const response = await fetch(store.apiUrl + "/api/add-post-candidate", {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${store.token}`,
           "Content-Type": "application/json",
