@@ -1,30 +1,18 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 
 export const HelperPosts = () => {
   const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    // Fetch user posts and post candidates when the component mounts
-    // actions.fetchUserPosts();
-  }, []);
-
   const { posts, user } = store;
-
-console.log(posts, "These are the posts")
-console.log(user, "This is the helper")
-console.log(posts
-  .filter((item) => item.helper_id === user.id), "posts the helper is assigned to")
-
   return (
     <div className="container">
-      <h1 className="mt-3">Helper View</h1>
-      <div className="row">
+      <div className="row mt-5">
         {posts
           .filter((item) => item.helper_id === user.id)
           .map((post, index) => (
             <div className="col-md-4 mb-3" key={index}>
-              <div className="card h-100">
+              <div style={{width:"40rem"}}className="card h-100">
                 <img
                   src={post.user.profile_image}
                   alt="User Profile Image"

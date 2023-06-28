@@ -1,21 +1,14 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context } from "../store/appContext";
 import Paymentmodal from "../component/paymentmodal"
 
 export const Post = () => {
   const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    // Fetch user posts and post candidates when the component mounts
-    // actions.fetchUserPosts();
-  }, []);
-
-  console.log(store.user.id, "these are the posts");
-
   return (
-    <div className="help-page">
+    <div className="post-page">
       <div className="container-fluid">
-        <div className="row">
+        <div className="row mt-5">
           {store.user ? (
             store.posts
               .filter((item, index) => item?.user_id == store.user.id)
@@ -76,7 +69,6 @@ export const Post = () => {
               ))
           ) : (
             <div>
-              <p>User Not Logged In</p>
             </div>
           )}
         </div>
