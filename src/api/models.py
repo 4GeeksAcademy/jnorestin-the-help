@@ -88,7 +88,9 @@ class Post(db.Model):
             "images": [image.serialize() for image in self.images],
             "price": self.price,
             "post_status": self.post_status,
-            "candidates": list(map(lambda x: x.serialize(), self.candidates))
+            "candidates": list(map(lambda x: x.serialize(), self.candidates)),
+            "helper":self.helper.serialize(),
+            "helper_id":self.helper_id
         }
 
 
