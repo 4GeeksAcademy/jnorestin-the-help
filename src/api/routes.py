@@ -3,6 +3,20 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from cloudinary import uploader
 from api.models import db, User, Post, Image
 from api.utils import generate_sitemap, APIException
+from flask import Flask, request, jsonify
+from api.models import User
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from api.models import db, User
+from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
+from flask import jsonify
+from flask import Flask, request, jsonify
+
+
+
+app = Flask(__name__)
+CORS(app)
+
 
 api = Blueprint('api', __name__)
 
@@ -57,6 +71,38 @@ def sign_up():
         print(error)
         return jsonify(error), 400
 
+
+from flask import jsonify
+
+#from flask_jwt_extended import jwt_optional, get_jwt_identity
+
+# ...
+
+#from flask_jwt_extended import get_jwt_identity
+
+@api.route('/user-by-token', methods=['GET'])
+def get_user_by_token():
+    # Verify if the JWT is present in the request
+    try:
+        verify_jwt_in_request()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 401
+
+    current_user_id = get_jwt_identity()
+
+    if current_user_id is None:
+        return jsonify({"error": "No JWT provided"}), 401
+
+    # Query the user from the database
+    user = User.query.get(current_user_id)
+
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    # Return the user's serialized data
+    return jsonify(user.serialize()), 200
+
+
    
 
 @api.route("/log-in", methods=["POST"])
@@ -71,30 +117,56 @@ def log_in():
         "user": user.serialize(),
         "token": token
     }), 200
-
-@api.route("/profile-image", methods=["POST"])
+@api.route("/profile-image", methods=["PUT"])
 @jwt_required()
 def create_profile_image():
     image = request.files['file']
-    user_id = User.query.filter_by(email=get_jwt_identity).first()
-    response = uploader.upload(
-        image,
-        resource_type="image",
-        folder="user"
-    )
-    new_post_image = Image(
-        user_id=user_id,
-        url=response["secure_url"],
-        public_id=response["public_id"]
-    )
-    db.session.add(new_post_image)
+    user_id = get_jwt_identity()
+    response = uploader.upload(image)
+    profile_image_url = response['secure_url']
+
+    user = User.query.get(user_id)
+   
+    new_user_image = User
     db.session.commit()
 
-    return jsonify(new_post_image.serialize()), 201
+    return jsonify({"message": "Profile image uploaded successfully", "profile_image_url": profile_image_url}), 201
 
 
 
 
+# ...
+
+@api.route("/update-user", methods=["PUT"])
+@jwt_required()
+def update_user():
+    # Retrieve the data from the request
+    data = request.json
+    skills = data.get("skills")
+    description = data.get("description")
+    phone_number = data.get("phone_number")
+    address = data.get("address")
+
+    # Get the current user from the JWT identity
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    # Update the user's profile
+    if skills is not None:
+        user.skills = skills
+    if description is not None:
+        user.description = description
+    if phone_number is not None:
+        user.phone_number = phone_number
+    if address is not None:
+        user.address = address
+
+    db.session.commit()
+
+    # Return a success response
+    return jsonify({"message": "Profile updated successfully"}), 200
+
+# ...
 
 # Post-related routes
 @api.route('/posts', methods=['GET'])
