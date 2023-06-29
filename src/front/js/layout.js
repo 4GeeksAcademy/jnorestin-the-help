@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import UpdateProfile from "./component/UpdateProfile";
+import UpdatedProfile from "./component/UpdatedProfile";
 
 
 import { Home } from "./pages/home";
@@ -34,6 +36,8 @@ function Layout() {
             <Route element={<Help />} path="/help" />
             <Route element={<Post />} path="/post" />
             <Route element={<HelperPosts />} path="/helperpost" />
+            <Route element={<UpdateProfile />} path="/update-profile" />
+            <Route element={<UpdatedProfile/>} path ="/updated-profile"/>
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
