@@ -55,6 +55,7 @@ class User(db.Model):
             "location":self.location
         }
 
+# ... User class stays the same ...
 
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -89,10 +90,11 @@ class Post(db.Model):
             "price": self.price,
             "post_status": self.post_status,
             "candidates": list(map(lambda x: x.serialize(), self.candidates)),
-            "helper":self.helper.serialize(),
-            "helper_id":self.helper_id
+            "helper": self.helper.serialize() if self.helper else None,
+            "helper_id": self.helper_id
         }
 
+# ... Image class stays the same ...
 
 class Image(db.Model):
     __tablename__ = 'images'
