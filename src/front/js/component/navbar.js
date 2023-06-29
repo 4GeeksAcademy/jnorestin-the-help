@@ -2,22 +2,24 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser, faSignOutAlt, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext";
 import imgSrc from "../../img/HELPMEET-4.png";
 import { LogIn } from "./logIn";
 import { SignUp } from "./signUp";
 import "../../../front/styles/index.css";
 
-library.add(faBell, faUser, faSignOutAlt);
+library.add(faBell, faUser, faSignOutAlt, faBars, faTimes);
 
 export const Navbar = () => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [logoutSuccess, setLogoutSuccess] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const { actions } = useContext(Context);
   const navigate = useNavigate();
+  const menuRef = useRef(null);
 
   const handleLoginClick = () => {
     setShowLoginForm(true);
@@ -46,20 +48,25 @@ export const Navbar = () => {
     setShowSignupForm(false);
   };
 
-  const loginFormRef = useRef(null);
-  const signupFormRef = useRef(null);
+  const handleMenuClick = () => {
+    toggleMenu();
+  };
+
+  const handleMenuItemClick = () => {
+    toggleMenu();
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (
-        (loginFormRef.current && !loginFormRef.current.contains(event.target)) ||
-        (signupFormRef.current && !signupFormRef.current.contains(event.target))
-      ) {
-        handleLoginFormClose();
-        handleSignupFormClose();
+      if (!menuRef.current.contains(event.target)) {
+        toggleMenu();
       }
     };
 
@@ -73,61 +80,82 @@ export const Navbar = () => {
   return (
     <React.Fragment>
       <nav className="navbar">
-        
-          <div className="nav-link">
-
-            {!isHomePage && (
-              <Link to="/help">
-                <span className="navbar-brand">HELP</span>
-              </Link>
-            )}
+      <div className="burger-menu" ref={menuRef}>
+          <FontAwesomeIcon
+            icon={isMenuOpen ? faTimes : faBars}
+            className={`burger-icon ${isMenuOpen ? "close-icon" : ""}`}
+            onClick={handleMenuClick}
+          />
+          {isMenuOpen && (
+            <ul className="menu-items">
               {!isHomePage && (
-              <Link to="/post">
-                <span className="navbar-brand">POSTS</span>
-              </Link>
-            )}
+                <li>
+                  <Link to="/help" onClick={handleMenuItemClick}>
+                    Help
+                  </Link>
+                </li>
+              )}
+              {!isHomePage && (
+                <li>
+                  <Link to="/post" onClick={handleMenuItemClick}>
+                    Posts
+                  </Link>
+                </li>
+              )}
+              <li>
+                <Link to="/" onClick={handleMenuItemClick}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/help" onClick={handleMenuItemClick}>
+                  Help
+                </Link>
+              </li>
+              <li>
+                <Link to="/post" onClick={handleMenuItemClick}>
+                  Your Posts
+                </Link>
+              </li>
+              <li>
+                <Link to="/helperpost" onClick={handleMenuItemClick}>
+                  Helper Posts
+                </Link>
+              </li>
+            </ul>
+          )}
+        </div>
 
-            <Link to="/">
-              <span className="navbar-brand mb-0 h1">Home</span>
-            </Link>
-            <Link to="/help">
-              <span className="navbar-brand mb-0 h1">Help</span>
-            </Link>
-            <Link to="/post">
-              <span className="navbar-brand mb-0 h1">Your Posts</span>
-            </Link>
-            <Link to="/helperpost">
-              <span className="navbar-brand mb-0 h1">Helper Posts</span>
-            </Link>
+        
 
+
+
+
+        <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
+        <div className="ml-auto login-out ">
+            <button className="navbar-button" onClick={handleLoginClick}>
+              Log In
+            </button>ml
+            <button className="navbar-button" onClick={handleSignupClick}>
+              Sign Up
+            </button>
           </div>
-          <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
-          {isHomePage && (
-            <div className="ml-auto">
-              <button className="navbar-button" onClick={handleLoginClick}>
-                Log In
-              </button>
-              <button className="navbar-button" onClick={handleSignupClick}>
-                Sign Up
-              </button>
-            </div>
-          )}
-          {location.pathname === "/help" && (
-            <div className="ml-auto">
-              <FontAwesomeIcon icon={faBell} className="navbar-icon" />
-              <span className="button-spacing" />
-              <FontAwesomeIcon icon={faUser} className="navbar-icon" />
-              <span className="button-spacing" />
-              <button className="logout-button" onClick={handleLogoutClick}>
-                Log Out
-              </button>
-            </div>
-          )}
+        {location.pathname === "/help" && (
+          <div className="ml-auto login-out">
+            <FontAwesomeIcon icon={faBell} className="navbar-icon" />
+            <span className="button-spacing" />
+            <FontAwesomeIcon icon={faUser} className="navbar-icon" />
+            <span className="button-spacing" />
+            <button className="logout-button" onClick={handleLogoutClick}>
+              Log Out
+            </button>
+          </div>
+        )}
         
       </nav>
       {showLoginForm && (
         <div className="form-overlay">
-          <div className="form-container" ref={loginFormRef}>
+          <div className="form-container">
             <div className="login-form">
               {loginSuccess ? (
                 <p>Login successful. Closing form...</p>
@@ -143,7 +171,7 @@ export const Navbar = () => {
       )}
       {showSignupForm && (
         <div className="form-overlay">
-          <div className="form-container" ref={signupFormRef}>
+          <div className="form-container">
             <div className="signup-form">
               <h3 className="form-title">Sign Up</h3>
               <SignUp onClose={handleSignupFormClose} />
@@ -155,5 +183,3 @@ export const Navbar = () => {
     </React.Fragment>
   );
 };
-
-

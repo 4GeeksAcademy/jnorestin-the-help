@@ -56,6 +56,42 @@ class User(db.Model):
         }
 
 
+# class Post(db.Model):
+#     __tablename__ = 'posts'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+#     user = db.relationship("User", back_populates="posts", foreign_keys=[user_id])
+#     candidates = db.relationship("User", secondary=candidates, back_populates="candidate_in")
+#     helper_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     helper = db.relationship("User", back_populates="posts_to_help", foreign_keys=[helper_id])
+#     description = db.Column(db.String(500), nullable=False)
+#     location = db.Column(db.String(256), nullable=False)
+#     city = db.Column(db.String(256), nullable=False)
+#     date = db.Column(db.String(256), nullable=False)
+#     price = db.Column(db.Integer, nullable=False)
+#     images = db.relationship('Image', backref='post')
+#     post_status = db.Column(db.String(256), nullable=False)
+
+#     def __repr__(self):
+#         return f'<Post {self.id}>'
+
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "user_id": self.user_id,
+#             "description": self.description,
+#             "location": self.location,
+#             "date": self.date,
+#             "user": self.user.serialize(),
+#             "city": self.city,
+#             "images": [image.serialize() for image in self.images],
+#             "price": self.price,
+#             "post_status": self.post_status,
+#             "candidates": list(map(lambda x: x.serialize(), self.candidates)),
+#             "helper":self.helper.serialize(),
+#             "helper_id":self.helper_id
+#         }
 class Post(db.Model):
     __tablename__ = 'posts'
 
@@ -89,8 +125,8 @@ class Post(db.Model):
             "price": self.price,
             "post_status": self.post_status,
             "candidates": list(map(lambda x: x.serialize(), self.candidates)),
-            "helper":self.helper.serialize(),
-            "helper_id":self.helper_id
+            "helper": self.helper.serialize() if self.helper else None,
+            "helper_id": self.helper_id
         }
 
 

@@ -58,7 +58,7 @@
   color: #1b4965;
 } */
 
-.ml-auto {
+.login-out {
   display: flex;
   align-items: center;
   width: 250px;
@@ -125,4 +125,154 @@
 .home-logo-img {
   margin-left: 10px; /* Adjusted margin for home page */
   /* Add other CSS styles for the home page logo-img */
+}
+
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #00aec5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 11px solid #ffffff;
+  position: relative;
+}
+
+.navbar-brand {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: underline #62b6cb;
+  margin-top: 10px;
+}
+
+.navbar-brand:hover {
+  color: hsl(203, 58%, 25%);
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  margin-right: 10px;
+}
+
+.navbar-link:last-child {
+  margin-right: 0;
+}
+
+/* .ml-auto {
+  display: flex;
+  align-items: center;
+} */
+
+.navbar-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #62b6cb;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.navbar-button:hover {
+  background-color: #1b4965;
+}
+
+.button-spacing {
+  margin-right: 10px;
+}
+
+.logout-button {
+  margin-top: 10px;
+  background-color: #62b6cb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+  align-self: center;
+  font-family: 'Arimo', sans-serif;
+}
+
+.logout-button:hover {
+  background-color: #1b4965;
+}
+
+.logout-button:last-child {
+  margin-right: 0;
+}
+
+.navbar-icon {
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+  color: hsl(203, 58%, 25%);
+}
+
+.logo-img {
+  width: 100px;
+  height: auto;
+  margin: auto;
+}
+
+.home-logo-img {
+  margin-left: 10px;
+}
+
+.burger-menu {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.burger-icon {
+  font-size: 24px;
+  color: #000;
+}
+
+.close-icon {
+  color: #f00;
+}
+
+.menu-items {
+  list-style: none;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 90px;
+}
+
+.menu-items li {
+  margin-bottom: 8px;
+}
+
+.menu-items li:last-child {
+  margin-bottom: 0;
+}
+
+.menu-items a {
+  color: #000;
+  text-decoration: none;
+}
+
+.menu-items a:hover {
+  color: #f00;
 }
