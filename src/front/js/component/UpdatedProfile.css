@@ -3,7 +3,7 @@
 * {
 	box-sizing: border-box;
 }
-
+/* 
 body {
 	background-color: #28223F;
 	font-family: Montserrat, sans-serif;
@@ -13,13 +13,25 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 	margin: 0;
-}
+} */
 
 h1 {
 	margin: 10px 0;
 }
 
 .profile-container {
+	
+	margin-left: 750px;
+	background-color: #28223F;
+	font-family: Montserrat, sans-serif;
+	display:contents;
+	width: 50%;
+	height: auto;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0;
 	text-align: center;
 	background-color: #f1f3f6;
 	padding: 20px;
@@ -52,6 +64,9 @@ p {
     -5px -5px 10px rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	margin-bottom: 10px;
+	margin-left: 500px;
+	width: 440px;
+	display: center;
 }
 
 button {

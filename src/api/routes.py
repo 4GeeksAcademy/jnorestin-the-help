@@ -169,6 +169,7 @@ def update_user():
 # ...
 
 # Post-related routes
+
 @api.route('/posts', methods=['GET'])
 def get_posts():
     posts = Post.query.all()
@@ -198,6 +199,26 @@ def create_post():
     db.session.commit()
 
     return jsonify(new_post.serialize()), 201
+
+@api.route('/add-post-candidate', methods=['PUT'])
+@jwt_required()
+def add_post_candidate():
+    user_id = get_jwt_identity()
+    request_body = request.get_json()
+
+    if request_body is None:
+        return "no data was sent on the request", 400
+    post = Post.query.filter_by(id=request_body["post_id"]).first()
+    if post is None:
+        return "post not found", 404
+    if post.candidates is None:
+        post.candidates=[]
+    user= User.query.get(user_id)
+    post.candidates.append(user)
+
+    db.session.commit()
+
+    return jsonify(post.serialize()), 200
 
 @api.route("/post/<int:id>", methods=["DELETE"])
 def delete_post(id):
