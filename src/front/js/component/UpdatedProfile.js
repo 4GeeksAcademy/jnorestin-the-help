@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./UpdatedProfile.css";
+//import "./UpdatedProfile.css";
+import styles from './UpdatedProfile.css';
 
 const UpdatedProfile = () => {
   const navigate = useNavigate();
