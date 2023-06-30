@@ -28,6 +28,7 @@ function Layout() {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
+          
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Single />} path="/single/:theid" />
