@@ -8,6 +8,9 @@
   width: 80px;
   text-align: center;
   margin: 10px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
 .helpslider-picture {
@@ -25,7 +28,7 @@
 }
 
 .card-text {
-  margin: 10;
+  margin: 10px; /* Fixed typo: added 'px' */
 }
 
 .rating {
@@ -38,10 +41,15 @@
   font-size: 20px;
   text-align: center;
 }
+
 .profile_image {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   border: 3px solid #333;
   object-fit: cover;
+}
+
+.card-body {
+  margin-top: 10px; 
 }

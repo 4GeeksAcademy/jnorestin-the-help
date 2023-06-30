@@ -44,19 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
       
-		logout: () => {
-		  setStore({
-=========
-		store: {
->>>>>>>>> Temporary merge branch 2
-			token: "",
-			user: {},
-			apiUrl: process.env.BACKEND_URL,
-			posts: [],
-			userPosts: []
-		},
-
-		actions: {
+	
 			logIn: async (email, password) => {
 				const store = getStore();
 				const response = await fetch(store.apiUrl + "/api/log-in", {
@@ -134,6 +122,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(data)
 				setStore({
 					posts: data
+					
 				});
 
 				return data;

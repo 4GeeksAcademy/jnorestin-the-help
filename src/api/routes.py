@@ -72,7 +72,7 @@ def sign_up():
         return jsonify(error), 400
 
 
-from flask import jsonify
+
 
 #from flask_jwt_extended import jwt_optional, get_jwt_identity
 

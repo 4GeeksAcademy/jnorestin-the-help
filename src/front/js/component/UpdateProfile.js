@@ -22,7 +22,7 @@ const UpdateProfile = () => {
     const token = localStorage.getItem("token");
     const authorizationHeader = `Bearer ${token.replace(/^"(.*)"$/, "$1")}`;
 
-    fetch("https://jnorestin-musical-computing-machine-v4pwg97pxg3wwr7-3001.preview.app.github.dev/api/update-user", {
+    fetch("https://donducci-cautious-spork-446gqv6x6pp35r9p-3001.preview.app.github.dev/api/update-user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
