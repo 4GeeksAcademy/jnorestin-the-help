@@ -239,8 +239,15 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  width: 45px
 }
-
+.navCollapse{
+  position:absolute;
+  background-color: #00aec5;
+  z-index: 3;
+ top: 30px;
+ left: 180px
+}
 .burger-icon {
   font-size: 24px;
   color: #000;
@@ -249,6 +256,7 @@
 .close-icon {
   color: #f00;
 }
+
 
 .menu-items {
   list-style: none;

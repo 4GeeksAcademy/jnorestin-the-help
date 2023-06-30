@@ -78,49 +78,68 @@ export const Navbar = () => {
   }, []);
 
   return (
-
-    <div>
-
-      <nav className="navbar ">
-        <img src={imgSrc} alt="" className={`logo-img home-logo-img me-0`} />
-        <button class="btn burger-menu me-auto " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <React.Fragment>
+      <nav className="navbar">
+      <div className="burger-menu" ref={menuRef}>
           <FontAwesomeIcon
-            icon={faBars}
-            className={`burger-icon`}
-
+            icon={isMenuOpen ? faTimes : faBars}
+            className={`burger-icon ${isMenuOpen ? "close-icon" : ""}`}
+            onClick={handleMenuClick}
           />
-        </button>
-        <div class="collapse navbar-collapse navCollapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-lg-0 ">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
+          {isMenuOpen && (
+            <ul className="menu-items">
+              {!isHomePage && (
+                <li>
+                  <Link to="/help" onClick={handleMenuItemClick}>
+                    Help
+                  </Link>
+                </li>
+              )}
+              {!isHomePage && (
+                <li>
+                  <Link to="/post" onClick={handleMenuItemClick}>
+                    Posts
+                  </Link>
+                </li>
+              )}
+              <li>
+                <Link to="/" onClick={handleMenuItemClick}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/help" onClick={handleMenuItemClick}>
+                  Help
+                </Link>
+              </li>
+              <li>
+                <Link to="/post" onClick={handleMenuItemClick}>
+                  Your Posts
+                </Link>
+              </li>
+              <li>
+                <Link to="/helperpost" onClick={handleMenuItemClick}>
+                  Helper Posts
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
 
+        
 
 
 
 
+        <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
         <div className="ml-auto login-out ">
-          <button className="navbar-button" onClick={handleLoginClick}>
-            Log In
-          </button>ml
-          <button className="navbar-button" onClick={handleSignupClick}>
-            Sign Up
-          </button>
-        </div>
+            <button className="navbar-button" onClick={handleLoginClick}>
+              Log In
+            </button>ml
+            <button className="navbar-button" onClick={handleSignupClick}>
+              Sign Up
+            </button>
+          </div>
         {location.pathname === "/help" && (
           <div className="ml-auto login-out">
             <FontAwesomeIcon icon={faBell} className="navbar-icon" />
@@ -132,10 +151,8 @@ export const Navbar = () => {
             </button>
           </div>
         )}
-
-
+        
       </nav>
-
       {showLoginForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -152,7 +169,6 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-
       {showSignupForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -163,11 +179,7 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-
       {logoutSuccess && <div className="logout-message alert alert-success">Logout successful. Redirecting...</div>}
-
-    </div>
+    </React.Fragment>
   );
 };
-
-
