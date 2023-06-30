@@ -71,26 +71,27 @@ export const Navbar = () => {
         {!isHomePage ? (
           <div className="collapse navbar-collapse navCollapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-lg-0">
-              <li className="nav-item">
-                <Link to="/post">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Your Posts
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/help">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Help
-                  </a>
-                </Link>
-              </li>
+
               <li className="nav-item">
                 <Link to="/">
                   <a className="nav-link" aria-current="page" href="#">
                     Home
                   </a>
                 </Link>
+                <li className="nav-item">
+                  <Link to="/help">
+                    <a className="nav-link" aria-current="page" href="#">
+                      Help
+                    </a>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/post">
+                    <a className="nav-link" aria-current="page" href="#">
+                      Your Posts
+                    </a>
+                  </Link>
+                </li>
               </li>
               <li className="nav-item">
                 <Link to="/helperpost">
