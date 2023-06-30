@@ -163,4 +163,9 @@
   background-color: #ffffff;
   width: 100px;
   justify-content: center;
+  text-decoration: none;
+}
+
+.login-out{
+  width: 250px;
 }
