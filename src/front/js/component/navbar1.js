@@ -16,8 +16,10 @@ export const Navbar = () => {
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [logoutSuccess, setLogoutSuccess] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const { actions } = useContext(Context);
   const navigate = useNavigate();
+  const menuRef = useRef(null);
 
   const handleLoginClick = () => {
     setShowLoginForm(true);
@@ -46,89 +48,111 @@ export const Navbar = () => {
     setShowSignupForm(false);
   };
 
+  const handleMenuClick = () => {
+    toggleMenu();
+  };
+
+  const handleMenuItemClick = () => {
+    toggleMenu();
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!menuRef.current.contains(event.target)) {
+        toggleMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
-    <div>
+    <React.Fragment>
       <nav className="navbar">
-        {isHomePage && (
-          <img src={imgSrc} alt="" className={`logo-img home-logo-img me-0`} />
-        )}
-        {!isHomePage && (
-          <button
-            className="btn burger-menu me-auto"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <FontAwesomeIcon icon={faBars} className={`burger-icon`} />
-          </button>
-        )}
-        {!isHomePage ? (
-          <div className="collapse navbar-collapse navCollapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-lg-0">
-              <li className="nav-item">
-                <Link to="/post">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Your Posts
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/help">
-                  <a className="nav-link" aria-current="page" href="#">
+      <div className="burger-menu" ref={menuRef}>
+          <FontAwesomeIcon
+            icon={isMenuOpen ? faTimes : faBars}
+            className={`burger-icon ${isMenuOpen ? "close-icon" : ""}`}
+            onClick={handleMenuClick}
+          />
+          {isMenuOpen && (
+            <ul className="menu-items">
+              {!isHomePage && (
+                <li>
+                  <Link to="/help" onClick={handleMenuItemClick}>
                     Help
-                  </a>
+                  </Link>
+                </li>
+              )}
+              {!isHomePage && (
+                <li>
+                  <Link to="/post" onClick={handleMenuItemClick}>
+                    Posts
+                  </Link>
+                </li>
+              )}
+              <li>
+                <Link to="/" onClick={handleMenuItemClick}>
+                  Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Home
-                  </a>
+              <li>
+                <Link to="/help" onClick={handleMenuItemClick}>
+                  Help
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/helperpost">
-                  <a className="nav-link" aria-current="page" href="#">
-                    Helperpost
-                  </a>
+              <li>
+                <Link to="/post" onClick={handleMenuItemClick}>
+                  Your Posts
+                </Link>
+              </li>
+              <li>
+                <Link to="/helperpost" onClick={handleMenuItemClick}>
+                  Helper Posts
                 </Link>
               </li>
             </ul>
-          </div>
-        ) : null}
+          )}
+        </div>
 
-        {!isHomePage ? null : (
-          <div className="ml-auto login-out">
+        
+
+
+
+
+        <img src={imgSrc} alt="" className={`logo-img ${isHomePage ? "home-logo-img" : ""}`} />
+        <div className="ml-auto login-out ">
             <button className="navbar-button" onClick={handleLoginClick}>
               Log In
-            </button>
+            </button>ml
             <button className="navbar-button" onClick={handleSignupClick}>
               Sign Up
             </button>
           </div>
-        )}
-
         {location.pathname === "/help" && (
           <div className="ml-auto login-out">
             <FontAwesomeIcon icon={faBell} className="navbar-icon" />
             <span className="button-spacing" />
-            <Link to="/updatedprofile">
-              <FontAwesomeIcon icon={faUser} className="navbar-icon" />
-            </Link>
+            <FontAwesomeIcon icon={faUser} className="navbar-icon" />
             <span className="button-spacing" />
             <button className="logout-button" onClick={handleLogoutClick}>
               Log Out
             </button>
           </div>
         )}
+        
       </nav>
-
       {showLoginForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -145,7 +169,6 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-
       {showSignupForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -156,12 +179,7 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-
       {logoutSuccess && <div className="logout-message alert alert-success">Logout successful. Redirecting...</div>}
-    </div>
+    </React.Fragment>
   );
 };
-
-
-
-
