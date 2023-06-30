@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from "../store/appContext";
 import Paymentmodal from "../component/paymentmodal"
 import PayPal from '../component/paypal';
@@ -6,9 +6,7 @@ import PayPal from '../component/paypal';
 export const Post = () => {
   const { store, actions } = useContext(Context);
 
-  const handleClick = () => {
-
-  };
+ const [isShowing, setIsShowing] = useState(false)
 
   return (
     <div className="post-page">
@@ -64,14 +62,18 @@ export const Post = () => {
                           <input className="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" />
                           <label className="form-check-label me-2" htmlFor="flexSwitchCheckDefault"></label>
                           <i className="fa-regular fa-envelope me-2"></i>
-                          <button className="btn btn-primary" type="button" onClick={handleClick(<PayPal />)}>Make Payment</button>
+                          <button className="btn btn-primary" type="button" onClick={()=>setIsShowing(!isShowing)}>Make Payment</button>
+                        {!isShowing?"":<PayPal/>}
+
                         </div>
-                        <div>
-                        <button type="button" class="btn btn-info">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <div className='d-flex'>
+                          <div className='me-auto'><button type="button" className=" btn btn-info ">Edit</button></div>
+                          <div><button type="button" className="btn btn-danger">Delete</button></div>
+                        
+                        
                         </div>
                         {/* <Paymentmodal/> */}
-                        <PayPal />
+                        
 
                       </div>
                     </div>
