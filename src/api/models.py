@@ -55,6 +55,7 @@ class User(db.Model):
             "location":self.location
         }
 
+# ... User class stays the same ...
 
 # ... User class stays the same ...
 
@@ -96,7 +97,10 @@ class Post(db.Model):
         }
 
 # ... Image class stays the same ...
+<<<<<<< HEAD
 
+=======
+>>>>>>> cd92d3bf5163a2736bed6512ac801e5ce453b17b
 
 class Image(db.Model):
     __tablename__ = 'images'
