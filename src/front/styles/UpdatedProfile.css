@@ -1,35 +1,86 @@
-
 footer i {
-	color: red;
-  }
+  color: red;
+}
+
+footer a {
+  color: #3c97bf;
+  text-decoration: none;
+}
+
+.custom-helper-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #03BFCB;
+  text-transform: uppercase;
+  margin: 10px 0;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  background: #f2f2f2;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: -20px -20px 60px #d9d9d9, 20px 20px 60px #ffffff;
+  margin-top: 20px;
+
+}
+
+.profile-picture-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f2f2f2;
+  box-shadow: -20px -20px 60px #d9d9d9, 20px 20px 60px #ffffff;
+}
+
+.profile-picture {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f2f2f2;
+  box-shadow: -20px -20px 60px #d9d9d9, 20px 20px 60px #ffffff;
+}
+
+.custom-profile-text {
+  color: hsl(203, 58%, 25%);
+  padding: 50px;
+  overflow: auto;
+  flex-grow: 1;
+  max-width: 100%;
   
-  footer a {
-	color: #3c97bf;
-	text-decoration: none;
-  }
-  
-  .custom-helper-title {
-	font-family: "Montserrat", sans-serif;
-	font-size: 24px;
-	font-weight: bold;
-	color: #03BFCB;
-	text-transform: uppercase;
-	margin: 10px 0;
-  }
-  
-  .profile-container {
-	/* Your existing styles */
-  }
-  
-  .profile-picture-container {
-	/* Your existing styles */
-  }
-  
-  .profile-picture {
-	/* Your existing styles */
-  }
-  
-  .custom-profile-text {
-	/* Your existing styles */
-  }
-  
+}
+
+.p {
+  font-size: 1em;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: -10px -10px 30px #d9d9d9, 10px 10px 30px #ffffff;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+
+.custom-button {
+  background-color: #62b6cb;
+  color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-button:hover {
+  background-color: #1b4965;
+}

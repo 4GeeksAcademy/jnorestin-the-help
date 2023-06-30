@@ -59,7 +59,8 @@ const UpdatedProfile = () => {
           alt="Profile"
           className="profile-picture"
         />
-      </div>
+      </div> 
+      <div className="custom-profile-text">
       <p>Name: {user.name}</p>
       <p>Age: {calculateAge(user.date_of_birth)}</p>
       <p>City: {user.city}</p>
@@ -68,7 +69,8 @@ const UpdatedProfile = () => {
       <p>Description: {user.description}</p>
       <p>Phone: {user.phone_number}</p>
       <p>Address: {user.address}</p>
-      <button onClick={() => navigate("/")}>Back</button>
+      </div>
+      <button className="custom-button" onClick={() => navigate("/")}>Back</button>
     </div>
   );
 };

@@ -11,5 +11,8 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
-    "python.formatting.provider": "none"
+    "python.formatting.provider": "none",
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    }
 }
