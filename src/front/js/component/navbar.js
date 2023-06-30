@@ -16,10 +16,8 @@ export const Navbar = () => {
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [logoutSuccess, setLogoutSuccess] = useState(false);
-  const [isMenuOpen, setMenuOpen] = useState(false);
   const { actions } = useContext(Context);
   const navigate = useNavigate();
-  const menuRef = useRef(null);
 
   const handleLoginClick = () => {
     setShowLoginForm(true);
@@ -48,92 +46,87 @@ export const Navbar = () => {
     setShowSignupForm(false);
   };
 
-  const handleMenuClick = () => {
-    toggleMenu();
-  };
-
-  const handleMenuItemClick = () => {
-    toggleMenu();
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
-
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (!menuRef.current.contains(event.target)) {
-        toggleMenu();
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
-
   return (
-
     <div>
-
-      <nav className="navbar ">
-        <img src={imgSrc} alt="" className={`logo-img home-logo-img me-0`} />
-        <button class="btn burger-menu me-auto " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <FontAwesomeIcon
-            icon={faBars}
-            className={`burger-icon`}
-
-          />
-        </button>
-        <div class="collapse navbar-collapse navCollapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-lg-0 ">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
-        </div>
-
-
-
-
-
-        <div className="ml-auto login-out ">
-          <button className="navbar-button" onClick={handleLoginClick}>
-            Log In
-          </button>ml
-          <button className="navbar-button" onClick={handleSignupClick}>
-            Sign Up
+      <nav className="navbar">
+        {isHomePage && (
+          <img src={imgSrc} alt="" className={`logo-img home-logo-img me-0`} />
+        )}
+        {!isHomePage && (
+          <button
+            className="btn burger-menu me-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <FontAwesomeIcon icon={faBars} className={`burger-icon`} />
           </button>
-        </div>
+        )}
+        {!isHomePage ? (
+          <div className="collapse navbar-collapse navCollapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-lg-0">
+              <li className="nav-item">
+                <Link to="/post">
+                  <a className="nav-link" aria-current="page" href="#">
+                    Your Posts
+                  </a>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/help">
+                  <a className="nav-link" aria-current="page" href="#">
+                    Help
+                  </a>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/">
+                  <a className="nav-link" aria-current="page" href="#">
+                    Home
+                  </a>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/helperpost">
+                  <a className="nav-link" aria-current="page" href="#">
+                    Helperpost
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        ) : null}
+
+        {!isHomePage ? null : (
+          <div className="ml-auto login-out">
+            <button className="navbar-button" onClick={handleLoginClick}>
+              Log In
+            </button>
+            <button className="navbar-button" onClick={handleSignupClick}>
+              Sign Up
+            </button>
+          </div>
+        )}
+
         {location.pathname === "/help" && (
           <div className="ml-auto login-out">
             <FontAwesomeIcon icon={faBell} className="navbar-icon" />
             <span className="button-spacing" />
-            <FontAwesomeIcon icon={faUser} className="navbar-icon" />
+            <Link to="/updatedprofile">
+              <FontAwesomeIcon icon={faUser} className="navbar-icon" />
+            </Link>
             <span className="button-spacing" />
             <button className="logout-button" onClick={handleLogoutClick}>
               Log Out
             </button>
           </div>
         )}
-
-
       </nav>
 
       {showLoginForm && (
@@ -165,9 +158,10 @@ export const Navbar = () => {
       )}
 
       {logoutSuccess && <div className="logout-message alert alert-success">Logout successful. Redirecting...</div>}
-
     </div>
   );
 };
+
+
 
 
