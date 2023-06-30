@@ -5,8 +5,22 @@ import PayPal from '../component/paypal';
 
 export const Post = () => {
   const { store, actions } = useContext(Context);
+  const [isShowing, setIsShowing] = useState(false);
 
- const [isShowing, setIsShowing] = useState(false)
+
+  const deletePost = (id) => {
+    fetch(process.env.BACKEND_URL +`/post/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          actions.deletePost(id);
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting post:', error);
+      });
+  };
 
   return (
     <div className="post-page">
@@ -19,18 +33,18 @@ export const Post = () => {
                 <div className="col-md-6 mb-3" key={index}>
                   <div className="card h-70">
                     <div className="card-body d-flex flex-column">
-                      <div className="d-flex align-items-center mb-3">
+                      <div className="align-items-center mb-3">
                         <img
-                          src={post.user.profile_image}
+                          src={post.user.profile_image || 'https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg'}
                           alt="User Profile Image"
-                          className="profile_image me-3"
+                          className="profile_image"
                         />
                         <div>
-                          <p className="m-0">{post.user.name}</p>
+                          <p className="m-20">{post.user.name}</p>
                         </div>
                       </div>
 
-                      <p className="card-text">{post.description}</p>
+                      <p className="custom-card-text">{post.description}</p>
                       <p className="card-price">Price: ${post.price}</p>
                       <div className="post-images d-flex flex-wrap">
                         {post.images.map((image) => (
@@ -48,41 +62,58 @@ export const Post = () => {
                       <div className="post-candidates">
                         <ul className="list-unstyled">
                           {post.candidates.map((candidate) => (
-                            <li key={candidate.id} className="d-flex align-items-center mb-3">
-                              <img
-                                src={candidate.profile_image}
-                                alt="Candidate Profile Image"
-                                className="candidate-profile-image me-3"
-                              />
-                              <p className="m-0">{candidate.name}</p>
+                            <li key={candidate.id} className="d-flex align-items-center justify-content-between mb-3">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  src={post.user.profile_image || 'https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg'}
+                                  className="candidate-profile-image me-3"
+                                />
+                                <p className="m-0">{candidate.name}</p>
+                              </div>
+                              <div className="d-flex align-items-center">
+                                <div className="form-check form-switch me-3">
+                                  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />
+                                  <label className="form-check-label" htmlFor="flexSwitchCheckDefault"></label>
+                                </div>
+                                <i className="fa-regular fa-envelope me-2"></i>
+                                <button
+                                  className="btn btn-primary"
+                                  type="button"
+                                  onClick={() => setIsShowing(!isShowing)}
+                                >
+                                  Make Payment
+                                </button>
+                                {!isShowing ? "" : <PayPal />}
+                              </div>
                             </li>
                           ))}
                         </ul>
-                        <div className="form-check form-switch d-flex align-items-center mb-3">
-                          <input className="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" />
-                          <label className="form-check-label me-2" htmlFor="flexSwitchCheckDefault"></label>
-                          <i className="fa-regular fa-envelope me-2"></i>
-                          <button className="btn btn-primary" type="button" onClick={()=>setIsShowing(!isShowing)}>Make Payment</button>
-                        {!isShowing?"":<PayPal/>}
 
+                        <div className="position-absolute top-0 end-0 mt-4 me-2">
+                          <div className="d-flex">
+                            <div className="me-2">
+                              <button type="button" className="btn btn-info">
+                                EDIT
+                              </button>
+                            </div>
+                            <div>
+                            <button
+                                type="button"
+                                className="btn"
+                                onClick={() => deletePost(post.id)}
+                              >
+                                DELETE
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                        <div className='d-flex'>
-                          <div className='me-auto'><button type="button" className=" btn btn-info ">Edit</button></div>
-                          <div><button type="button" className="btn btn-danger">Delete</button></div>
-                        
-                        
-                        </div>
-                        {/* <Paymentmodal/> */}
-                        
-
                       </div>
                     </div>
                   </div>
                 </div>
               ))
           ) : (
-            <div>
-            </div>
+            <div></div>
           )}
         </div>
       </div>

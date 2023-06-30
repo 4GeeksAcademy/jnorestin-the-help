@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import "./UpdateProfile.css";
-import styles from './UpdateProfile.css';
+
+import "../../../front/styles/UpdateProfile.css";
 
 const UpdateProfile = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const UpdateProfile = () => {
     const token = localStorage.getItem("token");
     const authorizationHeader = `Bearer ${token.replace(/^"(.*)"$/, "$1")}`;
 
-    fetch("https://donducci-cautious-spork-446gqv6x6pp35r9p-3001.preview.app.github.dev/api/update-user", {
+    fetch(process.env.BACKEND_URL +"/api/update-user", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

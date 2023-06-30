@@ -114,11 +114,11 @@ export const Navbar = () => {
           </div>
         )}
 
-        {location.pathname === "/help" && (
+        {!isHomePage && (
           <div className="ml-auto login-out">
             <FontAwesomeIcon icon={faBell} className="navbar-icon" />
             <span className="button-spacing" />
-            <Link to="/updatedprofile">
+            <Link to="/updated-profile">
               <FontAwesomeIcon icon={faUser} className="navbar-icon" />
             </Link>
             <span className="button-spacing" />

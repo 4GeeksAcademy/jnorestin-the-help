@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import UpdateProfile from "./component/UpdateProfile";
-import UpdatedProfile from "./component/UpdatedProfile";
+import UpdatedProfile from "./pages/UpdatedProfile";
 
 
 import { Home } from "./pages/home";

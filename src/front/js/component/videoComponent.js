@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./VideoComponent.css"; // Import the CSS file for styling
+import "../../../front/styles/VideoComponent.css";
 
 const VideoComponent = () => {
   const textRef = useRef(null);

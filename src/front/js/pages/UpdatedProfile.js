@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import "./UpdatedProfile.css";
-import styles from './UpdatedProfile.css';
+import "../../../front/styles/UpdatedProfile.css";
 
 const UpdatedProfile = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const UpdatedProfile = () => {
   const token = localStorage.getItem("token");
   const authorizationHeader = `Bearer ${token.replace(/^"(.*)"$/, "$1")}`;
   useEffect(() => {
-    fetch("https://donducci-cautious-spork-446gqv6x6pp35r9p-3001.preview.app.github.dev/api/user-by-token", {
+    fetch(process.env.BACKEND_URL +"/api/user-by-token", {
       headers: {
         Authorization: authorizationHeader,
         "Content-Type": "application/json",

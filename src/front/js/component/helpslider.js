@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import './helpslider.css';
+import "../../../front/styles/helpslider.css";
 
 const HelpSlider = (props) => {
   const { store, actions } = useContext(Context);

@@ -109,6 +109,18 @@ body {
   margin-left: 10px;
   margin-top: 10px;
 }
+.candidate-profile-image{
+  /* position: absolute; */
+  top: 20em; 
+  left: 20px; 
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: #1b4965 solid 2px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
 .card-images {
   display: flex;
   justify-content: center;
@@ -185,6 +197,17 @@ body {
   flex-grow: 1;
   max-width: 100%; 
  
+}
+.custom-card-text{
+  color: hsl(203, 58%, 25%);
+  /* border-radius: 5px; */
+  padding: 50px;
+  border: #1b4965 solid 3px;
+  overflow: auto; 
+  flex-grow: 1;
+  max-width: 100%; 
+  margin-top: 70px;
+
 }
 
 .popup-container button {

@@ -116,7 +116,6 @@ export const Help = (props) => {
 
   return (
     <div>
-      {/* <PayPal /> */}
       <div className="popup-container">
         {!popupOpen && !lightboxOpen && (
           <button onClick={openPopup} className="btn-new-post">
