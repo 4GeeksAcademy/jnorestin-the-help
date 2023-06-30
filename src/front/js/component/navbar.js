@@ -78,6 +78,7 @@ export const Navbar = () => {
   }, []);
 
   return (
+
     <div>
 
       <nav className="navbar ">
@@ -132,7 +133,9 @@ export const Navbar = () => {
           </div>
         )}
 
+
       </nav>
+
       {showLoginForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -149,6 +152,7 @@ export const Navbar = () => {
           </div>
         </div>
       )}
+
       {showSignupForm && (
         <div className="form-overlay">
           <div className="form-container">
@@ -159,8 +163,11 @@ export const Navbar = () => {
           </div>
         </div>
       )}
+
       {logoutSuccess && <div className="logout-message alert alert-success">Logout successful. Redirecting...</div>}
 
     </div>
   );
 };
+
+
