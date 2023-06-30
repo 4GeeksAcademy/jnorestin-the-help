@@ -31,9 +31,14 @@
   margin: 10px;
 }
 
-.custom-rating {
+/* .custom-rating {
   font-size: 14px;
   margin-top: 6px;
+  color: gold;
+  font-size: 20px;
+  text-align: center;
+} */
+.rating {
   color: gold;
   font-size: 20px;
   text-align: center;
