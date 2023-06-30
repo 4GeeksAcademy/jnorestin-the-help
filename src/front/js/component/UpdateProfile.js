@@ -8,7 +8,6 @@ const UpdateProfile = () => {
   const [description, setDescription] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  
 
   const handleUpdateProfile = () => {
     const userData = {
@@ -16,7 +15,7 @@ const UpdateProfile = () => {
       description: description,
       phone_number: phoneNumber,
       address: address,
-      is_helper:true
+      is_helper: true
     };
 
     const token = localStorage.getItem("token");
@@ -46,30 +45,30 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="update-profile-container">
+    <div className="custom-update-profile-container">
       <h4>Hi, we need a bit more info from you!</h4>
-      <div className="input-group">
-        <label htmlFor="skills">What are your skils?:</label>
+      <div className="custom-input-group">
+        <label htmlFor="skills">What are your skills?:</label>
         <input
           type="text"
           id="skills"
           name="skills"
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
-          className="display-field"
+          className="custom-input"
         />
       </div>
-      <div className="input-group">
+      <div className="custom-input-group">
         <label htmlFor="description">Tell us about yourself:</label>
         <textarea
           id="description"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="display-field"
+          className="custom-textarea"
         ></textarea>
       </div>
-      <div className="input-group">
+      <div className="custom-input-group">
         <label htmlFor="phone-number">Phone Number:</label>
         <input
           type="text"
@@ -77,10 +76,10 @@ const UpdateProfile = () => {
           name="phone-number"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
-          className="display-field"
+          className="custom-input"
         />
       </div>
-      <div className="input-group">
+      <div className="custom-input-group">
         <label htmlFor="address">Address:</label>
         <input
           type="text"
@@ -88,10 +87,10 @@ const UpdateProfile = () => {
           name="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="display-field"
+          className="custom-input"
         />
       </div>
-      <button onClick={handleUpdateProfile}>Update Profile</button>
+      <button onClick={handleUpdateProfile} className="custom-button">Update Profile</button>
     </div>
   );
 };

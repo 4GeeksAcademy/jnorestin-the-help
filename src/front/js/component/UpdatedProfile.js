@@ -51,7 +51,7 @@ const UpdatedProfile = () => {
 
   return (
     <div className="profile-container">
-      <h3 className="helper-title">Helper Profile</h3>
+      <h3 className="custom-helper-title">Helper Profile</h3>
       <div className="profile-picture-container">
         <img
           src={dummyProfilePictureUrl}

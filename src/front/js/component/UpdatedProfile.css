@@ -1,145 +1,35 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-
-* {
-	box-sizing: border-box;
-}
-/* 
-body {
-	background-color: #28223F;
-	font-family: Montserrat, sans-serif;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	min-height: 100vh;
-	margin: 0;
-} */
-
-h1 {
-	margin: 10px 0;
-}
-
-.profile-container {
-	
-	
-	margin-left: 750px;
-	background-color: #28223F;
-	font-family: Montserrat, sans-serif;
-	display:contents;
-	width: 50%;
-	height: auto;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	min-height: 100vh;
-	margin: 0;
-	text-align: center;
-	background-color: #f1f3f6;
-	padding: 20px;
-	border-radius: 20px;
-	box-shadow: 10px 10px 20px rgba(163, 177, 198, 0.6),
-    -10px -10px 20px rgba(255, 255, 255, 0.5);
-}
-
-.profile-picture-container {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 20px;
-}
-
-.profile-picture {
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
-	background-color: #f1f3f6;
-	box-shadow: 10px 10px 20px rgba(163, 177, 198, 0.6),
-    -10px -10px 20px rgba(255, 255, 255, 0.5),
-    inset 5px 5px 10px rgba(163, 177, 198, 0.4),
-    inset -5px -5px 10px rgba(255, 255, 255, 0.4);
-}
-
-p {
-	padding: 10px;
-	background-color: #f1f3f6;
-	box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.6),
-    -5px -5px 10px rgba(255, 255, 255, 0.5);
-	border-radius: 10px;
-	margin-bottom: 10px;
-	margin-left: 500px;
-	width: 440px;
-	display: center;
-}
-
-button {
-	margin-top: 20px;
-	background-color: #f1f3f6;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 10px;
-	color: #616e7c;
-	font-weight: bold;
-	box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.6),
-    -5px -5px 10px rgba(255, 255, 255, 0.5);
-	transition: transform 0.2s ease-in-out;
-}
-
-button:hover {
-	transform: scale(1.05);
-}
-
-.skills {
-	background-color: #1F1A36;
-	text-align: left;
-	padding: 15px;
-	margin-top: 30px;
-}
-
-.skills ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.skills ul li {
-	border: 1px solid #2D2747;
-	border-radius: 2px;
-	display: inline-block;
-	font-size: 12px;
-	margin: 0 7px 7px 0;
-	padding: 7px;
-}
-
-footer {
-	background-color: #222;
-	color: #fff;
-	font-size: 14px;
-	bottom: 0;
-	position: fixed;
-	left: 0;
-	right: 0;
-	text-align: center;
-	z-index: 999;
-}
-
-footer p {
-	margin: 10px 0;
-}
 
 footer i {
 	color: red;
-}
-
-footer a {
+  }
+  
+  footer a {
 	color: #3c97bf;
 	text-decoration: none;
-}
-
-.helper-title {
-  font-family: "Montserrat", sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: #03BFCB;
-  text-transform: uppercase;
-  margin: 10px 0;
-}
-
+  }
+  
+  .custom-helper-title {
+	font-family: "Montserrat", sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	color: #03BFCB;
+	text-transform: uppercase;
+	margin: 10px 0;
+  }
+  
+  .profile-container {
+	/* Your existing styles */
+  }
+  
+  .profile-picture-container {
+	/* Your existing styles */
+  }
+  
+  .profile-picture {
+	/* Your existing styles */
+  }
+  
+  .custom-profile-text {
+	/* Your existing styles */
+  }
+  
