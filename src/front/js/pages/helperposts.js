@@ -16,7 +16,7 @@ export const HelperPosts = () => {
                 <img
                   src={post.user.profile_image}
                   alt="User Profile Image"
-                  className="user-profile-image card-img-top"
+                  className="user-profile-image card-img-top me-3"
                 />
                 <div className="card-body">
                   <h5 className="card-title">{post.user.name}</h5>

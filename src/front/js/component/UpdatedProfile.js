@@ -10,7 +10,7 @@ const UpdatedProfile = () => {
   const token = localStorage.getItem("token");
   const authorizationHeader = `Bearer ${token.replace(/^"(.*)"$/, "$1")}`;
   useEffect(() => {
-    fetch("https://jnorestin-musical-computing-machine-v4pwg97pxg3wwr7-3001.preview.app.github.dev/api/user-by-token", {
+    fetch("https://donducci-cautious-spork-446gqv6x6pp35r9p-3001.preview.app.github.dev/api/user-by-token", {
       headers: {
         Authorization: authorizationHeader,
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const UpdatedProfile = () => {
 
   return (
     <div className="profile-container">
-      <h3 className="helper-title">Helper Profile</h3>
+      <h3 className="custom-helper-title">Helper Profile</h3>
       <div className="profile-picture-container">
         <img
           src={dummyProfilePictureUrl}

@@ -1,75 +1,35 @@
-body {
-	background-color: #e0e5ec;
-	font-family: 'Montserrat', sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	margin: 0;
-	color: #333;
+
+footer i {
+	color: red;
   }
   
-  .helper-title {
-	text-align: center;
-	font-size: 2em;
-	margin-bottom: 1em;
+  footer a {
+	color: #3c97bf;
+	text-decoration: none;
+  }
+  
+  .custom-helper-title {
+	font-family: "Montserrat", sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	color: #03BFCB;
+	text-transform: uppercase;
+	margin: 10px 0;
   }
   
   .profile-container {
-	background: #e0e5ec;
-	border-radius: 20px;
-	width: 500px;
-	padding: 20px;
-	box-shadow: -10px -10px 30px #bfc6d1, 
-				10px 10px 30px #ffffff;
+	/* Your existing styles */
   }
   
   .profile-picture-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 1em;
+	/* Your existing styles */
   }
   
   .profile-picture {
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-	object-fit: cover;
-	box-shadow: -10px -10px 30px #bfc6d1, 
-				10px 10px 30px #ffffff;
+	/* Your existing styles */
   }
   
-  .profile-container p {
-	background: #e0e5ec;
-	border-radius: 20px;
-	padding: 10px;
-	margin-bottom: 20px;
-	box-shadow: -5px -5px 20px #bfc6d1, 
-				5px 5px 20px #ffffff;
-	font-weight: bold;
-  }
-  
-  button {
-	padding: 10px 20px;
-	background-color: #e0e5ec;
-	border: none;
-	border-radius: 20px;
-	color: #333;
-	font-weight: bold;
-	cursor: pointer;
-	margin-top: 20px;
-	box-shadow: -5px -5px 20px #bfc6d1, 
-				5px 5px 20px #ffffff;
-  }
-  
-  button:hover {
-	box-shadow: -2px -2px 5px #bfc6d1, 
-				2px 2px 5px #ffffff;
-  }
-  
-  button:active {
-	box-shadow: inset 1px 1px 2px #bfc6d1, 
-				inset -1px -1px 2px #ffffff;
+  .custom-profile-text {
+	/* Your existing styles */
   }
   
