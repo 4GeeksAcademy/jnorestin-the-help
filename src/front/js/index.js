@@ -9,6 +9,6 @@ import "../styles/index.css";
 import Layout from "./layout";
 
 
-import UpdateProfile from "./component/UpdateProfile";
+// import UpdateProfile from "./component/UpdateProfile";
 //render your react application
 ReactDOM.render(<Layout />, document.querySelector("#app"));

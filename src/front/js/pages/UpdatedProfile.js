@@ -48,7 +48,7 @@ const UpdatedProfile = () => {
     return age;
   };
 
-  const dummyProfilePictureUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/800px-Elon_Musk_Royal_Society_%28crop2%29.jpg";
+  const dummyProfilePictureUrl = "https://res.cloudinary.com/dggcy5lcn/image/upload/v1688150623/sheiala-fotor-2023062820523_v8k83q.png";
 
   return (
     <div className="profile-container">
@@ -70,7 +70,7 @@ const UpdatedProfile = () => {
       <p>Phone: {user.phone_number}</p>
       <p>Address: {user.address}</p>
       </div>
-      <button className="custom-button" onClick={() => navigate("/")}>Back</button>
+      <button className="custom-button" onClick={() => navigate("/update-profile")}>Become an Helper</button>
     </div>
   );
 };
