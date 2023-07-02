@@ -50,7 +50,7 @@ export const Help = (props) => {
       if (store.user.is_helper !== true) {
         throw new Error("Only helpers can become post candidates");
       }
-
+  
       const response = await fetch(store.apiUrl + "/api/add-post-candidate", {
         method: "PUT",
         headers: {
@@ -59,16 +59,20 @@ export const Help = (props) => {
         },
         body: JSON.stringify({ post_id: postId }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to create post candidate");
       }
-
+  
+      // Display success message
+      alert("You have successfully become a post candidate!");
+  
       actions.fetchPosts(); // Fetch posts again
     } catch (error) {
       console.log(error);
     }
   };
+  
 
 
   const createPost = async (postData) => {

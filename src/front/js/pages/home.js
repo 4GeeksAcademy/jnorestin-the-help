@@ -20,7 +20,7 @@ export const Home = () => {
 			<VideoComponent />
 			
 			<div className="review-title">
-				<h1> See what they say about us </h1>
+				<h1> SEE WHAT THEY SAY ABOUT US </h1>
 			</div>
 			<HelpSlider />
 

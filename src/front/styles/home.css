@@ -15,18 +15,19 @@
   }
   
   .review-title{
-    margin: 50px;
-    margin-top: 120px;
-    margin-left: 460px;
+    
+    
+    /* margin-left: 460px; */
     font-size: 1.5em;
-    color: #333;
+    color: hsl(203, 58%, 25%);
     text-align: center;
-    background: #e0e0e0;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 5px 5px 20px #d4d4d4,
+    background: #ffffff;
+    /* border-radius: 15px; */
+    padding-bottom: 50px;
+    padding-top: 80px;
+    bottom: 5px 5px 20px #d4d4d4,
                 -5px -5px 20px #ffffff;
-    width: fit-content;
+    /* width: fit-content; */
     
 }
 

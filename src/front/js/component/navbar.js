@@ -93,13 +93,13 @@ export const Navbar = () => {
                   </Link>
                 </li>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/helperpost">
                   <a className="nav-link" aria-current="page" href="#">
                     Helperpost
                   </a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         ) : null}
